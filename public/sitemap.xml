@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Only real, standalone pages are listed here.
+
+  The service, portfolio, pricing and contact content lives in sections of the
+  home page (/ and /#pricing etc.), so those are NOT separate URLs and must not
+  be listed as if they were - a sitemap entry that resolves to the 404 page is a
+  soft-404 and hurts SEO.
+
+  Replace https://ezydigital.in with the confirmed production domain before
+  submitting. The same domain is configured in src/config/siteConfig.js.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://ezydigital.in/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/privacy-policy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/terms</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

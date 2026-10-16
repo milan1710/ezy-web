@@ -1,0 +1,256 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   EzyDigital design tokens
+   Palette is derived from the official EzyDigital logo:
+   - brand red  : the "E" mark and the "Ezy" wordmark
+   - ink navy   : the dark charcoal "Digital" wordmark, extended to a full navy ramp
+   - azure      : supporting accent used sparingly for technical highlights
+--------------------------------------------------------------------------- */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* Brand red */
+  --color-brand-50: #fff1f2;
+  --color-brand-100: #ffe1e3;
+  --color-brand-200: #ffc8cc;
+  --color-brand-300: #ff9ba2;
+  --color-brand-400: #fa6871;
+  --color-brand-500: #ef3b46;
+  --color-brand-600: #dc1f2c;
+  --color-brand-700: #b8141f;
+  --color-brand-800: #98161f;
+  --color-brand-900: #7d181f;
+  --color-brand-950: #45070b;
+
+  /* Ink navy / charcoal */
+  --color-ink-50: #f5f7fa;
+  --color-ink-100: #eaeff6;
+  --color-ink-200: #cfd9e6;
+  --color-ink-300: #a8b6cb;
+  --color-ink-400: #75859e;
+  --color-ink-500: #55657f;
+  --color-ink-600: #414f66;
+  --color-ink-700: #333f52;
+  --color-ink-800: #232f42;
+  --color-ink-900: #121b2a;
+  --color-ink-950: #080d16;
+
+  /* Supporting accent */
+  --color-azure-300: #7dd3fc;
+  --color-azure-400: #38bdf8;
+  --color-azure-500: #0ea5e9;
+  --color-azure-600: #0284c7;
+
+  --radius-4xl: 2rem;
+
+  --shadow-soft: 0 1px 2px rgb(8 13 22 / 0.04), 0 12px 32px -12px rgb(8 13 22 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(8 13 22 / 0.05), 0 28px 60px -24px rgb(8 13 22 / 0.28);
+  --shadow-glow: 0 18px 48px -18px rgb(220 31 44 / 0.55);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    /* Offset for the sticky header when jumping to an in-page anchor */
+    scroll-padding-top: 6rem;
+  }
+
+  html,
+  body {
+    /* Belt-and-braces guard against any horizontal overflow on small screens */
+    max-width: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink-700 antialiased;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-ink-900 font-bold tracking-tight;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, consistent keyboard focus states everywhere */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-600);
+    color: #fff;
+  }
+
+  /* Native smooth-scroll for anchor navigation, but not for reduced-motion users */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Consistent page gutter + max width used by every section */
+  .container-page {
+    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-gradient-brand {
+    @apply from-brand-600 via-brand-500 to-brand-400 bg-gradient-to-r bg-clip-text text-transparent;
+  }
+
+  .surface-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.055) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .surface-grid-light {
+    background-image:
+      linear-gradient(to right, rgb(8 13 22 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(8 13 22 / 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Hide scrollbars on the horizontally scrollable filter rails */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  /* Readable long-form styling for the Privacy Policy and Terms pages. */
+  .legal-prose h2 {
+    color: var(--color-ink-900);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2.25rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .legal-prose h2:first-child {
+    margin-top: 0;
+  }
+
+  .legal-prose h3 {
+    color: var(--color-ink-900);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    margin-top: 1.5rem;
+  }
+
+  .legal-prose p,
+  .legal-prose li {
+    color: var(--color-ink-600);
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+
+  .legal-prose p {
+    margin-top: 1rem;
+  }
+
+  .legal-prose ul,
+  .legal-prose ol {
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .legal-prose ul {
+    list-style: disc;
+  }
+
+  .legal-prose ol {
+    list-style: decimal;
+  }
+
+  .legal-prose strong {
+    color: var(--color-ink-800);
+    font-weight: 600;
+  }
+
+  .legal-prose a {
+    color: var(--color-brand-700);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}

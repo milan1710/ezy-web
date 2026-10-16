@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Local logs and scratch files
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Vite cache
+.vite/
+
+# Environment variables
+#
+# `.env` IS committed on purpose: it only holds the public Meta Pixel id, so the
+# pixel keeps working when the site is built from this repository.
+# NEVER put real secrets (passwords, private API keys) in `.env` - keep those in
+# `.env.local` (ignored) or in your hosting dashboard's environment variables.
+.env.local
+.env.*.local

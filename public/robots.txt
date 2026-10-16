@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block nothing that matters for a marketing website. Keep it simple and honest.
+Disallow: /npm-install.log
+Disallow: /npm-install.err.log
+
+Sitemap: https://ezydigital.in/sitemap.xml
