@@ -1,25 +1,36 @@
 import { useEffect, useId, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, Phone, X } from 'lucide-react'
+import { ChevronDown, Menu, Phone, X } from 'lucide-react'
 import Logo from './common/Logo'
 import Button from './ui/Button'
 import useScrolled from '../hooks/useScrolled'
 import useActiveSection from '../hooks/useActiveSection'
 import { siteConfig, whatsappLink } from '../config/siteConfig'
 
-const NAV_ITEMS = [
-  { id: 'home', label: 'Home' },
-  { id: 'services', label: 'Services' },
-  { id: 'portfolio', label: 'Portfolio' },
-  { id: 'pricing', label: 'Pricing' },
-  { id: 'about', label: 'About' },
-  { id: 'contact', label: 'Contact' },
+const SERVICE_LINKS = [
+  { to: '/website-development', label: 'Website Development' },
+  { to: '/website-development/pricing', label: 'Website Pricing' },
+  { to: '/ecommerce-website-development', label: 'E-commerce Websites' },
+  { to: '/custom-web-applications', label: 'Custom Web Applications' },
+  { to: '/meta-ads-management', label: 'Meta Ads Management' },
+  { to: '/social-media-management', label: 'Social Media Management' },
+  { to: '/additional-digital-services', label: 'Additional Digital Services' },
 ]
 
-const SECTION_IDS = NAV_ITEMS.map((item) => item.id)
+const NAV_ITEMS = [
+  { id: 'home', label: 'Home', to: '/', section: 'home' },
+  { id: 'services', label: 'Services', section: 'services' },
+  { id: 'portfolio', label: 'Portfolio', to: '/portfolio', section: 'portfolio' },
+  { id: 'pricing', label: 'Pricing', to: '/website-development/pricing', section: 'pricing' },
+  { id: 'about', label: 'About', to: '/about', section: 'about' },
+  { id: 'contact', label: 'Contact', to: '/contact', section: 'contact' },
+]
+
+const SECTION_IDS = NAV_ITEMS.map((item) => item.section)
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
   const scrolled = useScrolled(10)
   const location = useLocation()
   const menuId = useId()
@@ -27,12 +38,11 @@ export default function Navbar() {
   const isHome = location.pathname === '/'
   const activeId = useActiveSection(SECTION_IDS, { enabled: isHome })
 
-  // Close the mobile menu whenever the route or hash changes.
   useEffect(() => {
     setOpen(false)
+    setServicesOpen(false)
   }, [location.pathname, location.hash])
 
-  // Escape closes the menu; body scroll is locked while it is open.
   useEffect(() => {
     if (!open) return undefined
     const onKeyDown = (event) => {
@@ -47,27 +57,32 @@ export default function Navbar() {
     }
   }, [open])
 
-  // The header is transparent over the dark hero and solid once scrolled.
-  const solid = scrolled || !isHome || open
+  const solid = scrolled || !isHome || open || servicesOpen
+
+  const isActive = (item) => {
+    if (item.to === '/') return location.pathname === '/'
+    if (item.id === 'services') return location.pathname === '/website-development'
+    if (item.to) return location.pathname === item.to || location.pathname.startsWith(`${item.to}/`)
+    return false
+  }
 
   return (
     <header
       className={[
         'fixed inset-x-0 top-0 z-50 transition-all duration-300',
         solid
-          ? 'border-b border-ink-100 bg-white/95 shadow-[0_8px_28px_-20px_rgba(8,13,22,0.5)] backdrop-blur-md'
+          ? 'border-ink-100 border-b bg-white/95 shadow-[0_8px_28px_-20px_rgba(8,13,22,0.5)] backdrop-blur-md'
           : 'border-b border-white/5 bg-transparent',
       ].join(' ')}
     >
       <a
-        href="#home"
+        href="#main"
         className="focus:bg-ink-900 sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
       >
         Skip to main content
       </a>
 
       <div className="container-page flex h-16 items-center justify-between gap-4 lg:h-20">
-        {/* Logo */}
         <Link
           to="/"
           className="flex shrink-0 items-center rounded-lg"
@@ -76,24 +91,88 @@ export default function Navbar() {
           <Logo variant={solid ? 'dark' : 'light'} size="md" />
         </Link>
 
-        {/* Desktop navigation */}
         <nav aria-label="Main navigation" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-0.5">
             {NAV_ITEMS.map((item) => {
-              const active = isHome && activeId === item.id
+              const active = isHome ? activeId === item.section : isActive(item)
+
+              if (item.id === 'services') {
+                return (
+                  <li
+                    key={item.id}
+                    className="relative"
+                    onMouseEnter={() => setServicesOpen(true)}
+                    onMouseLeave={() => setServicesOpen(false)}
+                    onBlur={(event) => {
+                      if (!event.currentTarget.contains(event.relatedTarget)) {
+                        setServicesOpen(false)
+                      }
+                    }}
+                  >
+                    <button
+                      type="button"
+                      aria-haspopup="true"
+                      aria-expanded={servicesOpen}
+                      aria-controls="services-menu"
+                      onClick={() => setServicesOpen((value) => !value)}
+                      className={[
+                        'inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition-colors',
+                        solid
+                          ? active || servicesOpen
+                            ? 'text-brand-700 bg-brand-50'
+                            : 'text-ink-700 hover:bg-ink-50 hover:text-ink-900'
+                          : 'text-white/85 hover:bg-white/10 hover:text-white',
+                      ].join(' ')}
+                    >
+                      Services
+                      <ChevronDown
+                        className={[
+                          'h-4 w-4 transition-transform',
+                          servicesOpen ? 'rotate-180' : '',
+                        ].join(' ')}
+                      />
+                    </button>
+
+                    <div
+                      id="services-menu"
+                      hidden={!servicesOpen}
+                      className="border-ink-100 shadow-lift absolute top-full left-0 mt-2 w-64 rounded-2xl border bg-white p-2"
+                    >
+                      <ul>
+                        {SERVICE_LINKS.map((link) => (
+                          <li key={link.to}>
+                            <Link
+                              to={link.to}
+                              className={[
+                                'block rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors',
+                                location.pathname === link.to
+                                  ? 'text-brand-700 bg-brand-50'
+                                  : 'text-ink-700 hover:bg-ink-50 hover:text-ink-900',
+                              ].join(' ')}
+                            >
+                              {link.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                )
+              }
+
               return (
                 <li key={item.id}>
                   <Link
-                    to={`/#${item.id}`}
-                    aria-current={active ? 'true' : undefined}
+                    to={item.to}
+                    aria-current={active ? 'page' : undefined}
                     className={[
-                      'relative block rounded-full px-3.5 py-2 text-sm font-semibold transition-colors',
+                      'relative block rounded-full px-3 py-2 text-sm font-semibold transition-colors',
                       solid
                         ? active
                           ? 'text-brand-700 bg-brand-50'
-                          : 'text-ink-600 hover:bg-ink-50 hover:text-ink-900'
+                          : 'text-ink-700 hover:bg-ink-50 hover:text-ink-900'
                         : active
-                          ? 'bg-white/15 text-white'
+                          ? 'bg-white/10 text-white'
                           : 'text-white/80 hover:bg-white/10 hover:text-white',
                     ].join(' ')}
                   >
@@ -105,11 +184,9 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Desktop actions */}
         <div className="hidden items-center gap-2 lg:flex">
           <a
             href={siteConfig.contact.telHref}
-            aria-label="Call Milan Soni"
             className={[
               'inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-semibold transition-colors',
               solid
@@ -121,16 +198,15 @@ export default function Navbar() {
             <span className="hidden xl:inline">{siteConfig.contact.phoneDisplay}</span>
           </a>
 
-          <Button to="/#contact" size="md" iconRight="ArrowRight">
-            Get a Free Quote
+          <Button to="/contact" size="md" iconRight="ArrowRight">
+            Get a Quote
           </Button>
         </div>
 
-        {/* Mobile actions */}
         <div className="flex items-center gap-2 lg:hidden">
           <a
             href={siteConfig.contact.telHref}
-            aria-label="Call Milan Soni"
+            aria-label="Call Ezy Digital"
             className={[
               'inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors',
               solid ? 'border-ink-200 text-ink-800' : 'border-white/25 text-white',
@@ -157,19 +233,50 @@ export default function Navbar() {
             )}
           </button>
         </div>
-
       </div>
 
-      {/* Mobile menu panel */}
-      <div id={menuId} hidden={!open} className="max-h-[85vh] overflow-y-auto border-t border-ink-100 bg-white lg:hidden">
+      <div
+        id={menuId}
+        hidden={!open}
+        className="border-ink-100 max-h-[85vh] overflow-y-auto border-t bg-white lg:hidden"
+      >
         <nav aria-label="Mobile navigation" className="container-page py-4">
           <ul className="flex flex-col gap-1">
-            {NAV_ITEMS.map((item) => (
+            <li>
+              <Link
+                to="/"
+                onClick={() => setOpen(false)}
+                className="text-ink-700 hover:bg-ink-50 hover:text-brand-700 block rounded-xl px-4 py-3 text-base font-semibold"
+              >
+                Home
+              </Link>
+            </li>
+          </ul>
+
+          <p className="text-ink-400 mt-4 px-4 text-xs font-semibold tracking-[0.18em] uppercase">
+            Services
+          </p>
+          <ul className="mt-1 flex flex-col gap-1">
+            {SERVICE_LINKS.map((link) => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  onClick={() => setOpen(false)}
+                  className="text-ink-700 hover:bg-ink-50 hover:text-brand-700 block rounded-xl px-4 py-2.5 text-sm font-semibold"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <ul className="border-ink-100 mt-3 flex flex-col gap-1 border-t pt-3">
+            {NAV_ITEMS.filter((item) => item.id !== 'home' && item.id !== 'services').map((item) => (
               <li key={item.id}>
                 <Link
-                  to={`/#${item.id}`}
+                  to={item.to}
                   onClick={() => setOpen(false)}
-                  className="text-ink-700 hover:bg-ink-50 hover:text-brand-700 block rounded-xl px-4 py-3 text-base font-semibold"
+                  className="text-ink-700 hover:bg-ink-50 hover:text-brand-700 block rounded-xl px-4 py-2.5 text-sm font-semibold"
                 >
                   {item.label}
                 </Link>
@@ -178,8 +285,8 @@ export default function Navbar() {
           </ul>
 
           <div className="mt-4 grid gap-2 pb-2">
-            <Button to="/#contact" size="lg" iconRight="ArrowRight" fullWidth>
-              Get a Free Quote
+            <Button to="/contact" size="lg" iconRight="ArrowRight" fullWidth>
+              Get a Quote
             </Button>
             <Button
               href={whatsappLink(siteConfig.whatsappMessages.general)}
@@ -191,19 +298,12 @@ export default function Navbar() {
             >
               Chat on WhatsApp
             </Button>
-            <Button
-              href={siteConfig.contact.telHref}
-              variant="outline"
-              size="lg"
-              icon="Phone"
-              fullWidth
-            >
+            <Button href={siteConfig.contact.telHref} variant="outline" size="lg" icon="Phone" fullWidth>
               Call {siteConfig.contact.phoneInternational}
             </Button>
           </div>
         </nav>
       </div>
-
     </header>
   )
 }

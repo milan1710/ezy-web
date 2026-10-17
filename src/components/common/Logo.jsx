@@ -3,7 +3,7 @@ import { siteConfig } from '../../config/siteConfig'
 const LOGO_SRC = '/images/ezy-digital-logo.png'
 
 /**
- * The official EzyDigital logo, imported from the project's images folder
+ * The official Ezy Digital logo, imported from the project's images folder
  * (copied to /public/images so Vite serves it from the site root).
  *
  * The artwork has a white background, so on dark sections it is placed on a

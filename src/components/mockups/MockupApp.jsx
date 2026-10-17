@@ -47,7 +47,7 @@ function Tile({ className = '', from = 'from-brand-500/25', to = 'to-ink-900/20'
   )
 }
 
-function BrandMark({ label = 'EzyDigital', dark = false }) {
+function BrandMark({ label = 'Ezy Digital', dark = false }) {
   return (
     <div className="flex items-center gap-[1cqw]">
       <span className="bg-brand-600 block h-[2.6cqw] w-[2.6cqw] rounded-[0.6cqw]" />

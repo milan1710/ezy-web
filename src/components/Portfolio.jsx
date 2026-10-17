@@ -124,7 +124,7 @@ export default function Portfolio() {
             <div className="flex flex-wrap justify-center gap-3">
               <Button
                 href={whatsappLink(
-                  'Hello Milan, I saw the concept designs on the EzyDigital website. I would like something similar built for my business.',
+                  'Hello Ezy Digital, I saw the concept designs on the ezydigital.in website. I would like something similar built for my business.',
                 )}
                 external
                 size="lg"
@@ -132,7 +132,12 @@ export default function Portfolio() {
               >
                 Start My Website
               </Button>
-              <Button to="/#pricing" variant="outlineLight" size="lg" iconRight="ArrowRight">
+              <Button
+                to="/website-development/pricing"
+                variant="outlineLight"
+                size="lg"
+                iconRight="ArrowRight"
+              >
                 See Packages &amp; Prices
               </Button>
             </div>

@@ -10,7 +10,7 @@
  * (see src/components/mockups/MockupApp.jsx). No stock imagery is used.
  */
 export const projectNotice =
-  'Every preview below is an original concept design created by EzyDigital to demonstrate our design and front-end development work. They are clearly labelled as concept designs, not delivered client projects.'
+  'Every preview below is an original concept design created by Ezy Digital to demonstrate our design and front-end development work. They are clearly labelled as concept designs, not delivered client projects.'
 
 export const portfolioCategories = [
   { id: 'all', label: 'All work' },

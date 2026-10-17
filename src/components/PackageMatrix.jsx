@@ -48,7 +48,7 @@ export default function PackageMatrix() {
             <div className="overflow-x-auto">
               <table className="w-full min-w-[860px] border-collapse text-left">
                 <caption className="sr-only">
-                  Feature comparison of EzyDigital website packages with starting prices
+                  Feature comparison of Ezy Digital website packages with starting prices
                 </caption>
 
                 <thead>
@@ -102,7 +102,7 @@ export default function PackageMatrix() {
                       <td key={column.id} className="border-t border-ink-100 px-4 py-4 text-center">
                         <a
                           href={whatsappLink(
-                            `Hello Milan, I compared the packages and I am interested in the ${column.label} package (from ${formatINR(column.price)}). Please share the details and a quotation.`,
+                            `Hello Ezy Digital, I compared the website packages and I am interested in the ${column.label} package (from ${formatINR(column.price)}). Please share the details and a quotation.`,
                           )}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -129,7 +129,12 @@ export default function PackageMatrix() {
               your written quotation. Prices are starting points - the final figure depends on your
               scope.
             </p>
-            <Button to="/#finder" size="lg" iconRight="ArrowRight" className="shrink-0">
+            <Button
+              to="/website-development/pricing#finder"
+              size="lg"
+              iconRight="ArrowRight"
+              className="shrink-0"
+            >
               Not Sure? Use the Finder
             </Button>
           </div>

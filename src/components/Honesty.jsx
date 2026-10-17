@@ -66,7 +66,7 @@ export default function Honesty() {
               </Button>
               <Button
                 href={whatsappLink(
-                  'Hello Milan, I have a question about how you work before I decide on a website.',
+                  'Hello Ezy Digital, I have a question about how you work before I decide on a website.',
                 )}
                 external
                 variant="outlineLight"

@@ -1,9 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { Phone } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import BrowserFrame from './mockups/BrowserFrame'
 import MockupApp from './mockups/MockupApp'
 import Button from './ui/Button'
 import Icon from './ui/Icon'
+import Logo from './common/Logo'
 import { siteConfig, whatsappLink } from '../config/siteConfig'
 import { heroTechLabels } from '../data/techStack'
 
@@ -61,41 +63,67 @@ export default function Hero() {
         <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
           {/* Copy */}
           <div>
-            <motion.div {...enter(0)}>
+            <motion.div {...enter(0)} className="flex flex-wrap items-center gap-4">
+              <Logo variant="light" size="sm" />
               <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-white/85">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
                 </span>
-                Website design &amp; full-stack development - Upleta, Gujarat
+                Website Development · Meta Ads · Gujarat
               </p>
             </motion.div>
 
             <motion.h1
               id="hero-heading"
               {...enter(0.08)}
-              className="mt-6 text-4xl leading-[1.08] font-extrabold text-white sm:text-5xl lg:text-[3.4rem]"
+              className="mt-6 text-4xl leading-[1.12] font-extrabold text-white sm:text-5xl lg:text-[3.4rem]"
             >
-              Websites That Turn Your Business Into a{' '}
-              <span className="text-gradient-brand">Digital Brand.</span>
+              Grow Your Business{' '}
+              <span className="text-gradient-brand">Digitally.</span>
             </motion.h1>
 
             <motion.p
               {...enter(0.16)}
-              className="mt-6 max-w-[34rem] text-base leading-relaxed text-ink-200/90 sm:text-lg"
+              className="text-ink-200/90 mt-6 max-w-[36rem] text-base leading-relaxed sm:text-lg"
             >
-              Custom-designed, fast and mobile-friendly websites built to help your business grow.
-              From business websites and online stores to advanced full-stack web applications - we
-              build solutions around your goals.
+              Professional websites, e-commerce solutions and Facebook &amp; Instagram Ads management
+              for your business.
+            </motion.p>
+
+            <motion.p {...enter(0.2)} className="text-ink-400 mt-3 max-w-[36rem] text-sm leading-relaxed">
+              Custom web applications and Meta Ads management for businesses across Gujarat - with
+              clear starting prices and a written scope.
             </motion.p>
 
             <motion.div {...enter(0.24)} className="mt-8 flex flex-wrap items-center gap-3">
-              <Button to="/#contact" size="lg" iconRight="ArrowRight">
-                Get My Website
+              <Button to="/contact" size="lg" iconRight="ArrowRight">
+                Get a Quote
               </Button>
-              <Button to="/#portfolio" variant="outlineLight" size="lg" icon="LayoutDashboard">
-                Explore Our Work
+              <Button href={siteConfig.contact.telHref} variant="outlineLight" size="lg" icon="Phone">
+                Call Now
               </Button>
+            </motion.div>
+
+            <motion.ul {...enter(0.28)} className="mt-6 flex flex-wrap gap-2">
+              {['Website Development', 'E-commerce', 'Meta Ads', 'Social Media'].map((label) => (
+                <li
+                  key={label}
+                  className="rounded-full border border-white/12 bg-white/5 px-3 py-1 text-xs font-semibold text-white/75"
+                >
+                  {label}
+                </li>
+              ))}
+            </motion.ul>
+
+            <motion.div {...enter(0.3)}>
+              <Link
+                to="/portfolio"
+                className="text-ink-300 hover:text-brand-300 mt-5 inline-flex items-center gap-2 text-sm font-semibold transition-colors"
+              >
+                Explore our concept work
+                <Icon name="ArrowRight" className="h-4 w-4" />
+              </Link>
             </motion.div>
 
             {/* Direct contact options */}
@@ -182,7 +210,7 @@ export default function Hero() {
         >
           <Icon name="Info" className="mt-0.5 h-4 w-4 shrink-0" />
           <span>
-            The screens above are original concept designs built by EzyDigital to demonstrate our
+            The screens above are original concept designs built by Ezy Digital to demonstrate our
             design and front-end development work. They are not delivered client projects.
           </span>
         </motion.p>

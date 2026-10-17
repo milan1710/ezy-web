@@ -1,7 +1,7 @@
-# EzyDigital Web Development - Website
+# Ezy Digital - Website
 
-Production marketing website for **EzyDigital Web Development** (owner: **Milan Soni**), a website
-design and full-stack web development studio based in Upleta, Gujarat, India.
+Production marketing website for **Ezy Digital** (owner: **Milan Soni**), a website development,
+e-commerce and Meta Ads management studio based in Upleta, Gujarat, India.
 
 Built with **React 19 + Vite 6 + Tailwind CSS 4**, Lucide icons, Framer Motion and React Router.
 
@@ -15,7 +15,7 @@ Built with **React 19 + Vite 6 + Tailwind CSS 4**, Lucide icons, Framer Motion a
 | `npm run dev` | Start the dev server (Vite, default `http://localhost:5173`) |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the production build locally (default `http://localhost:4173`) |
-| `npm run verify` | Runs 70 configuration checks (phone, WhatsApp, prices, finder logic, comparison matrix, trust copy, Meta Pixel wiring, canonical URLs) |
+| `npm run verify` | Runs 100 configuration checks (phone, WhatsApp, website/Meta Ads prices, additional services, service-price page content, enquiry validation, finder logic, comparison matrix, trust copy, Meta Pixel wiring, canonical URLs) |
 
 ---
 
@@ -46,19 +46,24 @@ scripts/verify-config.mjs        Configuration checks (npm run verify)
 src/
   components/
     Navbar.jsx Footer.jsx Hero.jsx TrustBar.jsx TrustSection.jsx Honesty.jsx
-    Services.jsx ServiceCard.jsx Portfolio.jsx Pricing.jsx
-    PackageFinder.jsx PackageMatrix.jsx Process.jsx TechStack.jsx About.jsx FAQ.jsx
-    Contact.jsx FinalCTA.jsx LegalLayout.jsx
+    Services.jsx ServiceCard.jsx Portfolio.jsx Pricing.jsx PricingConditions.jsx
+    MetaAdsPricing.jsx AdditionalServices.jsx PackageSpotlight.jsx EnquiryForm.jsx
+    PageHeader.jsx PackageFinder.jsx PackageMatrix.jsx Process.jsx TechStack.jsx
+    About.jsx FAQ.jsx Contact.jsx FinalCTA.jsx LegalLayout.jsx
     FloatingCallButton.jsx WhatsAppButton.jsx FloatingActions.jsx
     ScrollManager.jsx
     common/Logo.jsx
     mockups/BrowserFrame.jsx MockupApp.jsx
     ui/Button.jsx Icon.jsx Reveal.jsx SectionHeading.jsx
   config/siteConfig.js           Business details, phone, domain, WhatsApp, email
-  data/                          services, pricing (+comparison matrix), portfolio, process,
-                                 techStack, faqs, trust, estimator
+  data/                          central pricing catalogue (website, Meta Ads, add-ons),
+                                 services, portfolio, process, techStack, faqs, trust, estimator
   hooks/                         useSeo, useActiveSection, useScrolled, useAnalytics
-  pages/                         Home, PrivacyPolicy, Terms, NotFound
+  pages/                         Home, WebsiteDevelopment, WebsiteDevelopmentPricing,
+                                 EcommerceWebsiteDevelopment, CustomWebApplications,
+                                 MetaAdsManagement, SocialMediaManagement,
+                                 AdditionalDigitalServices, PortfolioPage, AboutPage,
+                                 ContactPage, PrivacyPolicy, Terms, NotFound
   utils/scroll.js  utils/analytics.js
   App.jsx  main.jsx  index.css
 .env.example                     Template for local environment variables (.env is gitignored)
@@ -134,11 +139,12 @@ fixed stack at the bottom-right of every route, using
 `tel:+919512648085` and `https://wa.me/919512648085?text=<url-encoded message>`.
 Both come from `siteConfig`, so the number exists in exactly one place.
 
-**Contact.** `Contact` renders the three direct channels - call, WhatsApp and email - from a single
-`contactMethods` array, plus a "what to tell us" checklist. The phone channel uses
+**Contact.** `Contact` renders the direct channels - call, WhatsApp, email and website - from a
+single `contactMethods` array, plus a "what to tell us" checklist. The phone channel uses
 `tel:+919512648085`, WhatsApp uses a URL-encoded prefilled message, and email uses `mailto:`.
-There is deliberately **no enquiry form**: the website collects and stores no visitor data at all,
-which is also what the Privacy Policy states.
+The contact page adds `EnquiryForm`, which validates the fields in the browser and opens WhatsApp
+with the enquiry prefilled. It does **not** submit to a server or store visitor data, and it does not
+show a fake success state. The Privacy Policy describes this behaviour.
 
 **Trust, without fabrication.** There are no invented reviews, ratings, client counts, awards or
 statistics anywhere on this site - `scripts/verify-config.mjs` actively fails if such claims are

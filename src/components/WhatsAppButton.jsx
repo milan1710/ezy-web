@@ -10,7 +10,7 @@ export default function WhatsAppButton() {
       href={whatsappLink(siteConfig.whatsappMessages.general)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with EzyDigital on WhatsApp"
+      aria-label="Chat with Ezy Digital on WhatsApp"
       title="Chat on WhatsApp"
       className="group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366] relative inline-flex items-center"
     >

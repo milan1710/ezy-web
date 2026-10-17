@@ -7,11 +7,11 @@
  */
 
 export const baseOptions = [
-  { id: 'landing-page', label: 'One page / a campaign', note: 'Landing page' },
+  { id: 'basic-website', label: 'One page / a small website', note: 'Basic website' },
   { id: 'business-website', label: 'A company or shop website', note: 'Business website' },
   { id: 'professional-website', label: 'A larger, design-heavy website', note: 'Professional website' },
   { id: 'ecommerce', label: 'An online store', note: 'E-commerce website' },
-  { id: 'full-stack-application', label: 'A custom web application', note: 'Full-stack application' },
+  { id: 'custom-website', label: 'A custom web application', note: 'Custom website / web application' },
 ]
 
 export const pageOptions = [
@@ -30,17 +30,17 @@ export const featureOptions = [
   { id: 'payments', label: 'Online payments', minPackage: 'ecommerce' },
   { id: 'dashboard', label: 'Admin dashboard', minPackage: 'ecommerce' },
   { id: 'cms', label: 'Editable content (CMS)', minPackage: 'professional-website' },
-  { id: 'accounts', label: 'User accounts / login', minPackage: 'full-stack-application' },
-  { id: 'integrations', label: 'Third-party or API integrations', minPackage: 'full-stack-application' },
+  { id: 'accounts', label: 'User accounts / login', minPackage: 'custom-website' },
+  { id: 'integrations', label: 'Third-party or API integrations', minPackage: 'custom-website' },
   { id: 'maintenance', label: 'Maintenance after launch', minPackage: null },
 ]
 
 export const PACKAGE_ORDER = [
-  'landing-page',
+  'basic-website',
   'business-website',
   'professional-website',
   'ecommerce',
-  'full-stack-application',
+  'custom-website',
 ]
 
 /**
@@ -59,10 +59,10 @@ export function recommendPackage({ base, pages, features }) {
 
   let customScope = false
 
-  if (pages > 8) {
+  if (pages > 12) {
     customScope = true
     notes.push(
-      'Nine or more pages usually needs a scoped quotation rather than a standard package.',
+      'More than 12 pages usually needs a scoped quotation rather than a standard package.',
     )
   }
 
@@ -73,7 +73,7 @@ export function recommendPackage({ base, pages, features }) {
 
   const packageId = PACKAGE_ORDER[index]
 
-  if (packageId === 'full-stack-application') {
+  if (packageId === 'custom-website') {
     customScope = true
     notes.push(
       'The published application price covers a limited, clearly scoped build. Compiling the exact features you need will confirm the final quotation.',
@@ -94,7 +94,7 @@ export function recommendPackage({ base, pages, features }) {
 /** Builds the structured WhatsApp summary for the selections. */
 export function buildFinderMessage({ baseLabel, pageLabel, featureLabels, recommendation, priceLabel }) {
   return [
-    "Hello Milan, I used the package finder on the EzyDigital website.",
+    'Hello Ezy Digital, I used the package finder on the ezydigital.in website.',
     `What I need: ${baseLabel}`,
     `Approximate size: ${pageLabel}`,
     `Also needed: ${featureLabels.length ? featureLabels.join(', ') : 'Nothing else'}`,

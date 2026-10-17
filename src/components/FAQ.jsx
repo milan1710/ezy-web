@@ -48,7 +48,7 @@ export default function FAQ() {
                 <Button href={siteConfig.contact.telHref} size="md" icon="Phone">
                   Call {siteConfig.contact.phoneDisplay}
                 </Button>
-                <Button to="/#contact" variant="outline" size="md" iconRight="ArrowRight">
+                <Button to="/contact" variant="outline" size="md" iconRight="ArrowRight">
                   Send an Enquiry
                 </Button>
               </div>

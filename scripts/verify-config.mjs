@@ -6,7 +6,14 @@
  */
 import { readFileSync } from 'node:fs'
 import { siteConfig, whatsappLink, canonicalUrl } from '../src/config/siteConfig.js'
-import { packages, formatINR, packageMatrix } from '../src/data/pricing.js'
+import {
+  additionalServices,
+  formatINR,
+  metaAdsPackages,
+  metaAdsBudgetDisclaimer,
+  packageMatrix,
+  packages,
+} from '../src/data/pricing.js'
 import { services } from '../src/data/services.js'
 import { projects } from '../src/data/portfolio.js'
 import { honestyPillars, trustPromises, firstCallSteps } from '../src/data/trust.js'
@@ -18,6 +25,17 @@ import {
   recommendPackage,
 } from '../src/data/estimator.js'
 import { describeLink, FB_EVENTS, isPixelEnabled } from '../src/utils/analytics.js'
+import {
+  buildEnquiryMessage,
+  normalizeIndianMobile,
+  validateEnquiry,
+} from '../src/utils/enquiry.js'
+import {
+  additionalServiceGroups,
+  metaPriceGroups,
+  pricePageNote,
+  websitePriceGroups,
+} from '../src/data/servicePricePage.js'
 
 const checks = []
 const check = (name, condition, detail = '') => {
@@ -47,24 +65,101 @@ check('canonical for nested route', canonicalUrl('/privacy-policy') === `${siteC
 
 // --- Pricing ----------------------------------------------------------------
 const expectedPrices = {
-  'landing-page': 2999,
+  'basic-website': 2999,
   'business-website': 5999,
   'professional-website': 9999,
   ecommerce: 14999,
-  'full-stack-application': 24999,
-  maintenance: 999,
+  'custom-website': 25000,
 }
-check('six packages defined', packages.length === 6, `found ${packages.length}`)
+check('five website packages defined', packages.length === 5, `found ${packages.length}`)
 packages.forEach((pkg) => {
   check(`price for ${pkg.id}`, pkg.startingPrice === expectedPrices[pkg.id], String(pkg.startingPrice))
   check(`${pkg.id} has features`, Array.isArray(pkg.features) && pkg.features.length > 0)
+  check(`${pkg.id} is marked active`, pkg.active === true)
 })
 
-check('INR formatting uses Indian grouping', formatINR(24999) === '\u20b924,999', formatINR(24999))
+check('INR formatting uses Indian grouping', formatINR(25000) === '\u20b925,000', formatINR(25000))
 check('INR formatting of 1234567', formatINR(1234567) === '\u20b912,34,567', formatINR(1234567))
 
+// --- Meta Ads and additional services --------------------------------------
+const metaPrices = {
+  'meta-single-campaign': 1000,
+  'meta-multiple-campaigns': 1500,
+  'meta-social-management': 5000,
+}
+check('three Meta Ads packages defined', metaAdsPackages.length === 3, `found ${metaAdsPackages.length}`)
+metaAdsPackages.forEach((pkg) => {
+  check(`Meta price for ${pkg.id}`, pkg.startingPrice === metaPrices[pkg.id], String(pkg.startingPrice))
+  check(`${pkg.id} has exclusions`, Array.isArray(pkg.excludes) && pkg.excludes.length > 0)
+})
+check('Meta Ads budget disclaimer mentions separate payment', /budget is not included/i.test(metaAdsBudgetDisclaimer))
+check('eleven additional services defined', additionalServices.length === 11, `found ${additionalServices.length}`)
+check(
+  'additional services all have a positive price',
+  additionalServices.every((service) => Number.isFinite(service.startingPrice) && service.startingPrice > 0),
+)
+check(
+  'maintenance is ₹1,000 per month',
+  additionalServices.find((service) => service.id === 'website-maintenance')?.startingPrice === 1000,
+)
+
+// --- /service-price Gujarati page ------------------------------------------
+check('service price page has 5 website packages', websitePriceGroups.length === 5)
+check('service price page has 3 Meta Ads packages', metaPriceGroups.length === 3)
+check('service price page has 11 additional services', additionalServiceGroups.length === 11)
+check(
+  'website prices on the service price page match the central catalogue',
+  websitePriceGroups.every((group) => {
+    const pkg = packages.find((item) => item.id === group.id)
+    return pkg && group.price.startsWith(formatINR(pkg.startingPrice))
+  }),
+)
+check(
+  'Meta prices on the service price page match the central catalogue',
+  metaPriceGroups.every((group) => {
+    const pkg = metaAdsPackages.find((item) => item.id === group.id)
+    return pkg && group.price === formatINR(pkg.startingPrice)
+  }),
+)
+check('service price page note includes the Meta Ads budget wording', /Meta Ads/.test(pricePageNote))
+check('service price page note includes third-party charges', /થર્ડ-પાર્ટી ચાર્જ/.test(pricePageNote))
+
+// --- Enquiry form helpers ---------------------------------------------------
+check('valid 10-digit mobile accepted', normalizeIndianMobile('9512648085') === '9512648085')
+check('+91 mobile normalised', normalizeIndianMobile('+91 95126 48085') === '9512648085')
+check('short mobile rejected', normalizeIndianMobile('95126') === null)
+check('invalid mobile prefix rejected', normalizeIndianMobile('1512648085') === null)
+check(
+  'empty name is rejected',
+  Boolean(validateEnquiry({ name: '', phone: '9512648085', service: 'business-website', requirements: 'Need a business website' }).name),
+)
+check(
+  'valid enquiry has no errors',
+  Object.keys(
+    validateEnquiry({
+      name: 'Test Business',
+      phone: '9512648085',
+      service: 'business-website',
+      requirements: 'Need a five page business website',
+    }),
+  ).length === 0,
+)
+const enquiryMessage = buildEnquiryMessage({
+  form: {
+    name: 'Test Business',
+    phone: '9512648085',
+    business: 'Test Shop',
+    budget: '₹5,000 – ₹10,000',
+    requirements: 'Need a five page business website',
+  },
+  serviceLabel: 'Business Website (website)',
+})
+check('enquiry message identifies the package', enquiryMessage.includes('Business Website'))
+check('enquiry message includes the phone number', enquiryMessage.includes('+91 9512648085'))
+check('enquiry message includes the requirement', enquiryMessage.includes('five page business website'))
+
 // --- Content integrity ------------------------------------------------------
-check('10 services defined', services.length === 10, `found ${services.length}`)
+check('13 services defined', services.length === 13, `found ${services.length}`)
 check('8 portfolio previews defined', projects.length === 8, `found ${projects.length}`)
 check(
   'every portfolio item is labelled as a concept/demo',
@@ -78,7 +173,7 @@ check(
 check('no client numbers, ratings or award claims in data', !JSON.stringify({ services, projects }).match(/\b(award|rated|100\+ clients|years of experience)\b/i))
 
 // --- Comparison matrix ------------------------------------------------------
-check('matrix has 6 package columns', packageMatrix.columns.length === 6, `${packageMatrix.columns.length}`)
+check('matrix has 5 package columns', packageMatrix.columns.length === 5, `${packageMatrix.columns.length}`)
 check('matrix has at least 12 feature rows', packageMatrix.rows.length >= 12, `${packageMatrix.rows.length}`)
 check(
   'every matrix row defines a value for every column',
@@ -99,12 +194,12 @@ check(
 const rec = (input) => recommendPackage(input)
 
 check(
-  'one page stays on the landing page package',
-  rec({ base: 'landing-page', pages: 1, features: [] }).packageId === 'landing-page',
+  'one page stays on the basic website package',
+  rec({ base: 'basic-website', pages: 1, features: [] }).packageId === 'basic-website',
 )
 check(
   'five pages upgrades to the business package',
-  rec({ base: 'landing-page', pages: 5, features: [] }).packageId === 'business-website',
+  rec({ base: 'basic-website', pages: 5, features: [] }).packageId === 'business-website',
 )
 check(
   'eight pages upgrades to the professional package',
@@ -115,17 +210,17 @@ check(
   rec({ base: 'business-website', pages: 5, features: ['payments'] }).packageId === 'ecommerce',
 )
 check(
-  'login requirement upgrades to a full-stack application',
+  'login requirement upgrades to a custom web application',
   rec({ base: 'business-website', pages: 5, features: ['accounts'] }).packageId ===
-    'full-stack-application',
+    'custom-website',
 )
 check(
   'large page counts are flagged as needing a custom scope',
   rec({ base: 'business-website', pages: 15, features: [] }).customScope === true,
 )
 check(
-  'full-stack recommendation is always flagged as custom scope',
-  rec({ base: 'full-stack-application', pages: 5, features: [] }).customScope === true,
+  'custom web application recommendation is always flagged as custom scope',
+  rec({ base: 'custom-website', pages: 5, features: [] }).customScope === true,
 )
 check(
   'maintenance selection adds an explanatory note',
@@ -136,7 +231,7 @@ check(
 check(
   'every page option maps to a known package recommendation',
   pageOptions.every((option) =>
-    PACKAGE_ORDER.includes(rec({ base: 'landing-page', pages: option.pages, features: [] }).packageId),
+    PACKAGE_ORDER.includes(rec({ base: 'basic-website', pages: option.pages, features: [] }).packageId),
   ),
 )
 check(

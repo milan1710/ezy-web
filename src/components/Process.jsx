@@ -47,7 +47,7 @@ export default function Process() {
               <span className="font-semibold text-ink-900">Timelines: </span>
               {processNote}
             </p>
-            <Button to="/#contact" size="lg" iconRight="ArrowRight" className="shrink-0">
+            <Button to="/contact" size="lg" iconRight="ArrowRight" className="shrink-0">
               Start My Website
             </Button>
           </div>

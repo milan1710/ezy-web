@@ -35,6 +35,16 @@ const reasons = [
     title: 'Practical technical solutions',
     text: 'We recommend the simplest stack that solves the problem reliably, rather than adding complexity your business will not use.',
   },
+  {
+    icon: 'Megaphone',
+    title: 'Campaign monitoring and reporting',
+    text: 'Meta Ads management includes campaign monitoring, basic optimization and a monthly performance report within the agreed scope.',
+  },
+  {
+    icon: 'ShieldCheck',
+    title: 'Support after launch',
+    text: 'Optional maintenance covers routine fixes, updates, backups and security checks within a clearly limited monthly allowance.',
+  },
 ]
 
 export default function About() {
@@ -44,12 +54,12 @@ export default function About() {
         <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
             <SectionHeading
-              eyebrow="Why choose EzyDigital"
+              eyebrow="Why choose Ezy Digital"
               titleId="about-heading"
               align="left"
               className="mx-0"
-              title="A focused web development studio you can actually reach"
-              description="EzyDigital Web Development is built around one promise: honest scope, careful development work and a direct line to the developer building your website."
+              title="Why choose Ezy Digital?"
+              description="Ezy Digital is built around one promise: honest scope, careful development work and a direct line to the person building your website."
               level={2}
             />
 
@@ -80,7 +90,7 @@ export default function About() {
                 <div>
                   <p className="text-lg font-bold text-white">{siteConfig.brand.owner}</p>
                   <p className="text-ink-300 text-sm">
-                    Website design &amp; full-stack development
+                    Website development &amp; digital marketing
                   </p>
                 </div>
               </div>

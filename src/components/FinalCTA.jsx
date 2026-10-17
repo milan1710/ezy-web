@@ -22,7 +22,7 @@ export default function FinalCTA() {
               id="final-cta-heading"
               className="mt-4 text-3xl leading-tight font-extrabold text-white sm:text-4xl"
             >
-              Let&apos;s build a website your business deserves
+              Let&apos;s build your digital presence
             </h2>
             <p className="text-ink-200/85 mx-auto mt-5 max-w-2xl text-base leading-relaxed sm:text-lg">
               One short conversation is usually enough to recommend a package, a realistic timeline
@@ -30,8 +30,8 @@ export default function FinalCTA() {
             </p>
 
             <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <Button to="/#contact" size="lg" iconRight="ArrowRight">
-                Get a Website Quote
+              <Button to="/contact" size="lg" iconRight="ArrowRight">
+                Get a Quote
               </Button>
               <Button href={siteConfig.contact.telHref} variant="outlineLight" size="lg" icon="Phone">
                 Call Milan Soni

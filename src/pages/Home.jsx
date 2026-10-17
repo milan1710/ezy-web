@@ -4,6 +4,8 @@ import TrustSection from '../components/TrustSection'
 import Services from '../components/Services'
 import Portfolio from '../components/Portfolio'
 import Pricing from '../components/Pricing'
+import MetaAdsPricing from '../components/MetaAdsPricing'
+import AdditionalServices from '../components/AdditionalServices'
 import PackageFinder from '../components/PackageFinder'
 import PackageMatrix from '../components/PackageMatrix'
 import Honesty from '../components/Honesty'
@@ -29,10 +31,9 @@ const faqSchema = {
 
 export default function Home() {
   useSeo({
-    title:
-      'EzyDigital Web Development | Custom Website Design & Development in Upleta, Gujarat',
+    title: 'Website Development & Meta Ads Services in Gujarat | Ezy Digital',
     description:
-      'EzyDigital Web Development designs and builds custom, fast, mobile-friendly websites and full-stack web applications for businesses in Upleta, Gujarat and across India. Website packages starting at Rs.2,999. Call +91 9512648085 for a free quote.',
+      'Explore Ezy Digital website development, e-commerce websites, Meta Ads management and social media services with transparent starting prices. Websites from ₹2,999. Call 9512648085.',
     path: '/',
     jsonLd: faqSchema,
   })
@@ -41,10 +42,12 @@ export default function Home() {
     <>
       <Hero />
       <TrustBar />
-      <TrustSection />
       <Services />
-      <Portfolio />
       <Pricing />
+      <MetaAdsPricing showConditions={false} />
+      <AdditionalServices />
+      <Portfolio />
+      <TrustSection />
       <PackageFinder />
       <PackageMatrix />
       <Honesty />

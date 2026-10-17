@@ -4,9 +4,9 @@ import { siteConfig } from '../config/siteConfig'
 
 export default function PrivacyPolicy() {
   useSeo({
-    title: 'Privacy Policy | EzyDigital Web Development',
+    title: 'Privacy Policy | Ezy Digital',
     description:
-      'How EzyDigital Web Development handles the information you share when you call, message on WhatsApp or email us, what the Meta Pixel measures on this website, and how to ask us to delete your details.',
+      'How Ezy Digital handles information you share by phone, WhatsApp, email or the enquiry form, what the Meta Pixel measures on this website, and how to request deletion.',
     path: '/privacy-policy',
   })
 
@@ -26,9 +26,10 @@ export default function PrivacyPolicy() {
 
       <h2>2. What information we collect</h2>
       <p>
-        This website has no enquiry form and no server-side form handler. Nothing you type is
-        collected or stored while you browse. We only hold information that you choose to give us
-        directly:
+        This website does not have a server-side form handler. The contact-page enquiry form runs
+        entirely in your browser: it validates the details you enter and prepares a WhatsApp
+        message, but it does not send or store those details on this website. We only hold
+        information that you choose to give us directly:
       </p>
       <ul>
         <li>
@@ -49,10 +50,15 @@ export default function PrivacyPolicy() {
 
       <h2>3. How we receive your enquiry</h2>
       <p>
-        You contact us yourself, using one of the options on the contact section of this website.
-        There is no form to submit and no data is sent to us until you take one of these actions:
+        You contact us yourself, using the enquiry form or one of the direct options on this
+        website. No data reaches us until you take one of these actions:
       </p>
       <ul>
+        <li>
+          <strong>Enquiry form</strong> - the form checks the fields you entered and opens WhatsApp
+          with a prefilled message. The details are not submitted to this website and nothing is
+          transmitted until you press send inside WhatsApp.
+        </li>
         <li>
           <strong>Call</strong> - the call button opens your phone&apos;s dialer with our number. The
           call is handled by your telephone service provider.
@@ -75,7 +81,7 @@ export default function PrivacyPolicy() {
       <h2>4. Why we use your information</h2>
       <ul>
         <li>To reply to your enquiry and discuss your requirements.</li>
-        <li>To prepare a scope and quotation for a website or web application project.</li>
+        <li>To prepare a scope and quotation for a website, web application or Meta Ads project.</li>
         <li>To deliver, support and maintain a project if you become a client.</li>
         <li>To keep basic records of work agreed and completed.</li>
       </ul>
@@ -115,8 +121,8 @@ export default function PrivacyPolicy() {
       </p>
       <p>
         <strong>What is never sent to Meta:</strong> your name, phone number, email address, or
-        anything you discuss with us. This website has no enquiry form and collects no such data to
-        share.
+        anything you enter in the enquiry form. The form prepares a WhatsApp message locally and
+        this website does not pass those details to the Meta Pixel.
       </p>
       <p>You can limit or avoid this measurement by:</p>
       <ul>

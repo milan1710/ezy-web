@@ -15,6 +15,11 @@ const groups = [
     title: 'Advanced & custom development',
     note: 'Backend systems, databases, user accounts and third-party integrations. These are quoted individually after a requirements discussion.',
   },
+  {
+    tier: 'marketing',
+    title: 'Digital marketing & creative services',
+    note: 'Facebook and Instagram advertising, monthly social media management and individual design or content services, with transparent starting prices.',
+  },
 ]
 
 export default function Services() {
@@ -24,8 +29,8 @@ export default function Services() {
         <SectionHeading
           eyebrow="Services"
           titleId="services-heading"
-          title="Website development services, from a landing page to a custom web platform"
-          description="We focus on one thing: designing and developing websites and web applications. Choose the level that matches your requirements today - and grow into the next one later."
+          title="Website development and digital marketing services"
+          description="From a small business website to a custom web application, plus Facebook and Instagram advertising, social media management and creative support. Choose what matches your requirements today."
           level={2}
         />
 
@@ -71,7 +76,7 @@ export default function Services() {
                 bigger scope is genuinely required.
               </p>
             </div>
-            <Button to="/#contact" size="lg" iconRight="ArrowRight" className="shrink-0">
+            <Button to="/contact" size="lg" iconRight="ArrowRight" className="shrink-0">
               Get a Website Quote
             </Button>
           </div>

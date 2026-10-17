@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Icon from './ui/Icon'
 import { whatsappLink } from '../config/siteConfig'
 
@@ -8,6 +9,8 @@ import { whatsappLink } from '../config/siteConfig'
  */
 export default function ServiceCard({ service, ctaLabel = 'Discuss Your Project', ctaMessage }) {
   const isAdvanced = service.tier === 'advanced'
+  const isMarketing = service.tier === 'marketing'
+  const label = service.ctaLabel ?? ctaLabel
 
   return (
     <article
@@ -32,7 +35,7 @@ export default function ServiceCard({ service, ctaLabel = 'Discuss Your Project'
             isAdvanced ? 'bg-ink-100 text-ink-600' : 'bg-brand-50 text-brand-700',
           ].join(' ')}
         >
-          {isAdvanced ? 'Advanced' : 'Standard'}
+          {isAdvanced ? 'Advanced' : isMarketing ? 'Marketing' : 'Standard'}
         </span>
       </div>
 
@@ -48,20 +51,33 @@ export default function ServiceCard({ service, ctaLabel = 'Discuss Your Project'
         ))}
       </ul>
 
-      <a
-        href={whatsappLink(
-          ctaMessage ?? `Hello Milan, I am interested in ${service.title} for my business.`,
-        )}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group/link text-brand-700 mt-6 inline-flex items-center gap-2 border-t border-ink-100 pt-5 text-sm font-semibold"
-      >
-        {ctaLabel}
-        <Icon
-          name="ArrowRight"
-          className="h-4 w-4 transition-transform group-hover/link:translate-x-1"
-        />
-      </a>
+      {service.to ? (
+        <Link
+          to={service.to}
+          className="group/link text-brand-700 mt-6 inline-flex items-center gap-2 border-t border-ink-100 pt-5 text-sm font-semibold"
+        >
+          {label}
+          <Icon
+            name="ArrowRight"
+            className="h-4 w-4 transition-transform group-hover/link:translate-x-1"
+          />
+        </Link>
+      ) : (
+        <a
+          href={whatsappLink(
+            ctaMessage ?? `Hello Ezy Digital, I am interested in ${service.title} for my business.`,
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/link text-brand-700 mt-6 inline-flex items-center gap-2 border-t border-ink-100 pt-5 text-sm font-semibold"
+        >
+          {label}
+          <Icon
+            name="ArrowRight"
+            className="h-4 w-4 transition-transform group-hover/link:translate-x-1"
+          />
+        </a>
+      )}
     </article>
   )
 }

@@ -11,12 +11,12 @@ const PHONE_E164 = `+${PHONE_COUNTRY_CODE}${PHONE_LOCAL}` // +919512648085
 
 export const siteConfig = {
   brand: {
-    name: 'EzyDigital',
-    fullName: 'EzyDigital Web Development',
-    tagline: 'Website Design & Full-Stack Web Development',
+    name: 'Ezy Digital',
+    fullName: 'Ezy Digital',
+    tagline: 'Grow Your Business Digitally',
     owner: 'Milan Soni',
     shortDescription:
-      'We design and develop custom, fast and mobile-friendly websites and web applications for businesses that want to be found, trusted and contacted online.',
+      'We build professional websites, e-commerce stores and custom web applications, and manage Facebook and Instagram advertising for businesses across Gujarat.',
   },
 
   contact: {
@@ -49,18 +49,22 @@ export const siteConfig = {
   domain: 'https://ezydigital.in',
 
   /**
-   * This website intentionally has no enquiry form. Visitors contact EzyDigital
-   * by phone, WhatsApp or email - see `contactMethods` in Contact.jsx.
+   * The enquiry form does not submit to a server. It composes a WhatsApp
+   * message locally so no lead data is stored by this website.
    */
 
   /** Prefilled WhatsApp messages, URL-encoded when used. */
   whatsappMessages: {
-    general: 'Hello Milan, I want to discuss a website development project with EzyDigital.',
-    quote: 'Hello Milan, I would like a free quote for a website development project.',
+    general:
+      'Hello Ezy Digital, I would like to know more about your website development and digital marketing services.',
+    quote:
+      'Hello Ezy Digital, I would like a quotation for my website or digital marketing requirement.',
     customQuote:
-      'Hello Milan, my requirements are outside the standard packages. I would like a custom quote.',
+      'Hello Ezy Digital, my requirements are outside the standard packages. I would like a custom quotation.',
     maintenance:
-      'Hello Milan, I am interested in the Website Maintenance plan for an existing website.',
+      'Hello Ezy Digital, I am interested in the Website Maintenance plan for an existing website.',
+    metaAds:
+      'Hello Ezy Digital, I would like to know more about Meta Ads management for my business.',
   },
 }
 

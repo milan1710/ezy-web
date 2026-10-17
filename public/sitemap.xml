@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Only real, standalone pages are listed here.
-
-  The service, portfolio, pricing and contact content lives in sections of the
-  home page (/ and /#pricing etc.), so those are NOT separate URLs and must not
-  be listed as if they were - a sitemap entry that resolves to the 404 page is a
-  soft-404 and hurts SEO.
-
+  Standalone pages only. In-page anchors (/#pricing etc.) are not URLs.
   Replace https://ezydigital.in with the confirmed production domain before
   submitting. The same domain is configured in src/config/siteConfig.js.
 -->
@@ -15,6 +9,61 @@
     <loc>https://ezydigital.in/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/website-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/website-development/pricing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/ecommerce-website-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/custom-web-applications</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/meta-ads-management</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/social-media-management</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/additional-digital-services</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/portfolio</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/about</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/contact</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ezydigital.in/service-price</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ezydigital.in/privacy-policy</loc>

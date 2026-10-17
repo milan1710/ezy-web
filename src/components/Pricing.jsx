@@ -1,31 +1,41 @@
+import { Link } from 'react-router-dom'
 import Reveal from './ui/Reveal'
 import SectionHeading from './ui/SectionHeading'
 import Button from './ui/Button'
 import Icon from './ui/Icon'
-import { packages, formatINR, pricingNote, pricingExclusions } from '../data/pricing'
-import { siteConfig, whatsappLink } from '../config/siteConfig'
+import PricingConditions from './PricingConditions'
+import { formatINR, packageEnquiryMessage, websitePackages } from '../data/pricing'
+import { whatsappLink } from '../config/siteConfig'
 
 function PricingCard({ pkg, index }) {
-  const featured = Boolean(pkg.highlight)
+  const featured = pkg.id === 'business-website'
 
   return (
-    <Reveal delay={(index % 3) * 0.07} className="h-full">
+    <Reveal delay={(index % 3) * 0.06} className="h-full">
       <article
         className={[
-          'relative flex h-full flex-col rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 sm:p-7',
+          'relative flex h-full flex-col rounded-3xl border bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-7',
           featured
-            ? 'border-brand-300 bg-white shadow-lift ring-2 ring-brand-500/25'
-            : 'border-ink-100 bg-white hover:border-brand-200 hover:shadow-soft',
+            ? 'border-brand-300 shadow-lift ring-2 ring-brand-500/20'
+            : 'border-ink-100 hover:border-brand-200',
         ].join(' ')}
       >
-        {pkg.badge ? (
+        {featured ? (
           <span className="bg-brand-600 absolute -top-3 left-6 rounded-full px-3 py-1 text-[11px] font-bold tracking-wide text-white uppercase shadow-glow">
-            {pkg.badge}
+            Recommended for growing businesses
           </span>
         ) : null}
 
-        <h3 className="text-lg font-bold text-ink-900">{pkg.name}</h3>
-        <p className="text-ink-500 mt-2 min-h-[2.75rem] text-sm leading-relaxed">{pkg.audience}</p>
+        <div className="flex items-start gap-3">
+          <span className="bg-brand-50 text-brand-600 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
+            <Icon name={pkg.icon} className="h-5 w-5" />
+          </span>
+          <div>
+            <h3 className="text-lg leading-snug font-bold text-ink-900">{pkg.name}</h3>
+          </div>
+        </div>
+
+        <p className="text-ink-500 mt-4 text-sm leading-relaxed">{pkg.audience}</p>
 
         <div className="mt-5 border-t border-ink-100 pt-5">
           <span className="text-ink-400 text-xs font-semibold tracking-[0.18em] uppercase">
@@ -37,6 +47,7 @@ function PricingCard({ pkg, index }) {
             </span>
             <span className="text-ink-400 text-sm font-semibold">{pkg.priceSuffix}</span>
           </div>
+          <p className="text-ink-400 mt-1 text-xs">Final price depends on the approved scope.</p>
         </div>
 
         <ul className="mt-6 flex flex-1 flex-col gap-2.5">
@@ -48,121 +59,81 @@ function PricingCard({ pkg, index }) {
           ))}
         </ul>
 
-        {pkg.excludes ? (
-          <p className="text-ink-400 mt-5 rounded-xl bg-ink-50 p-3.5 text-xs leading-relaxed">
-            {pkg.excludes}
-          </p>
-        ) : null}
+        <p className="text-ink-400 mt-5 rounded-xl bg-ink-50 p-3.5 text-xs leading-relaxed">
+          <span className="text-ink-600 font-semibold">Not included: </span>
+          {pkg.excludes}
+        </p>
 
-        <div className="mt-6">
+        <div className="mt-6 grid gap-2">
           <Button
-            href={whatsappLink(
-              `Hello Milan, I am interested in the ${pkg.name} package (starting at ${formatINR(
-                pkg.startingPrice,
-              )}${pkg.priceSuffix === 'per month' ? ' per month' : ''}). Please share the details and a quotation.`,
-            )}
+            href={whatsappLink(packageEnquiryMessage(pkg))}
             external
             variant={featured ? 'primary' : 'outline'}
             size="lg"
             iconRight="ArrowRight"
             fullWidth
           >
-            Discuss Your Project
+            {pkg.ctaLabel}
           </Button>
+          <Link
+            to={`/contact?service=${pkg.id}`}
+            className="text-ink-600 hover:text-brand-700 inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition-colors"
+          >
+            Request a Quote
+          </Link>
+          <Link
+            to="/website-development/pricing#pricing-conditions"
+            className="text-ink-400 hover:text-ink-700 inline-flex items-center justify-center gap-1.5 text-xs font-semibold underline decoration-ink-200 underline-offset-4 transition-colors"
+          >
+            <Icon name="Info" className="h-3.5 w-3.5" />
+            Pricing conditions
+          </Link>
         </div>
       </article>
     </Reveal>
   )
 }
 
-export default function Pricing() {
+export default function Pricing({ withConditions = true }) {
   return (
-    <section id="pricing" aria-labelledby="pricing-heading" className="bg-white py-20 lg:py-28">
-      <div className="container-page">
-        <SectionHeading
-          eyebrow="Pricing"
-          titleId="pricing-heading"
-          title="Affordable website packages with clear starting prices"
-          description="Straightforward, entry-level packages in Indian rupees. Every card shows exactly what is included and what is not, so there are no surprises later."
-          level={2}
-        />
+    <>
+      <section id="pricing" aria-labelledby="pricing-heading" className="bg-white py-20 lg:py-28">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Website development pricing"
+            titleId="pricing-heading"
+            title="Professional websites with clear starting prices"
+            description="Five website packages for different stages of business. Every card shows the starting price, who it is for, what is included and what is not included."
+            level={2}
+          />
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {packages.map((pkg, index) => (
-            <PricingCard key={pkg.id} pkg={pkg} index={index} />
-          ))}
-        </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {websitePackages
+              .filter((pkg) => pkg.active)
+              .map((pkg, index) => (
+                <PricingCard key={pkg.id} pkg={pkg} index={index} />
+              ))}
+          </div>
 
-        {/* Notes, custom quote and CTA */}
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          <Reveal className="lg:col-span-2">
-            <div className="bg-ink-50 h-full rounded-2xl border border-ink-100 p-6 sm:p-7">
-              <h3 className="flex items-center gap-2 text-base font-bold text-ink-900">
-                <Icon name="FileText" className="text-brand-600 h-5 w-5" />
-                Please read before requesting a quote
-              </h3>
-              <ul className="mt-4 flex flex-col gap-2.5 text-sm leading-relaxed text-ink-600">
-                <li className="flex gap-2.5">
-                  <Icon name="Check" className="text-brand-600 mt-0.5 h-4 w-4 shrink-0" />
-                  <span>{pricingNote}</span>
-                </li>
-                <li className="flex gap-2.5">
-                  <Icon name="Check" className="text-brand-600 mt-0.5 h-4 w-4 shrink-0" />
-                  <span>{pricingExclusions}</span>
-                </li>
-                <li className="flex gap-2.5">
-                  <Icon name="Check" className="text-brand-600 mt-0.5 h-4 w-4 shrink-0" />
-                  <span>
-                    These are proposed introductory prices set by EzyDigital - not verified market
-                    averages - and they are reviewed from time to time.
-                  </span>
-                </li>
-              </ul>
-
-              <div className="mt-6 border-t border-dashed border-ink-200 pt-5">
-                <Button
-                  to="/#finder"
-                  variant="outline"
-                  size="md"
-                  icon="ArrowRight"
-                  className="mt-0"
-                >
-                  Not sure which package fits? Use the package finder
-                </Button>
-              </div>
+          <div className="bg-ink-50 mt-10 flex flex-col items-start gap-4 rounded-2xl border border-ink-100 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-ink-600 max-w-2xl text-sm leading-relaxed">
+              Not sure which package fits? Tell us what your business does and what the website must
+              achieve. You will get a written recommendation, scope and quotation.
+            </p>
+            <div className="flex shrink-0 flex-wrap gap-2">
+              <Button to="/website-development/pricing" size="md" iconRight="ArrowRight">
+                Compare Packages
+              </Button>
+              <Button to="/contact" variant="outline" size="md" icon="FileText">
+                Request a Quote
+              </Button>
             </div>
-          </Reveal>
-
-          <Reveal delay={0.08} className="h-full">
-            <div className="from-ink-950 to-ink-900 flex h-full flex-col rounded-2xl bg-gradient-to-br p-6 sm:p-7">
-              <h3 className="text-base font-bold text-white">Need something bigger?</h3>
-              <p className="text-ink-300 mt-2 flex-1 text-sm leading-relaxed">
-                Larger stores, multi-role portals, dashboards with complex workflows and extensive
-                integrations need a custom quote. Describe the requirement and you will get a written
-                scope and price.
-              </p>
-              <div className="mt-5 grid gap-2">
-                <Button
-                  href={whatsappLink(siteConfig.whatsappMessages.customQuote)}
-                  external
-                  size="lg"
-                  iconRight="ArrowRight"
-                  fullWidth
-                >
-                  Get a Custom Quote
-                </Button>
-                <a
-                  href={siteConfig.contact.telHref}
-                  className="text-ink-200 rounded-full px-4 py-2 text-sm font-semibold underline decoration-white/25 underline-offset-4 transition-colors hover:text-white"
-                >
-                  Or call {siteConfig.contact.phoneDisplay}
-                </a>
-              </div>
-            </div>
-          </Reveal>
+          </div>
         </div>
+      </section>
 
-      </div>
-    </section>
+      {withConditions ? <PricingConditions /> : null}
+    </>
   )
 }
+

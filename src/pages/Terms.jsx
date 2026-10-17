@@ -4,16 +4,16 @@ import { siteConfig } from '../config/siteConfig'
 
 export default function Terms() {
   useSeo({
-    title: 'Terms & Conditions | EzyDigital Web Development',
+    title: 'Terms & Conditions | Ezy Digital',
     description:
-      'Terms and conditions for website design and full-stack web development services provided by EzyDigital Web Development: scope, quotations, payments, revisions, ownership and support.',
+      'Terms and conditions for website design, e-commerce development, custom web applications and Meta Ads management provided by Ezy Digital: scope, quotations, payments and support.',
     path: '/terms',
   })
 
   return (
     <LegalLayout
       title="Terms & Conditions"
-      lead="These terms describe how website design and development work is agreed, delivered and supported by EzyDigital Web Development."
+      lead="These terms describe how website design, development and digital marketing work is agreed, delivered and supported by Ezy Digital."
       updated="October 2026"
     >
       <h2>1. About these terms</h2>
@@ -27,15 +27,16 @@ export default function Terms() {
 
       <h2>2. What we provide</h2>
       <p>
-        We design and develop websites and web applications. Our published packages are
-        fixed-scope starting points: a landing page, a business website, a professional website, an
-        e-commerce website, a limited-scope full-stack web application and an optional monthly
-        maintenance plan.
+        We design and develop websites and web applications and provide Meta Ads management
+        services. Our published packages are fixed-scope starting points: a Basic Website, a
+        Business Website, a Professional Website, an E-commerce Website, a Custom Website / Web
+        Application, Meta Ads campaign setup and monthly social media management.
       </p>
       <p>
         We also provide custom development at a quoted price, which may include backend systems,
-        databases, authentication, dashboards and third-party integrations. We do not provide social
-        media management, video production or unrelated digital marketing services.
+        databases, authentication, dashboards and third-party integrations. Additional creative
+        services such as poster design, logo design, basic video editing and content writing are
+        available as separately priced services.
       </p>
 
       <h2>3. Quotations and scope</h2>
@@ -60,7 +61,14 @@ export default function Terms() {
         Unless your quotation explicitly says otherwise, the following are charged separately:
         domain registration, web hosting, paid themes or plugins, premium or paid third-party APIs,
         payment gateway setup and transaction charges, SMS or email service providers, SSL
-        certificates where a paid certificate is required, and applicable taxes.
+        certificates where a paid certificate is required, video production, and applicable taxes.
+      </p>
+      <p>
+        <strong>Meta Ads:</strong> advertising spend is never included in a service fee. You pay
+        Meta directly through your own ad account and payment method. Campaign setup and management
+        charges cover the work described in the agreed scope only. Monthly management is billed in
+        advance and does not include unlimited creative production, video production, extra posters
+        or unrelated projects. No fixed number of leads, sales, calls or conversions is guaranteed.
       </p>
 
       <h2>5. Payments</h2>
@@ -132,7 +140,7 @@ export default function Terms() {
 
       <h2>11. Maintenance</h2>
       <p>
-        The maintenance plan starting at Rs.999 per month is available for eligible existing websites
+        The maintenance plan starting at ₹1,000 per month is available for eligible existing websites
         and covers routine tasks such as bug fixes, updates, backups and security checks within a
         clearly limited monthly support allowance. It does not include unlimited development, unlimited
         revisions, unlimited support or unlimited content changes. New features and large content

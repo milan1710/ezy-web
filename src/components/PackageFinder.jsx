@@ -232,7 +232,7 @@ export default function PackageFinder() {
                 >
                   Send These Details on WhatsApp
                 </Button>
-                <Button to="/#contact" variant="outlineLight" size="lg" iconRight="ArrowRight" fullWidth>
+                <Button to="/contact" variant="outlineLight" size="lg" iconRight="ArrowRight" fullWidth>
                   See All Contact Options
                 </Button>
               </div>

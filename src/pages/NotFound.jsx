@@ -5,9 +5,9 @@ import { siteConfig } from '../config/siteConfig'
 
 export default function NotFound() {
   useSeo({
-    title: 'Page not found | EzyDigital Web Development',
+    title: 'Page not found | Ezy Digital',
     description:
-      'This page could not be found. Return to EzyDigital Web Development for website design and full-stack web development services.',
+      'This page could not be found. Return to Ezy Digital for website development, e-commerce and Meta Ads management services.',
     path: '/404',
   })
 
@@ -35,11 +35,17 @@ export default function NotFound() {
 
         <p className="text-ink-400 mt-10 text-sm">
           Looking for something specific?{' '}
-          <Link to="/#pricing" className="font-semibold text-white underline underline-offset-4">
+          <Link
+            to="/website-development/pricing"
+            className="font-semibold text-white underline underline-offset-4"
+          >
             View pricing
           </Link>{' '}
           or{' '}
-          <Link to="/#services" className="font-semibold text-white underline underline-offset-4">
+          <Link
+            to="/website-development"
+            className="font-semibold text-white underline underline-offset-4"
+          >
             browse services
           </Link>
           .

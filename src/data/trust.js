@@ -18,7 +18,7 @@ export const trustPromises = [
 
 /** The centrepiece trust section - straight talk instead of fake proof. */
 export const honestyIntro =
-  'Trust is earned by being straight with you, not by decorating a page with badges. Here is exactly what you get from EzyDigital - and what you will never see here.'
+  'Trust is earned by being straight with you, not by decorating a page with badges. Here is exactly what you get from Ezy Digital - and what you will never see here.'
 
 export const honestyPillars = [
   {
@@ -48,7 +48,7 @@ export const firstCallSteps = [
   {
     icon: 'Phone',
     title: 'You call or message',
-    text: 'Ring the number or send a WhatsApp message. There is no form to fill in and a short description is enough to begin.',
+    text: 'Ring the number, send a WhatsApp message or use the enquiry form. A short description is enough to begin.',
   },
   {
     icon: 'MessagesSquare',

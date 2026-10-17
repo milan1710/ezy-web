@@ -4,7 +4,7 @@ import Icon from './ui/Icon'
 import Button from './ui/Button'
 import { siteConfig, whatsappLink } from '../config/siteConfig'
 
-/** The three ways to reach EzyDigital. All values come from siteConfig. */
+/** The direct ways to reach Ezy Digital. All values come from siteConfig. */
 const contactMethods = [
   {
     title: 'Call now',
@@ -33,6 +33,15 @@ const contactMethods = [
     href: `mailto:${siteConfig.contact.email}`,
     external: false,
   },
+  {
+    title: 'Website',
+    icon: 'Monitor',
+    tone: 'bg-ink-100 text-ink-700',
+    value: 'ezydigital.in',
+    description: 'Browse the full service and pricing pages at any time.',
+    href: siteConfig.domain,
+    external: true,
+  },
 ]
 
 const checklist = [
@@ -52,7 +61,7 @@ export default function Contact() {
           eyebrow="Contact"
           titleId="contact-heading"
           title="Tell us about your project"
-          description="Call, message on WhatsApp or send an email. There is no form to fill in - you talk directly to Milan Soni at EzyDigital Web Development."
+          description="Call, message on WhatsApp, send an email or use the enquiry form on the contact page. You talk directly to Milan Soni at Ezy Digital - no call centre in between."
           level={2}
         />
 
@@ -129,6 +138,9 @@ export default function Contact() {
               <div className="mt-auto grid gap-2">
                 <Button href={siteConfig.contact.telHref} size="lg" icon="Phone" fullWidth>
                   Call {siteConfig.contact.phoneDisplay}
+                </Button>
+                <Button to="/contact" variant="outlineLight" size="lg" icon="FileText" fullWidth>
+                  Send an Enquiry
                 </Button>
                 <Button
                   href={whatsappLink(siteConfig.whatsappMessages.general)}

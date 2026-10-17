@@ -2,17 +2,24 @@ import { Link } from 'react-router-dom'
 import Logo from './common/Logo'
 import Icon from './ui/Icon'
 import { siteConfig, whatsappLink } from '../config/siteConfig'
-import { services } from '../data/services'
 
 const NAV_LINKS = [
-  { href: '/#home', label: 'Home' },
-  { href: '/#services', label: 'Services' },
-  { href: '/#portfolio', label: 'Portfolio' },
-  { href: '/#pricing', label: 'Pricing' },
-  { href: '/#finder', label: 'Package Finder' },
-  { href: '/#about', label: 'About' },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About Ezy Digital' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/website-development/pricing', label: 'Website Pricing' },
+  { href: '/meta-ads-management', label: 'Meta Ads Pricing' },
+  { href: '/contact', label: 'Contact Us' },
   { href: '/#faq', label: 'FAQ' },
-  { href: '/#contact', label: 'Contact' },
+]
+
+const SERVICE_LINKS = [
+  { href: '/website-development', label: 'Website Development' },
+  { href: '/ecommerce-website-development', label: 'E-commerce Websites' },
+  { href: '/custom-web-applications', label: 'Custom Web Applications' },
+  { href: '/meta-ads-management', label: 'Meta Ads Management' },
+  { href: '/social-media-management', label: 'Social Media Management' },
+  { href: '/additional-digital-services', label: 'Additional Digital Services' },
 ]
 
 export default function Footer() {
@@ -22,7 +29,6 @@ export default function Footer() {
     <footer className="bg-ink-950 pb-28 text-white lg:pb-14">
       <div className="container-page pt-16">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
-          {/* Brand */}
           <div>
             <Logo variant="light" size="md" />
             <p className="text-ink-300 mt-5 max-w-sm text-sm leading-relaxed">
@@ -31,18 +37,25 @@ export default function Footer() {
             <p className="text-ink-400 mt-4 text-xs font-semibold tracking-[0.18em] uppercase">
               {siteConfig.brand.tagline}
             </p>
+            <p className="text-ink-300 mt-4 text-sm">
+              Website:{' '}
+              <a
+                href={siteConfig.domain}
+                className="font-semibold text-white hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ezydigital.in
+              </a>
+            </p>
           </div>
 
-          {/* Navigation */}
           <nav aria-label="Footer navigation">
             <h2 className="text-sm font-bold tracking-[0.14em] text-white uppercase">Company</h2>
             <ul className="mt-5 flex flex-col gap-2.5">
               {NAV_LINKS.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    to={link.href}
-                    className="text-ink-300 hover:text-brand-400 text-sm transition-colors"
-                  >
+                  <Link to={link.href} className="text-ink-300 hover:text-brand-400 text-sm transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -50,24 +63,19 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Services */}
           <nav aria-label="Services">
             <h2 className="text-sm font-bold tracking-[0.14em] text-white uppercase">Services</h2>
             <ul className="mt-5 flex flex-col gap-2.5">
-              {services.map((service) => (
-                <li key={service.id}>
-                  <Link
-                    to={`/#${service.id}`}
-                    className="text-ink-300 hover:text-brand-400 text-sm transition-colors"
-                  >
-                    {service.title}
+              {SERVICE_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.href} className="text-ink-300 hover:text-brand-400 text-sm transition-colors">
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
-          {/* Contact */}
           <div>
             <h2 className="text-sm font-bold tracking-[0.14em] text-white uppercase">Get in touch</h2>
             <ul className="mt-5 flex flex-col gap-4">
@@ -77,10 +85,7 @@ export default function Footer() {
                   <span className="text-ink-400 block text-xs font-semibold tracking-wide uppercase">
                     Phone
                   </span>
-                  <a
-                    href={siteConfig.contact.telHref}
-                    className="text-sm font-semibold text-white hover:underline"
-                  >
+                  <a href={siteConfig.contact.telHref} className="text-sm font-semibold text-white hover:underline">
                     {siteConfig.contact.phoneInternational}
                   </a>
                 </div>
@@ -98,7 +103,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="text-ink-100 text-sm font-semibold hover:text-white hover:underline"
                   >
-                    Message Milan on WhatsApp
+                    Message on WhatsApp
                   </a>
                 </div>
               </li>
@@ -110,9 +115,7 @@ export default function Footer() {
                     Address
                   </span>
                   <address className="text-ink-100 text-sm leading-relaxed not-italic">
-                    {siteConfig.contact.address.line1},<br />
-                    {siteConfig.contact.address.city}, {siteConfig.contact.address.state}{' '}
-                    {siteConfig.contact.address.postalCode}, {siteConfig.contact.address.country}
+                    {siteConfig.contact.address.full}
                   </address>
                 </div>
               </li>
@@ -133,10 +136,8 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-
         </div>
 
-        {/* Bottom bar */}
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-ink-400 text-sm">
             &copy; {year} {siteConfig.brand.fullName}. All rights reserved.
@@ -162,10 +163,11 @@ export default function Footer() {
         </div>
 
         <p className="text-ink-500 mt-6 text-xs leading-relaxed">
-          Website design and full-stack web development. Packages, prices and timelines shown on this
-          site are illustrative starting points and are confirmed only in a written quotation.
+          Website design, e-commerce development, custom web applications and digital marketing. All
+          prices shown are &ldquo;starting at&rdquo; prices; the final price is confirmed only in a
+          written quotation after the scope is agreed. Domain, hosting, paid tools, payment gateway
+          charges and Meta advertising spend may be additional.
         </p>
-
       </div>
     </footer>
   )

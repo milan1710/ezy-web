@@ -7,6 +7,7 @@
 export const serviceTiers = {
   website: { label: 'Website development', tone: 'brand' },
   advanced: { label: 'Advanced & custom development', tone: 'ink' },
+  marketing: { label: 'Digital marketing & creative', tone: 'brand' },
 }
 
 export const services = [
@@ -155,5 +156,56 @@ export const services = [
       'Security maintenance',
       'Technical support',
     ],
+  },
+  {
+    id: 'meta-ads',
+    tier: 'marketing',
+    icon: 'Megaphone',
+    title: 'Meta Ads Management',
+    summary:
+      'Facebook and Instagram campaign setup, audience targeting, monitoring and monthly management through Meta Ads Manager.',
+    features: [
+      'Single and multiple campaign setup',
+      'Audience and location targeting',
+      'Ad copy and static creatives',
+      'Campaign monitoring and optimization',
+      'Monthly performance report',
+    ],
+    ctaLabel: 'View Meta Ads Pricing',
+    to: '/meta-ads-management',
+  },
+  {
+    id: 'social-media-management',
+    tier: 'marketing',
+    icon: 'Share2',
+    title: 'Social Media Management',
+    summary:
+      'Monthly Facebook and Instagram page management with a defined poster allowance and reporting.',
+    features: [
+      'Facebook and Instagram pages',
+      'Up to 12 static posters per month',
+      'Ad copy preparation',
+      'Campaign monitoring',
+      'One monthly report',
+    ],
+    ctaLabel: 'View Social Media Plan',
+    to: '/social-media-management',
+  },
+  {
+    id: 'creative-services',
+    tier: 'marketing',
+    icon: 'Palette',
+    title: 'Creative & Additional Digital Services',
+    summary:
+      'Poster design, basic video or reel editing, logo design, brochures, visiting cards and content writing.',
+    features: [
+      'Social media poster design',
+      'Logo and brochure design',
+      'Basic video / reel editing',
+      'Website content writing',
+      'Landing pages and SEO groundwork',
+    ],
+    ctaLabel: 'View Additional Services',
+    to: '/additional-digital-services',
   },
 ]
