@@ -12,10 +12,36 @@ Built with **React 19 + Vite 6 + Tailwind CSS 4**, Lucide icons, Framer Motion a
 | Command | Purpose |
 | --- | --- |
 | `npm install` | Install dependencies |
-| `npm run dev` | Start the dev server (Vite, default `http://localhost:5173`) |
+| `npm run dev` | Start the main site **and** the ceramic micro-site. Main: `http://localhost:5173/`; ceramic: `http://localhost:5173/ceramic/` |
+| `npm run dev:main` | Start only the main Ezy Digital dev server on `http://localhost:5173/` |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the production build locally (default `http://localhost:4173`) |
 | `npm run verify` | Runs 100 configuration checks (phone, WhatsApp, website/Meta Ads prices, additional services, service-price page content, enquiry validation, finder logic, comparison matrix, trust copy, Meta Pixel wiring, canonical URLs) |
+| `npm run dev:ceramic` | Start the standalone ceramic micro-site dev server (`http://localhost:5174/ceramic/`) |
+| `npm run build:ceramic` | Build the standalone ceramic micro-site into `ceramic/dist/` |
+| `npm run build:all` | Build the main site, build the ceramic micro-site, then copy it into `dist/ceramic/` |
+| `npm run preview:all` | Preview the combined `dist/` output at `http://localhost:4180/` |
+
+---
+
+## Ceramic micro-site (`/ceramic/`)
+
+A separate React + Vite application lives in `ceramic/`. It has its own `index.html`,
+metadata, Open Graph tags, local images and plain-CSS design system, and is deployed
+under **https://ezydigital.in/ceramic/**. All SEO stays on the single `ezydigital.in`
+domain, and every ceramic route is included in the main `public/sitemap.xml`.
+
+```powershell
+npm run dev             # both sites → http://localhost:5173/ceramic/
+npm run dev:ceramic     # ceramic only → http://localhost:5174/ceramic/
+npm run dev:main        # main site only → http://localhost:5173/
+npm run build:all       # production: dist/ (main site) + dist/ceramic/ (ceramic site)
+npm run preview:all     # verify the combined output locally
+```
+
+Deploy the root `dist/` folder. Deep ceramic routes require the SPA fallback included in
+`ceramic/public/.htaccess` (Apache) or the host equivalent. See `ceramic/README.md` for
+the full ceramic site documentation, image credits and form behaviour.
 
 ---
 
