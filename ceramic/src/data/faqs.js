@@ -22,9 +22,9 @@ export const homeFaqs = [
       'We do not claim a verified international buyer database. Any database-based outreach would need to be discussed and validated separately for accuracy, consent and relevance. Our core work is digital visibility, product presentation and inquiry systems.',
   },
   {
-    question: 'How much does a ceramic website cost?',
+    question: 'How much does a ceramic growth package cost?',
     answer:
-      'Ceramic-specific website packages start at ₹9,999, depending on scope. Catalogue, export and advanced website options start at higher levels. Final pricing depends on product count, features, content, integrations and revision requirements.',
+      'The approved ceramic growth packages start at ₹1,00,000 per month. All package prices are monthly charges and GST is extra. Deliverables and reporting frequency are confirmed in writing before work begins, and inquiry figures are planning estimates rather than guaranteed results.',
   },
   {
     question: 'Is advertising spend included?',

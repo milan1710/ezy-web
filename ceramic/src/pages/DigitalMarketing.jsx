@@ -209,8 +209,8 @@ export default function DigitalMarketing() {
         <div className="container">
           <SectionHeading
             eyebrow="Engagement options"
-            title="Marketing Support With Published Starting Prices."
-            text="Fees are separate from advertising media spend. Scope, campaign count and reporting frequency are confirmed in writing."
+            title="Marketing Support Within Approved Growth Packages."
+            text="Meta Ads, Google Ads and SEO support are included according to package scope. Advertising media spend is separate and is confirmed in writing."
             action={
               <Link className="btn btn--outline" to="/pricing">
                 View full pricing <Icon name="arrowRight" size={15} />
@@ -243,7 +243,7 @@ export default function DigitalMarketing() {
         text="Tell us your product categories, priority markets and current inquiry quality. We will recommend a realistic channel mix and budget range."
         primaryLabel="Discuss Digital Marketing"
         primaryTo="/contact?interest=digital-marketing"
-        secondaryLabel="View Starting Prices"
+        secondaryLabel="View Growth Packages"
         secondaryTo="/pricing"
       />
     </>

@@ -1,25 +1,23 @@
 import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   budgetOptions,
-  buildInquiryMessage,
   emptyInquiry,
   geographyOptions,
   goalOptions,
   productOptions,
   validateInquiry,
 } from '../utils/inquiry'
-import { whatsappLink } from '../config/ceramicSite'
+import { buildInquiryDescription, buildLeadPayload, submitLeadToCrm } from '../utils/crm'
 import Icon from './ui/Icon'
 
 export default function InquiryForm({ defaults = {} }) {
+  const navigate = useNavigate()
   const [form, setForm] = useState({ ...emptyInquiry, ...defaults })
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
-  const [waHref, setWaHref] = useState('')
-  const [copied, setCopied] = useState(false)
   const summaryRef = useRef(null)
-  const messageRef = useRef('')
+  const statusRef = useRef(null)
 
   const update = (field) => (event) => {
     const value = field === 'consent' ? event.target.checked : event.target.value
@@ -30,10 +28,10 @@ export default function InquiryForm({ defaults = {} }) {
       delete next[field]
       return next
     })
-    if (status === 'ready') setStatus('idle')
+    if (status === 'error') setStatus('idle')
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const nextErrors = validateInquiry(form)
     setErrors(nextErrors)
@@ -44,34 +42,24 @@ export default function InquiryForm({ defaults = {} }) {
       return
     }
 
-    const message = buildInquiryMessage(form)
-    messageRef.current = message
-    setStatus('preparing')
+    setStatus('submitting')
 
-    // No backend is connected. We prepare a WhatsApp message locally; the
-    // visitor explicitly sends it from their own WhatsApp application.
-    window.setTimeout(() => {
-      setWaHref(whatsappLink(message))
-      setStatus('ready')
-    }, 450)
-  }
-
-  const copyMessage = async () => {
     try {
-      await navigator.clipboard.writeText(messageRef.current)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 2500)
+      await submitLeadToCrm(buildLeadPayload(form, buildInquiryDescription(form)))
+      const submissionId = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+      navigate('/thank-you', { replace: true, state: { submitted: true, submissionId } })
     } catch {
-      setCopied(false)
+      setStatus('error')
+      window.requestAnimationFrame(() => statusRef.current?.focus())
     }
   }
 
   const errorCount = Object.keys(errors).length
-  const isPreparing = status === 'preparing'
+  const isSubmitting = status === 'submitting'
   const fieldError = (field) => (errors[field] ? `${field}-error` : undefined)
 
   return (
-    <form className="inquiry-form" onSubmit={handleSubmit} noValidate aria-busy={isPreparing}>
+    <form className="inquiry-form" onSubmit={handleSubmit} noValidate aria-busy={isSubmitting}>
       {errorCount > 0 ? (
         <div className="form-error-summary" ref={summaryRef} tabIndex={-1} role="alert">
           Please review {errorCount === 1 ? 'the highlighted field' : `the ${errorCount} highlighted fields`} below
@@ -292,30 +280,23 @@ export default function InquiryForm({ defaults = {} }) {
       {errors.consent ? <p className="field__error" id="consent-error">{errors.consent}</p> : null}
 
       <div className="form-actions">
-        <button className="btn btn--block" type="submit" disabled={isPreparing}>
-          {isPreparing ? 'Preparing your message…' : 'Prepare My WhatsApp Inquiry'}
-          {!isPreparing ? <Icon name="arrowRight" size={16} /> : null}
+        <button className="btn btn--block" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting your inquiry…' : 'Submit My Inquiry'}
+          {!isSubmitting ? <Icon name="arrowRight" size={16} /> : null}
         </button>
         <p className="form-privacy">
-          This website does not store form submissions. Your details are used only to prepare a
-          WhatsApp message that you choose to send.
+          Your details are submitted to our CRM so the team can respond to your inquiry. We do not
+          sell your information.
         </p>
       </div>
 
-      {status === 'ready' ? (
-        <div className="form-status" role="status">
-          <strong>Your inquiry is ready in WhatsApp.</strong>
+      {status === 'error' ? (
+        <div className="form-status" role="alert" tabIndex={-1} ref={statusRef}>
+          <strong>We could not submit your inquiry.</strong>
           <p>
-            This website has not saved your details. Open WhatsApp and press <strong>Send</strong> to
-            deliver the inquiry to Ezy Digital. If WhatsApp does not open, use the call option below.
+            Please check your connection and try again, or call us directly on +91 95126 48085.
           </p>
           <div className="row" style={{ marginTop: 12 }}>
-            <a className="btn btn--sm" href={waHref} target="_blank" rel="noopener noreferrer">
-              <Icon name="whatsapp" size={15} /> Open WhatsApp
-            </a>
-            <button className="btn btn--outline btn--sm" type="button" onClick={copyMessage}>
-              {copied ? 'Message copied' : 'Copy message'}
-            </button>
             <a className="btn btn--outline btn--sm" href="tel:+919512648085">
               <Icon name="phone" size={14} /> Call instead
             </a>

@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Ezy Digital ceramic business growth website for Morbi ceramic manufacturers, dealers and exporters. Served from ezydigital.in/ceramic.",
+  "description": "Premium single-page ceramic business growth presentation for Ezy Digital Marketing Agency, served from ezydigital.in/ceramic.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

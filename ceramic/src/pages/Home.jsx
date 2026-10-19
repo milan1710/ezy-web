@@ -30,7 +30,7 @@ export default function Home() {
   useSeo({
     title: 'Ezy Digital | Ceramic Business Growth Solutions',
     description:
-      'Ezy Digital helps Morbi ceramic manufacturers reach potential buyers, develop dealer and distributor inquiries, improve export visibility and manage business inquiries. Ceramic websites from ₹9,999+.',
+      'Ezy Digital helps ceramic manufacturers reach potential buyers, develop dealer and distributor inquiries, improve export visibility and manage business inquiries. Ceramic growth packages start at ₹1,00,000 per month plus GST.',
     path: '/',
     jsonLd: {
       '@context': 'https://schema.org',
@@ -355,7 +355,7 @@ export default function Home() {
               <Icon name="whatsapp" size={16} /> WhatsApp Ezy Digital
             </a>
             <p className="small" style={{ marginTop: 14, color: 'rgba(255,255,255,0.42)' }}>
-              Ceramic websites start at {websitePackages[0].priceLabel}. Advertising spend is separate.
+              Ceramic growth packages start at {websitePackages[0].priceLabel} per month. GST extra.
             </p>
           </div>
         </div>

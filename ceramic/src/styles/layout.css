@@ -722,9 +722,10 @@
   transform: translateY(-2px);
 }
 
-.floating-actions .is-whatsapp {
-  background: #1f9d55;
+.floating-actions .is-form {
+  background: var(--red);
   color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .floating-actions .is-call {

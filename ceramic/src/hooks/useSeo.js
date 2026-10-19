@@ -41,7 +41,7 @@ export default function useSeo({ title, description, path = '/', image, jsonLd, 
     upsertMeta('property', 'og:description', description)
     upsertMeta('property', 'og:url', url)
     upsertMeta('property', 'og:type', 'website')
-    upsertMeta('property', 'og:site_name', 'Ezy Digital — Ceramic Business Growth')
+    upsertMeta('property', 'og:site_name', 'Ezy Digital Marketing Agency')
     upsertMeta('property', 'og:image', ogImage)
     upsertMeta('property', 'og:image:alt', `${title} — illustrative ceramic industry image`)
     upsertMeta('property', 'og:locale', 'en_IN')

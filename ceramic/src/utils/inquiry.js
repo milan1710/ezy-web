@@ -1,9 +1,8 @@
 /**
  * Ceramic inquiry form helpers.
  *
- * This site has no backend. The form validates locally, then prepares a
- * prefilled WhatsApp message that the visitor sends from their own WhatsApp.
- * Nothing is stored by this website.
+ * Validation and option lists are kept here as pure functions. Valid
+ * submissions are mapped to Perfex CRM fields by `utils/crm.js`.
  */
 
 export function normalizeIndianMobile(value = '') {
@@ -57,30 +56,6 @@ export function validateInquiry(form) {
   }
 
   return errors
-}
-
-export function buildInquiryMessage(form) {
-  const phone = normalizeIndianMobile(form.phone) ?? form.phone
-
-  return [
-    'Hello Ezy Digital, I would like to discuss digital growth for my ceramic business.',
-    '',
-    `Name: ${form.name.trim()}`,
-    `Company: ${form.company.trim()}`,
-    `Phone: +91 ${phone}`,
-    form.email.trim() ? `Email: ${form.email.trim()}` : null,
-    form.website.trim() ? `Website: ${form.website.trim()}` : null,
-    `Product category: ${form.product}`,
-    `Primary goal: ${form.goal}`,
-    `Target geography: ${form.geography}`,
-    form.budget ? `Monthly advertising budget: ${form.budget}` : null,
-    '',
-    `Requirement: ${form.description.trim()}`,
-    '',
-    'This inquiry was prepared from the Ezy Digital ceramic growth website.',
-  ]
-    .filter((line) => line !== null)
-    .join('\n')
 }
 
 export const productOptions = [

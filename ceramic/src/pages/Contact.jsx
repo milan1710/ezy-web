@@ -51,7 +51,7 @@ export default function Contact() {
   useSeo({
     title: 'Contact Ezy Digital | Ceramic Growth Consultation',
     description:
-      'Tell Ezy Digital about your ceramic business growth goals: buyers, dealer network, export visibility, product catalogue or digital marketing. Call or WhatsApp +91 9512648085.',
+      'Tell Ezy Digital about your ceramic business growth goals: buyers, dealer network, export visibility, product catalogue or digital marketing. Call or WhatsApp +91 95126 48085.',
     path: '/contact',
     image: `${import.meta.env.BASE_URL}images/showroom.jpg`,
     jsonLd: {
@@ -61,9 +61,8 @@ export default function Contact() {
       url: 'https://ezydigital.in/ceramic/contact',
       mainEntity: {
         '@type': 'Organization',
-        name: 'Ezy Digital',
+        name: 'Ezy Digital Marketing Agency',
         telephone: '+919512648085',
-        email: 'hello@ezydigital.in',
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Upleta',
@@ -128,8 +127,8 @@ export default function Contact() {
             <div className="contact-form-card">
               <h2>Request a Free Ceramic Growth Audit</h2>
               <p>
-                Required fields are marked with an asterisk. This form prepares a WhatsApp message —
-                it does not silently store your details on this website.
+                Required fields are marked with an asterisk. Your details are submitted to our CRM so
+                the team can review your requirement and contact you.
               </p>
               <InquiryForm key={searchParams.toString()} defaults={defaults} />
             </div>
@@ -148,9 +147,6 @@ export default function Contact() {
                     rel="noopener noreferrer"
                   >
                     <Icon name="whatsapp" size={15} /> WhatsApp Ezy Digital
-                  </a>
-                  <a href={`mailto:${ceramicSite.contact.email}`}>
-                    <Icon name="mail" size={15} /> {ceramicSite.contact.email}
                   </a>
                   <span>
                     <Icon name="mapPin" size={15} /> {ceramicSite.contact.address.full}
@@ -176,7 +172,7 @@ export default function Contact() {
                 <h3>What happens after you send</h3>
                 <p>
                   We review your requirement and respond on WhatsApp or by phone. If there is a fit,
-                  we propose a scope and starting price. If there is no fit, we will say so.
+                  we propose a suitable package scope. If there is no fit, we will say so.
                 </p>
                 <p className="small muted mt-16">
                   We do not promise a fixed number of buyers, dealers or export orders.
@@ -192,10 +188,9 @@ export default function Contact() {
           <div className="notice">
             <Icon name="shield" size={16} />
             <p>
-              <strong>How this form works:</strong> after validation, we prepare a prefilled WhatsApp
-              message in your browser. You choose whether to send it. This website has no inquiry
-              database and does not claim that a submission has been saved. If you prefer, call or
-              WhatsApp us directly.
+              <strong>How this form works:</strong> after validation, your details are submitted to our
+              CRM as a lead and you are taken to a confirmation page. Our team can then review and
+              contact you. If you prefer, call or WhatsApp us directly.
             </p>
           </div>
         </div>

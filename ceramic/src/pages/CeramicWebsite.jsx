@@ -15,7 +15,7 @@ export default function CeramicWebsite() {
   useSeo({
     title: 'Ceramic Website & Product Catalogue Development | Ezy Digital',
     description:
-      'Ceramic website development from ₹9,999+: business websites, product catalogue sites, export websites and advanced catalogue builds with clear scope, exclusions and inquiry paths.',
+      'Ceramic website development with approved monthly growth packages: business websites, product catalogue sites, export websites and advanced catalogue builds with clear scope, exclusions and inquiry paths.',
     path: '/solutions/ceramic-website',
     image: `${import.meta.env.BASE_URL}images/tile-samples.jpg`,
     jsonLd: {
@@ -45,7 +45,7 @@ export default function CeramicWebsite() {
           { label: 'Ceramic Website & Catalogue' },
         ]}
         meta={['Mobile-first', 'Category structure', 'Product inquiry actions']}
-        stamp="Starting at ₹9,999+"
+        stamp="Included in monthly growth packages"
         actions={
           <>
             <Link className="btn" to="/contact?interest=ceramic-website">
@@ -101,9 +101,9 @@ export default function CeramicWebsite() {
       <section className="section section--soft">
         <div className="container">
           <SectionHeading
-            eyebrow="Website packages"
-            title="Ceramic Website Options and Starting Prices."
-            text="All prices are starting points, not final quotations. Product count, features, content and revision limits are defined in the proposal."
+            eyebrow="Growth packages"
+            title="Ceramic Website Options Within Growth Packages."
+            text="Website and catalogue deliverables are included in the approved monthly growth packages. Scope, content and revision limits are defined in writing."
             action={
               <Link className="btn btn--outline" to="/pricing">
                 See full pricing page <Icon name="arrowRight" size={15} />

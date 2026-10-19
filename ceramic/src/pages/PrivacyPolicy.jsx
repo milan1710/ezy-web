@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
   useSeo({
     title: 'Privacy Policy | Ezy Digital Ceramic Growth',
     description:
-      'How Ezy Digital handles information submitted through the ceramic growth website, including the WhatsApp inquiry form, contact details and third-party services.',
+      'How Ezy Digital handles information submitted through the ceramic growth website, including the CRM inquiry form, Meta Pixel measurement and third-party services.',
     path: '/privacy-policy',
   })
 
@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
       <PageHero
         eyebrow="Legal"
         title="Privacy Policy"
-        lead="How this ceramic growth website handles information you choose to share, and how the inquiry form actually works."
+        lead="How this ceramic growth website handles information you choose to share, how the inquiry form is submitted to our CRM and how measurement works."
         breadcrumbs={[{ label: 'Privacy Policy' }]}
       />
 
@@ -24,7 +24,7 @@ export default function PrivacyPolicy() {
         <div className="container">
           <div className="legal-page">
             <div className="legal-page__meta">
-              <span>Last updated: 18 October 2026</span>
+              <span>Last updated: 19 October 2026</span>
               <span>Applies to: ezydigital.in/ceramic</span>
             </div>
 
@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
               <p>
                 Ezy Digital is a digital services business based in Upleta, Gujarat, India. You can
                 contact us at <a href={ceramicSite.contact.telHref}>{ceramicSite.contact.phoneInternational}</a>{' '}
-                or <a href={`mailto:${ceramicSite.contact.email}`}>{ceramicSite.contact.email}</a>.
+                or through our <Link to="/contact">contact page</Link>.
               </p>
 
               <h2>2. Information you choose to provide</h2>
@@ -61,18 +61,19 @@ export default function PrivacyPolicy() {
 
               <h2>3. How the inquiry form works</h2>
               <p>
-                This ceramic website <strong>does not submit form data to a database or backend</strong>.
-                When you complete the form, the details remain in your browser and are used to prepare a
-                prefilled WhatsApp message. You then choose whether to open WhatsApp and press send.
+                When you submit a form on this website, the details you enter are sent directly to our
+                <strong> Perfex CRM</strong> lead management system so our team can review and respond
+                to your requirement. The information stored in the CRM includes your name, company,
+                phone number, optional email and website, and the requirement details you provide.
               </p>
               <p>
-                Until you send that message, Ezy Digital does not receive your form details. Once you
-                send it, the message is delivered through WhatsApp and is subject to WhatsApp&apos;s own
-                terms and privacy practices, which we do not control.
+                The form does not process payments and does not ask for passwords, financial account
+                details or identity documents. If you prefer not to use the form, you can call or email
+                us directly.
               </p>
               <p>
-                If you call or email us directly, we receive the information you choose to share through
-                those channels.
+                If you contact us through WhatsApp, the conversation is delivered through WhatsApp and is
+                subject to WhatsApp&apos;s own terms and privacy practices, which we do not control.
               </p>
 
               <h2>4. Information collected automatically</h2>
@@ -82,14 +83,16 @@ export default function PrivacyPolicy() {
                 server logs for security, reliability and diagnostic purposes.
               </p>
               <p>
-                This website does not currently include advertising pixels, third-party analytics or
-                behavioural tracking scripts. If analytics or advertising tracking is added in future,
-                this policy will be updated and any required consent mechanism will be provided.
+                This website uses the <strong>Meta (Facebook) Pixel</strong> to measure page views and
+                to count when a visitor clicks a phone number or successfully submits a form. The pixel
+                may set cookies (including <code>_fbp</code>) and sends Meta standard device and usage
+                information. It does <strong>not</strong> receive the name, phone number, email address
+                or description you enter in a form.
               </p>
 
               <h2>5. Cookies and external resources</h2>
               <p>
-                We do not set advertising or profiling cookies on this website. The site loads fonts from
+                We use the Meta Pixel for measurement as described above. The site loads fonts from
                 Google Fonts, which means your browser makes a request to Google&apos;s servers and
                 Google&apos;s own privacy terms may apply. Images are served from this website&apos;s
                 own domain.
@@ -127,10 +130,10 @@ export default function PrivacyPolicy() {
 
               <h2>8. Retention</h2>
               <p>
-                Because this website does not store form submissions, there is no website database
-                record to delete. If you send a WhatsApp message, call or email, the communication may
-                be retained in our business communication systems for as long as needed to respond,
-                manage a project, maintain business records or meet legal obligations.
+                Form submissions are stored as leads in our CRM and are retained for as long as needed
+                to respond to your inquiry, manage a project, maintain business records or meet legal
+                obligations. You can ask us to correct or delete your lead record, subject to any
+                records we are legally required to keep.
               </p>
 
               <h2>9. Your choices and requests</h2>
@@ -164,16 +167,15 @@ export default function PrivacyPolicy() {
               <h2>13. Contact</h2>
               <p>
                 For privacy questions, contact Ezy Digital at{' '}
-                <a href={ceramicSite.contact.telHref}>{ceramicSite.contact.phoneInternational}</a> or{' '}
-                <a href={`mailto:${ceramicSite.contact.email}`}>{ceramicSite.contact.email}</a>. You can
-                also use our <Link to="/contact">contact page</Link>.
+                <a href={ceramicSite.contact.telHref}>{ceramicSite.contact.phoneInternational}</a>. You
+                can also use our <Link to="/contact">contact page</Link>.
               </p>
 
               <div className="notice mt-32">
                 <p>
-                  This policy describes the current implementation of this website. If a backend, CRM,
-                analytics platform or advertising pixel is added later, this policy must be updated
-                before those tools go live.
+                  This policy describes the current implementation of this website, including the CRM
+                lead form and the Meta Pixel. If additional tools are added later, this policy will be
+                updated before those tools go live.
                 </p>
               </div>
             </div>

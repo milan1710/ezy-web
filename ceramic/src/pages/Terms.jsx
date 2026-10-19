@@ -105,10 +105,9 @@ export default function Terms() {
 
               <h2>6. Fees, taxes and payment</h2>
               <p>
-                Prices displayed on this website are starting prices in Indian Rupees and are not final
-                quotations. Applicable taxes are additional unless stated otherwise. A project or
-                retainer begins after the written proposal is accepted and any agreed advance payment is
-                received.
+                Prices displayed on this website are monthly package charges in Indian Rupees. GST is
+                extra. A project or retainer begins after the written agreement is accepted and any
+                agreed advance payment is received.
               </p>
               <p>
                 Payment schedules, suspension for non-payment and refund positions are set out in the
@@ -195,7 +194,6 @@ export default function Terms() {
               <h2>16. Contact</h2>
               <p>
                 Questions about these Terms can be sent to{' '}
-                <a href={`mailto:${ceramicSite.contact.email}`}>{ceramicSite.contact.email}</a> or{' '}
                 <a href={ceramicSite.contact.telHref}>{ceramicSite.contact.phoneInternational}</a>. You
                 can also use our <Link to="/contact">contact page</Link>.
               </p>

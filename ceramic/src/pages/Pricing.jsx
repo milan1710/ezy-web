@@ -16,15 +16,15 @@ import {
 
 export default function Pricing() {
   useSeo({
-    title: 'Ceramic Website & Digital Marketing Pricing | Ezy Digital',
+    title: 'Ceramic Growth Packages | Ezy Digital',
     description:
-      'Transparent starting prices for ceramic websites (₹9,999+), catalogue websites (₹14,999+), export websites (₹24,999+) and digital marketing management. Ad spend is separate.',
+      'Ceramic growth packages with websites, social creatives, product videos, Meta and Google Ads, inquiry campaigns and reporting. Monthly packages from ₹1,00,000 plus GST.',
     path: '/pricing',
     image: `${import.meta.env.BASE_URL}images/slab-factory.jpg`,
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'OfferCatalog',
-      name: 'Ezy Digital ceramic website and digital marketing starting prices',
+      name: 'Ezy Digital ceramic growth packages',
       url: 'https://ezydigital.in/ceramic/pricing',
       itemListElement: [
         ...websitePackages.map((pkg) => ({
@@ -32,13 +32,7 @@ export default function Pricing() {
           name: pkg.name,
           price: String(pkg.price),
           priceCurrency: 'INR',
-          description: `${pkg.tagline} Starting price; final scope confirmed in a proposal.`,
-        })),
-        ...marketingServices.map((service) => ({
-          '@type': 'Offer',
-          name: service.name,
-          priceCurrency: 'INR',
-          description: `${service.description} ${service.considerations}`,
+          description: `${pkg.tagline} Monthly package; GST extra. Inquiry figures are estimates, not guarantees.`,
         })),
       ],
     },
@@ -47,14 +41,14 @@ export default function Pricing() {
   return (
     <>
       <PageHero
-        eyebrow="Ceramic pricing"
-        title="Clear Starting Prices for Ceramic Digital Work."
-        lead="No hidden scope, no vague “guaranteed growth” package. Choose a website or marketing starting point, then confirm the exact deliverables in a written proposal."
+        eyebrow="Ceramic growth packages"
+        title="Five Clear Packages for Ceramic Digital Growth."
+        lead="Choose a monthly growth programme built around your website, content, campaigns and inquiry goals. Every package scope is confirmed in writing before work begins."
         image={ceramicImages.slabFactory.src}
         imageAlt={ceramicImages.slabFactory.alt}
-        breadcrumbs={[{ label: 'Pricing' }]}
-        meta={['Website from ₹9,999+', 'Marketing from ₹3,000+', 'Ad spend separate']}
-        stamp="Starting prices, not final quotations."
+        breadcrumbs={[{ label: 'Packages' }]}
+        meta={['Monthly packages', 'GST extra', 'Inquiry estimates, not guarantees']}
+        stamp="Packages from ₹1,00,000 per month."
         actions={
           <>
             <Link className="btn" to="/contact">
@@ -70,9 +64,9 @@ export default function Pricing() {
       <section className="section">
         <div className="container">
           <SectionHeading
-            eyebrow="Ceramic website development"
-            title="Website Packages Built for Ceramic Businesses."
-            text="Prices are starting points. Product count, page count, filters, integrations, content and revision limits determine the final quotation."
+            eyebrow="Ceramic growth packages"
+            title="Packages Built for Ceramic Businesses."
+            text="Every package is a monthly programme. Deliverables, campaign volumes and reporting frequency are confirmed before work begins."
           />
           <div className="pricing-grid">
             {websitePackages.map((pkg) => (
@@ -82,9 +76,9 @@ export default function Pricing() {
           <div className="notice mt-24">
             <Icon name="info" size={16} />
             <p>
-              These are proposed starting prices, not guaranteed fixed quotations. Domain, hosting,
-              product photography, professional copywriting, translation, premium tools and
-              third-party integrations may cost extra.
+              All package prices are monthly charges. GST will be charged extra. Third-party
+              expenses and additional production or travel requirements must be agreed separately
+              where applicable.
             </p>
           </div>
         </div>
@@ -93,9 +87,9 @@ export default function Pricing() {
       <section className="section section--soft">
         <div className="container">
           <SectionHeading
-            eyebrow="Digital marketing"
-            title="Campaign and Visibility Starting Points."
-            text="Advertising media spend is paid to the platform and is separate from the fees below. Campaign count, reporting frequency and scope are agreed before work begins."
+            eyebrow="Integrated campaign support"
+            title="Marketing Support Within a Growth Package."
+            text="Meta Ads, Google Ads and SEO support are included according to package scope. Advertising media spend is separate and is handled according to the written commercial agreement."
           />
           <div className="marketing-list">
             {marketingServices.map((service) => (
@@ -121,8 +115,8 @@ export default function Pricing() {
         <div className="container">
           <SectionHeading
             eyebrow="Scope and exclusions"
-            title="What the Starting Price Covers — and What It Does Not."
-            text="A clear quotation protects both sides. These exclusions are standard unless a written proposal says otherwise."
+            title="What a Package Covers — and What It Does Not."
+            text="A clear scope protects both sides. These exclusions are standard unless a written agreement says otherwise."
           />
           <div className="grid grid-2">
             <div className="panel">
@@ -237,7 +231,7 @@ export default function Pricing() {
 
       <CTASection
         title="Get a Proposal Based on Your Actual Product Range."
-        text="Share your categories, number of products, target markets and inquiry goals. We will reply with a realistic scope and starting price."
+        text="Share your categories, number of products, target markets and inquiry goals. We will reply with a realistic package scope and recommended next step."
         primaryLabel="Request a Growth Proposal"
         primaryTo="/contact?interest=custom-growth"
         secondaryLabel="Explore Growth Solutions"

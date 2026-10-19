@@ -76,7 +76,7 @@ export default function Solutions() {
               Discuss Your Growth Plan <Icon name="arrowRight" size={16} />
             </Link>
             <Link className="btn btn--outline-light" to="/pricing">
-              View Starting Prices
+              View Growth Packages
             </Link>
           </>
         }
@@ -219,7 +219,7 @@ export default function Solutions() {
                     {solution.cta} <Icon name="arrowRight" size={15} />
                   </Link>
                   <Link className="btn btn--outline" to="/pricing">
-                    View starting prices
+                    View growth packages
                   </Link>
                 </div>
               </div>

@@ -10,7 +10,7 @@ export default function PricingCard({ pkg, ctaLabel = 'Discuss This Option' }) {
       <h3>{pkg.name}</h3>
       <p className="pricing-card__tagline">{pkg.tagline}</p>
       <p className="pricing-card__price">
-        {pkg.priceLabel} <small>starting price</small>
+        {pkg.priceLabel} <small>{pkg.priceSuffix || 'monthly'}</small>
       </p>
       <p className="pricing-card__best">{pkg.bestFor}</p>
       <ul className="list-check">

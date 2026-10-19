@@ -187,10 +187,15 @@ export default function About() {
               </p>
             </div>
             <div className="content-card">
-              <h3>Email</h3>
+              <h3>WhatsApp</h3>
               <p>
-                <a className="text-link" href={`mailto:${ceramicSite.contact.email}`}>
-                  {ceramicSite.contact.email}
+                <a
+                  className="text-link"
+                  href={whatsappLink(ceramicSite.whatsappMessages.general)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {ceramicSite.contact.phoneInternational}
                 </a>
               </p>
             </div>

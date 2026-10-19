@@ -53,7 +53,7 @@ export default function Footer() {
                 <span>
                   <strong>{ceramicSite.contact.phoneInternational}</strong>
                   <br />
-                  Monday to Saturday
+                  Call or WhatsApp
                 </span>
               </a>
               <a
@@ -63,10 +63,6 @@ export default function Footer() {
               >
                 <Icon name="whatsapp" size={15} />
                 <span>WhatsApp your requirement</span>
-              </a>
-              <a href={`mailto:${ceramicSite.contact.email}`}>
-                <Icon name="mail" size={15} />
-                <span>{ceramicSite.contact.email}</span>
               </a>
             </div>
             <Link className="footer__cta" to="/contact">
@@ -90,7 +86,7 @@ export default function Footer() {
         </div>
         <p className="small" style={{ paddingBottom: 22, color: 'rgba(255,255,255,0.35)' }}>
           Imagery is illustrative and does not depict Ezy Digital clients, projects or Morbi factories.
-          Prices shown are starting prices, not final quotations.
+          Package prices are monthly, GST is extra, and inquiry figures are estimates — not guaranteed results.
         </p>
       </div>
     </footer>

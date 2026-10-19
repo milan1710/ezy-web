@@ -346,8 +346,8 @@ export const whyPoints = [
     text: 'Deliverables, dependencies and exclusions are written down before work begins.',
   },
   {
-    title: 'Transparent starting prices',
-    text: 'Published prices give you a realistic starting point for the conversation.',
+    title: 'Transparent monthly packages',
+    text: 'Published package prices give you a clear starting point for the conversation.',
   },
   {
     title: 'Structured product presentation',

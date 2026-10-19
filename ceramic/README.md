@@ -1,14 +1,10 @@
-# Ezy Digital — Ceramic Business Growth micro-site
+# Ezy Digital — Ceramic Business Growth presentation
 
-This is a **standalone React + Vite app** that is deployed separately from the main
-Ezy Digital website at `https://ezydigital.in/ceramic/`.
+A standalone React + Vite micro-site deployed at `https://ezydigital.in/ceramic/`.
+The main route is a premium, animated, single-page ceramic business presentation built
+from the approved seven-page Ezy Digital Ceramic Business Catalogue.
 
-It has its own `index.html`, title tags, Open Graph metadata, image folder and design
-system. SEO is still centralized on the single `ezydigital.in` domain: canonical tags,
-Open Graph URLs and JSON-LD all use that domain, and every ceramic route is included in
-the one root sitemap at `public/sitemap.xml`.
-
-## Local development
+## Run locally
 
 ```powershell
 cd ceramic
@@ -16,102 +12,100 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite, normally:
+Open `http://localhost:5174/ceramic/`.
 
-```
-http://localhost:5174/ceramic/
-```
-
-The `/ceramic/` path is important: `vite.config.js` sets `base: '/ceramic/'` and
-`src/main.jsx` sets `BrowserRouter basename="/ceramic"`.
+The `/ceramic/` path matters: `vite.config.js` sets `base: '/ceramic/'` and
+`src/main.jsx` uses `BrowserRouter basename="/ceramic"`.
 
 ## Production build
 
 ```powershell
 cd ceramic
 npm run build
+npm run preview
 ```
 
-Output: `ceramic/dist/`
+Deploy the contents of `dist/` under `/ceramic/`. `public/.htaccess` and
+`public/_redirects` provide SPA fallback on Apache and Netlify.
 
-Deploy the **contents of `ceramic/dist`** so that the application is reachable at
-`https://ezydigital.in/ceramic/` (for example, copy it to a `/ceramic/` subdirectory in
-the main site's web root, or configure a host rewrite from `/ceramic/*` to this app).
+## Single-page sections
 
-Server-side routing is required for deep links such as `/ceramic/solutions/export-growth`.
+The presentation at `/ceramic/` contains all sections on one page with smooth scrolling:
 
-- Apache: `public/.htaccess` is copied into the build and provides the fallback rewrite.
-- Netlify: `public/_redirects` is copied into the build.
-- Other hosts: configure a rewrite/fallback so `/ceramic/*` serves `/ceramic/index.html`
-  when the requested file does not exist.
+- `#home` — cinematic hero
+- `#about` — about, mission, vision, values, industries, approach
+- `#services` — eight service cards
+- `#solutions` — ceramic growth solutions, tracking and free audit CTA
+- `#packages` — the five approved Ceramic Growth Packages
+- `#process` — six-stage process timeline
+- `#contact` — terms, audit form and verified contact details
 
-Do not deploy this build at the domain root. All asset URLs are prefixed with `/ceramic/`.
+Navigation is sticky, keyboard accessible and updates the active section while scrolling.
 
-### Combined build with the main Ezy Digital site
+## Package pricing
 
-From the repository root:
+`src/data/ceramicPackages.js` is the only source of truth for ceramic package prices,
+inquiry estimates, deliverables and WhatsApp messages:
 
-```powershell
-npm run build:all
-npm run preview:all
-```
+- Ceramic Starter — ₹1,00,000 / month — 200–500 estimated inquiries
+- Market Expansion — ₹2,50,000 / month — 500–1,250 estimated inquiries
+- Ceramic Growth Pro — ₹5,00,000 / month — 1,000–2,500 estimated inquiries
+- Ceramic Export Growth — ₹7,50,000 / month — 1,500–3,750 estimated inquiries
+- Ceramic Market Leadership — ₹10,00,000 / month — 2,000–5,000 estimated inquiries
 
-`build:all` builds the main site, builds this ceramic app and copies `ceramic/dist` into
-`dist/ceramic`. Deploy the root `dist/` folder. `preview:all` serves the combined output
-at `http://localhost:4180/ceramic/` and verifies the static sub-path setup.
+All prices are monthly and GST is extra. Inquiry figures are planning estimates, not
+guaranteed results. Package CTAs build a URL-encoded WhatsApp message for the selected
+package.
 
-## Verification
+## Forms, CRM and lead counting
 
-The ceramic app was verified with a headless Chrome smoke test covering all 13 routes,
-titles, canonical URLs, broken images, mobile overflow, dropdown/mobile navigation,
-catalogue filtering and the full inquiry-form validation/WhatsApp handoff.
+Both ceramic forms (the presentation audit form and the legacy `/contact` inquiry form):
 
-To re-run it locally:
+1. Validate required fields and format locally.
+2. Submit the lead to the Perfex CRM web-to-lead endpoint configured in
+   `src/config/ceramicSite.js` (`crm.formUrl` / `crm.formKey`).
+3. Map standard Perfex lead columns (`name`, `company`, `email`, `website`,
+   `phonenumber`) and put every extra answer (business type, target market,
+   growth goal, product, budget, requirement and source page) into
+   `description`, so no submitted detail is lost.
+4. Redirect to `/thank-you` after the request is delivered.
 
-```powershell
-# terminal 1 — preview the ceramic build
-cd ceramic
-npm run preview -- --port 4173
+The CRM request uses `mode: 'no-cors'` because the Perfex endpoint does not send
+CORS headers. CSRF protection is excluded by Perfex for `forms/wtl/{key}`, so
+the public form key is enough.
 
-# terminal 2 — Chrome with debugging enabled
-& "C:\Program Files\Google\Chrome\Application\chrome.exe" --headless=new `
-  --remote-debugging-port=9223 --user-data-dir=.\ceramic\.chrome-test about:blank
+The floating WhatsApp button has been replaced by two fixed buttons: **Fill
+Form** (scrolls to the audit form, or opens `/contact` on legacy routes) and
+**Call** (`tel:+919512648085`). All phone-link clicks are counted as Meta
+`Lead` events.
 
-# terminal 3 — run the checks
-cd ceramic
-node scripts/cdp-check.mjs
-```
+## Meta Pixel
 
+`src/utils/analytics.js` loads pixel `2673882233043263` (override with
+`VITE_FB_PIXEL_ID` if needed) and tracks:
 
-## Inquiry form behaviour
+- `PageView` on first load and every in-app route change.
+- `Lead` when any `tel:` link is clicked.
+- `Lead` once on the thank-you page after a successful form submission. A
+  per-submission id in `sessionStorage` prevents double counting on refresh or
+  React StrictMode remounts. Direct visits to `/thank-you` do not count.
 
-There is **no backend** in this project. The contact form:
+No personal form data is sent to Meta; only the event name and generic button /
+page labels.
 
-1. Validates all required fields locally.
-2. Builds a prefilled WhatsApp message in the browser.
-3. Shows a clear "ready" state with an explicit **Open WhatsApp** action.
-4. Does not save the submission on this website and does not claim that it has been saved.
+## Images and branding
 
-The visitor must press Send inside WhatsApp to deliver the inquiry. No secrets or API keys
-are used in the frontend.
+- Original logo: `public/images/ezy-digital-logo.png` (used unchanged on a white plate).
+- All photographs are local files in `public/images/`, mapped centrally in
+  `src/data/ceramicImages.js`.
+- `src/data/presentationContent.js` contains the presentation asset map and section content.
+- Images are illustrative and do not depict Ezy Digital clients or specific factories.
 
-If a backend or CRM is added later, update the form and the privacy policy before launch.
+## Other routes
 
-## Images
+The existing solution, pricing, demo and legal routes remain available for deep links and
+use the legacy header/footer. They are not part of the single-page presentation:
 
-All photographs are stored locally in `public/images/` and referenced through
-`src/data/ceramicImages.js`.
-
-- Source: Pexels (free-to-use Pexels license).
-- They are **illustrative** and do not depict Ezy Digital clients, projects or Morbi factories.
-- Photo IDs are recorded in `src/data/ceramicImages.js` (`imageCredits`).
-- Replace an image by keeping the filename or updating the central image configuration.
-
-The official Ezy Digital logo is stored at `public/images/ezy-digital-logo.png`.
-
-## Routes
-
-- `/` — Homepage
 - `/solutions`
 - `/solutions/dealer-distributor-growth`
 - `/solutions/export-growth`
@@ -125,12 +119,40 @@ The official Ezy Digital logo is stored at `public/images/ezy-digital-logo.png`.
 - `/privacy-policy`
 - `/terms`
 
-## Central configuration
+## Verification performed
 
-- `src/config/ceramicSite.js` — brand, phone, WhatsApp, canonical URLs
-- `src/data/navigation.js` — header, mobile and footer navigation
-- `src/data/pricing.js` — every displayed price and pricing note
-- `src/data/solutions.js` — service content
-- `src/data/ceramicImages.js` — image URLs, alt text and credits
-- `src/data/demoProducts.js` — illustrative demo products
-- `src/styles/` — plain CSS design system (no Tailwind)
+- Production build completed successfully with Vite.
+- Presentation and legacy routes rendered in headless Edge with no React error overlay or
+  console errors.
+- No horizontal overflow at 360, 390, 430, 768, 1024, 1366 or 1440 px.
+- All 36 in-page links resolve to existing section IDs.
+- Mobile menu opens, locks body scroll, closes on selection and scrolls to the section.
+- All five package WhatsApp messages include the correct package name and price.
+- Audit form validation, CRM payload mapping, thank-you redirect and reduced-motion fallback verified.
+
+To re-run the browser smoke test, start the preview and a debugging browser, then run
+`node scripts/cdp-check.mjs`:
+
+```powershell
+npm run preview -- --port 4173
+
+# in a second terminal
+& "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless=new `
+  --remote-debugging-port=9223 --user-data-dir=.\.edge-verify about:blank
+
+# in a third terminal
+node scripts/cdp-check.mjs
+```
+
+
+## Central files
+
+- `src/data/ceramicPackages.js` — approved packages and package notes
+- `src/data/presentationContent.js` — navigation, services, solutions, process, terms, form options
+- `src/data/ceramicImages.js` — image URLs, alt text, dimensions and credits
+- `src/config/ceramicSite.js` — phone, WhatsApp, CRM endpoint, canonical URLs and general messages
+- `src/utils/crm.js` — Perfex lead mapping and submission
+- `src/utils/analytics.js` — Meta Pixel loader and `Lead` / `PageView` tracking
+- `src/pages/ThankYou.jsx` — post-submission thank-you page and form `Lead` event
+- `src/components/presentation/` — reusable presentation components
+- `src/styles/presentation.css` — presentation design system (plain CSS, no Tailwind)

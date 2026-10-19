@@ -24,20 +24,34 @@ export const ceramicSite = {
   baseUrl: 'https://ezydigital.in/ceramic',
 
   contact: {
-    phoneDisplay: '9512648085',
-    phoneInternational: '+91 9512648085',
+    phoneDisplay: '+91 95126 48085',
+    phoneInternational: '+91 95126 48085',
     phoneLocal: PHONE_LOCAL,
     phoneE164: PHONE_E164,
     telHref: `tel:${PHONE_E164}`,
     whatsappNumber: `${PHONE_COUNTRY_CODE}${PHONE_LOCAL}`,
     whatsappHref: `https://wa.me/${PHONE_COUNTRY_CODE}${PHONE_LOCAL}`,
-    email: 'hello@ezydigital.in',
+    // No email address is displayed on the ceramic presentation unless it is
+    // explicitly verified and configured here.
+    email: '',
     address: {
       city: 'Upleta',
       state: 'Gujarat',
       country: 'India',
       full: 'Upleta, Gujarat, India',
     },
+  },
+
+  /**
+   * Perfex CRM web-to-lead form. Submissions from this micro-site are posted
+   * here, so every form fill creates a lead in the CRM.
+   * The key is public (it is part of the public form URL) and is required by
+   * the Perfex endpoint.
+   */
+  crm: {
+    formUrl:
+      'https://crm.ezydigital.in/forms/wtl/95115b27a7b5f5e2f295973f75aa376f',
+    formKey: '95115b27a7b5f5e2f295973f75aa376f',
   },
 
   whatsappMessages: {
