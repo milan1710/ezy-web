@@ -50,7 +50,6 @@ export function buildAuditDescription(form) {
     `Business type: ${form.businessType}`,
     `Target market: ${form.targetMarket}`,
     `Main growth goal: ${form.growthGoal}`,
-    'Consent to contact: Yes',
     `Source page: ${sourcePage()}`,
   ].join('\n')
 }
@@ -59,17 +58,19 @@ export function buildAuditDescription(form) {
 export function buildInquiryDescription(form) {
   return [
     'Requested: Ceramic growth consultation',
-    `Product category: ${form.product}`,
-    `Primary goal: ${form.goal}`,
-    `Target geography: ${form.geography}`,
+    form.businessType ? `Business type: ${form.businessType}` : null,
+    form.product ? `Product category: ${form.product}` : null,
+    form.goal ? `Primary goal: ${form.goal}` : null,
+    form.geography ? `Target geography: ${form.geography}` : null,
     form.budget ? `Monthly advertising budget: ${form.budget}` : null,
+    form.description && form.description.trim()
+      ? `\nRequirement: ${form.description.trim()}`
+      : null,
     '',
-    `Requirement: ${form.description}`,
-    '',
-    'Consent to contact: Yes',
+    'Submitted via the ceramic inquiry form',
     `Source page: ${sourcePage()}`,
   ]
-    .filter((line) => line !== null)
+    .filter((line) => line !== null && line !== '')
     .join('\n')
 }
 

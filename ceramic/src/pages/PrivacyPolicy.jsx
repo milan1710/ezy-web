@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
                 <li>Product category, primary business goal and target geography</li>
                 <li>Optional monthly advertising budget range</li>
                 <li>A brief description of your requirement</li>
-                <li>Your consent to be contacted about the inquiry</li>
+                <li>Your request to be contacted about the inquiry</li>
               </ul>
               <p>
                 Please do not include sensitive personal information, financial account details or

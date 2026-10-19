@@ -51,6 +51,9 @@ export default function Hero() {
               Explore Our Packages
             </a>
           </div>
+          <p className="cn-hero__urgency">
+            <Icon name="clock" size={14} /> Limited free audit slots this week — request yours today.
+          </p>
 
           <ul className="cn-hero__services" aria-label="Primary service areas">
             {heroHighlights.map((item) => (

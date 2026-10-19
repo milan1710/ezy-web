@@ -96,9 +96,8 @@ export default function Contact() {
             </p>
             <h3>Tell us where your ceramic business wants to grow.</h3>
             <p className="cn-contact__intro">
-              Share a few details about your business and target market. We will use the
-              information to prepare a practical audit conversation around your website, product
-              catalogue and inquiry path.
+              Share a few details about your business and target market. Free audit slots are
+              limited this week, so the sooner you send your request, the sooner we can review it.
             </p>
 
             <a className="cn-btn cn-btn--primary cn-btn--lg" href="#audit-form">

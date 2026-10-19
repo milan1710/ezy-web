@@ -461,6 +461,31 @@
   line-height: 1.6;
 }
 
+.contact-urgency {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 10px 0 12px;
+  padding: 9px 12px;
+  border: 1px solid rgba(229, 57, 53, 0.2);
+  border-radius: var(--radius-sm);
+  background: var(--red-soft);
+  color: var(--gray-600);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.contact-urgency svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--red);
+}
+
+.contact-urgency strong {
+  color: var(--red-dark);
+}
+
+
 .contact-side {
   display: grid;
   gap: 14px;

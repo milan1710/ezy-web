@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   budgetOptions,
   emptyInquiry,
@@ -9,6 +9,7 @@ import {
   validateInquiry,
 } from '../utils/inquiry'
 import { buildInquiryDescription, buildLeadPayload, submitLeadToCrm } from '../utils/crm'
+import { businessTypeOptions } from '../data/presentationContent'
 import Icon from './ui/Icon'
 
 export default function InquiryForm({ defaults = {} }) {
@@ -20,7 +21,7 @@ export default function InquiryForm({ defaults = {} }) {
   const statusRef = useRef(null)
 
   const update = (field) => (event) => {
-    const value = field === 'consent' ? event.target.checked : event.target.value
+    const value = event.target.value
     setForm((current) => ({ ...current, [field]: value }))
     setErrors((current) => {
       if (!current[field]) return current
@@ -66,6 +67,16 @@ export default function InquiryForm({ defaults = {} }) {
           and try again. Nothing has been sent yet.
         </div>
       ) : null}
+
+      <div className="form-urgency">
+        <span className="form-urgency__icon">
+          <Icon name="clock" size={17} />
+        </span>
+        <div>
+          <strong>Limited free audit slots this week</strong>
+          <p>Only a few review slots are open. Requesting yours takes less than 60 seconds.</p>
+        </div>
+      </div>
 
       <div className="form-grid">
         <div className={`field${errors.name ? ' has-error' : ''}`}>
@@ -130,163 +141,145 @@ export default function InquiryForm({ defaults = {} }) {
           )}
         </div>
 
-        <div className={`field${errors.email ? ' has-error' : ''}`}>
-          <label htmlFor="email">Email (optional)</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            value={form.email}
-            onChange={update('email')}
-            placeholder="you@company.com"
-            aria-invalid={Boolean(errors.email)}
-            aria-describedby={fieldError('email')}
-          />
-          {errors.email ? <p className="field__error" id="email-error">{errors.email}</p> : null}
-        </div>
-
-        <div className="field">
-          <label htmlFor="website">Website URL (optional)</label>
-          <input
-            id="website"
-            name="website"
-            type="url"
-            value={form.website}
-            onChange={update('website')}
-            placeholder="https://"
-          />
-        </div>
-
-        <div className={`field${errors.product ? ' has-error' : ''}`}>
-          <label htmlFor="product">
-            Product category <span className="field__req">*</span>
+        <div className={`field${errors.businessType ? ' has-error' : ''}`}>
+          <label htmlFor="businessType">
+            Business type <span className="field__req">*</span>
           </label>
           <select
-            id="product"
-            name="product"
-            value={form.product}
-            onChange={update('product')}
-            aria-invalid={Boolean(errors.product)}
-            aria-describedby={fieldError('product')}
+            id="businessType"
+            name="businessType"
+            value={form.businessType}
+            onChange={update('businessType')}
+            aria-invalid={Boolean(errors.businessType)}
+            aria-describedby={fieldError('businessType')}
             required
           >
-            <option value="">Select a category</option>
-            {productOptions.map((option) => (
+            <option value="">Select business type</option>
+            {businessTypeOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
             ))}
           </select>
-          {errors.product ? <p className="field__error" id="product-error">{errors.product}</p> : null}
-        </div>
-
-        <div className={`field${errors.goal ? ' has-error' : ''}`}>
-          <label htmlFor="goal">
-            Primary business goal <span className="field__req">*</span>
-          </label>
-          <select
-            id="goal"
-            name="goal"
-            value={form.goal}
-            onChange={update('goal')}
-            aria-invalid={Boolean(errors.goal)}
-            aria-describedby={fieldError('goal')}
-            required
-          >
-            <option value="">Select your goal</option>
-            {goalOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.goal ? <p className="field__error" id="goal-error">{errors.goal}</p> : null}
-        </div>
-
-        <div className={`field${errors.geography ? ' has-error' : ''}`}>
-          <label htmlFor="geography">
-            Target geography <span className="field__req">*</span>
-          </label>
-          <select
-            id="geography"
-            name="geography"
-            value={form.geography}
-            onChange={update('geography')}
-            aria-invalid={Boolean(errors.geography)}
-            aria-describedby={fieldError('geography')}
-            required
-          >
-            <option value="">Select target market</option>
-            {geographyOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.geography ? <p className="field__error" id="geography-error">{errors.geography}</p> : null}
-        </div>
-
-        <div className="field">
-          <label htmlFor="budget">Monthly advertising budget (optional)</label>
-          <select id="budget" name="budget" value={form.budget} onChange={update('budget')}>
-            {budgetOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          <p className="field__hint">Media spend is separate from management fees.</p>
-        </div>
-
-        <div className={`field field--full${errors.description ? ' has-error' : ''}`}>
-          <label htmlFor="description">
-            Brief description <span className="field__req">*</span>
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={form.description}
-            onChange={update('description')}
-            placeholder="What do you manufacture, which markets are you targeting and what would you like to improve?"
-            aria-invalid={Boolean(errors.description)}
-            aria-describedby={fieldError('description')}
-            required
-          />
-          {errors.description ? (
-            <p className="field__error" id="description-error">{errors.description}</p>
+          {errors.businessType ? (
+            <p className="field__error" id="businessType-error">{errors.businessType}</p>
           ) : null}
         </div>
       </div>
 
-      <label className={`checkbox${errors.consent ? ' has-error' : ''}`} htmlFor="consent">
-        <input
-          id="consent"
-          name="consent"
-          type="checkbox"
-          checked={form.consent}
-          onChange={update('consent')}
-          aria-invalid={Boolean(errors.consent)}
-          aria-describedby={fieldError('consent')}
-        />
-        <span>
-          I agree to be contacted about this inquiry and have read the{' '}
-          <Link to="/privacy-policy" style={{ textDecoration: 'underline' }}>
-            Privacy Policy
-          </Link>
-          . <span className="field__req">*</span>
-        </span>
-      </label>
-      {errors.consent ? <p className="field__error" id="consent-error">{errors.consent}</p> : null}
+      <details className="form-extra">
+        <summary>Add more details (optional)</summary>
+        <div className="form-grid form-extra__grid">
+          <div className="field">
+            <label htmlFor="product">Product category</label>
+            <select id="product" name="product" value={form.product} onChange={update('product')}>
+              <option value="">Select a category</option>
+              {productOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="field">
+            <label htmlFor="goal">Primary business goal</label>
+            <select id="goal" name="goal" value={form.goal} onChange={update('goal')}>
+              <option value="">Select your goal</option>
+              {goalOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={`field${errors.email ? ' has-error' : ''}`}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              value={form.email}
+              onChange={update('email')}
+              placeholder="you@company.com"
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={fieldError('email')}
+            />
+            {errors.email ? <p className="field__error" id="email-error">{errors.email}</p> : null}
+          </div>
+
+          <div className="field">
+            <label htmlFor="website">Website URL</label>
+            <input
+              id="website"
+              name="website"
+              type="url"
+              value={form.website}
+              onChange={update('website')}
+              placeholder="https://"
+            />
+          </div>
+
+          <div className={`field${errors.geography ? ' has-error' : ''}`}>
+            <label htmlFor="geography">Target geography</label>
+            <select
+              id="geography"
+              name="geography"
+              value={form.geography}
+              onChange={update('geography')}
+              aria-invalid={Boolean(errors.geography)}
+              aria-describedby={fieldError('geography')}
+            >
+              <option value="">Select target market</option>
+              {geographyOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.geography ? <p className="field__error" id="geography-error">{errors.geography}</p> : null}
+          </div>
+
+          <div className="field">
+            <label htmlFor="budget">Monthly advertising budget</label>
+            <select id="budget" name="budget" value={form.budget} onChange={update('budget')}>
+              {budgetOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <p className="field__hint">Media spend is separate from management fees.</p>
+          </div>
+
+          <div className={`field field--full${errors.description ? ' has-error' : ''}`}>
+            <label htmlFor="description">Anything else we should know?</label>
+            <textarea
+              id="description"
+              name="description"
+              value={form.description}
+              onChange={update('description')}
+              placeholder="For example: products you manufacture, markets you want to target or the problem you want to solve."
+              aria-invalid={Boolean(errors.description)}
+              aria-describedby={fieldError('description')}
+            />
+            {errors.description ? (
+              <p className="field__error" id="description-error">{errors.description}</p>
+            ) : null}
+          </div>
+        </div>
+      </details>
 
       <div className="form-actions">
         <button className="btn btn--block" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting your inquiry…' : 'Submit My Inquiry'}
+          {isSubmitting ? 'Claiming your audit slot…' : 'Claim My Free Audit'}
           {!isSubmitting ? <Icon name="arrowRight" size={16} /> : null}
         </button>
         <p className="form-privacy">
-          Your details are submitted to our CRM so the team can respond to your inquiry. We do not
-          sell your information.
+          Free audit · No obligation · Reply within 1 business day. Your details are shared only
+          with our team so we can respond to your inquiry.
         </p>
       </div>
 

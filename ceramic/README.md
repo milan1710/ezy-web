@@ -59,7 +59,8 @@ package.
 
 ## Forms, CRM and lead counting
 
-Both ceramic forms (the presentation audit form and the legacy `/contact` inquiry form):
+Both ceramic forms (the presentation audit form and the legacy `/contact` inquiry form), plus the
+popup audit form:
 
 1. Validate required fields and format locally.
 2. Submit the lead to the Perfex CRM web-to-lead endpoint configured in
@@ -69,6 +70,17 @@ Both ceramic forms (the presentation audit form and the legacy `/contact` inquir
    growth goal, product, budget, requirement and source page) into
    `description`, so no submitted detail is lost.
 4. Redirect to `/thank-you` after the request is delivered.
+
+The `/contact` form asks only four required fields (name, company, phone and business
+type). Email, website, product category, primary goal, geography, budget and a
+free-text note are kept in the collapsed **Add more details (optional)** section.
+The presentation form keeps email and website in an optional section as well.
+No consent checkbox is used; the submit button is the contact request.
+
+`src/components/FormPopup.jsx` renders the full **AuditForm** in a modal. It appears
+a few seconds after every full page load or reload, and never on `/thank-you`,
+`/privacy-policy` or `/terms`. Closing it hides it for the current page view only,
+so it shows again on the next reload.
 
 The CRM request uses `mode: 'no-cors'` because the Perfex endpoint does not send
 CORS headers. CSRF protection is excluded by Perfex for `forms/wtl/{key}`, so

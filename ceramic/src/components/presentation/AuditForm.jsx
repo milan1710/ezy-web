@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   businessTypeOptions,
   growthGoalOptions,
@@ -18,7 +18,6 @@ const EMPTY_FORM = {
   businessType: '',
   targetMarket: '',
   growthGoal: '',
-  consent: false,
 }
 
 function validate(form) {
@@ -39,12 +38,16 @@ function validate(form) {
   if (!form.businessType) errors.businessType = 'Please select your business type.'
   if (!form.targetMarket) errors.targetMarket = 'Please select your target market.'
   if (!form.growthGoal) errors.growthGoal = 'Please select your main growth goal.'
-  if (!form.consent) errors.consent = 'Please confirm that we may contact you about this request.'
 
   return errors
 }
 
-export default function AuditForm() {
+export default function AuditForm({
+  idPrefix = 'audit',
+  showUrgency = true,
+  showNote = true,
+  onSuccess,
+}) {
   const navigate = useNavigate()
   const [form, setForm] = useState(EMPTY_FORM)
   const [errors, setErrors] = useState({})
@@ -53,7 +56,7 @@ export default function AuditForm() {
   const statusRef = useRef(null)
 
   const update = (field) => (event) => {
-    const value = field === 'consent' ? event.target.checked : event.target.value
+    const value = event.target.value
     setForm((current) => ({ ...current, [field]: value }))
     setErrors((current) => {
       if (!current[field]) return current
@@ -79,6 +82,7 @@ export default function AuditForm() {
 
     try {
       await submitLeadToCrm(buildLeadPayload(form, buildAuditDescription(form)))
+      onSuccess?.()
       const submissionId = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
       navigate('/thank-you', { replace: true, state: { submitted: true, submissionId } })
     } catch {
@@ -89,7 +93,7 @@ export default function AuditForm() {
 
   const errorCount = Object.keys(errors).length
   const isSubmitting = status === 'submitting'
-  const fieldError = (field) => (errors[field] ? `audit-${field}-error` : undefined)
+  const fieldError = (field) => (errors[field] ? `${idPrefix}-${field}-error` : undefined)
   const fieldClass = (field) => `cn-field${errors[field] ? ' has-error' : ''}`
 
   return (
@@ -101,13 +105,25 @@ export default function AuditForm() {
         </div>
       ) : null}
 
+      {showUrgency ? (
+        <div className="cn-audit-form__urgency">
+          <span className="cn-audit-form__urgency-icon">
+            <Icon name="clock" size={16} />
+          </span>
+          <p>
+            <strong>Limited free audit slots this week.</strong> It takes under a minute to send your
+            request today.
+          </p>
+        </div>
+      ) : null}
+
       <div className="cn-form-grid">
         <div className={fieldClass('name')}>
-          <label htmlFor="audit-name">
+          <label htmlFor={`${idPrefix}-name`}>
             Name <span aria-hidden="true">*</span>
           </label>
           <input
-            id="audit-name"
+            id={`${idPrefix}-name`}
             name="name"
             type="text"
             autoComplete="name"
@@ -119,18 +135,18 @@ export default function AuditForm() {
             aria-describedby={fieldError('name')}
           />
           {errors.name ? (
-            <p className="cn-field__error" id="audit-name-error">
+            <p className="cn-field__error" id={fieldError('name')}>
               {errors.name}
             </p>
           ) : null}
         </div>
 
         <div className={fieldClass('company')}>
-          <label htmlFor="audit-company">
+          <label htmlFor={`${idPrefix}-company`}>
             Company name <span aria-hidden="true">*</span>
           </label>
           <input
-            id="audit-company"
+            id={`${idPrefix}-company`}
             name="company"
             type="text"
             autoComplete="organization"
@@ -142,18 +158,18 @@ export default function AuditForm() {
             aria-describedby={fieldError('company')}
           />
           {errors.company ? (
-            <p className="cn-field__error" id="audit-company-error">
+            <p className="cn-field__error" id={fieldError('company')}>
               {errors.company}
             </p>
           ) : null}
         </div>
 
         <div className={fieldClass('phone')}>
-          <label htmlFor="audit-phone">
+          <label htmlFor={`${idPrefix}-phone`}>
             Phone number <span aria-hidden="true">*</span>
           </label>
           <input
-            id="audit-phone"
+            id={`${idPrefix}-phone`}
             name="phone"
             type="tel"
             inputMode="tel"
@@ -166,16 +182,19 @@ export default function AuditForm() {
             aria-describedby={fieldError('phone')}
           />
           {errors.phone ? (
-            <p className="cn-field__error" id="audit-phone-error">
+            <p className="cn-field__error" id={fieldError('phone')}>
               {errors.phone}
             </p>
           ) : null}
         </div>
 
+        <details className="cn-form-extra cn-field--full">
+          <summary>Add email or website (optional)</summary>
+          <div className="cn-form-extra__grid">
         <div className={fieldClass('email')}>
-          <label htmlFor="audit-email">Email (optional)</label>
+          <label htmlFor={`${idPrefix}-email`}>Email (optional)</label>
           <input
-            id="audit-email"
+            id={`${idPrefix}-email`}
             name="email"
             type="email"
             autoComplete="email"
@@ -186,16 +205,16 @@ export default function AuditForm() {
             aria-describedby={fieldError('email')}
           />
           {errors.email ? (
-            <p className="cn-field__error" id="audit-email-error">
+            <p className="cn-field__error" id={fieldError('email')}>
               {errors.email}
             </p>
           ) : null}
         </div>
 
         <div className={fieldClass('website')}>
-          <label htmlFor="audit-website">Website (optional)</label>
+          <label htmlFor={`${idPrefix}-website`}>Website (optional)</label>
           <input
-            id="audit-website"
+            id={`${idPrefix}-website`}
             name="website"
             type="text"
             inputMode="url"
@@ -207,19 +226,20 @@ export default function AuditForm() {
             aria-describedby={fieldError('website')}
           />
           {errors.website ? (
-            <p className="cn-field__error" id="audit-website-error">
+            <p className="cn-field__error" id={fieldError('website')}>
               {errors.website}
             </p>
           ) : null}
         </div>
-
+          </div>
+        </details>
 
         <div className={fieldClass('businessType')}>
-          <label htmlFor="audit-business-type">
+          <label htmlFor={`${idPrefix}-business-type`}>
             Business type <span aria-hidden="true">*</span>
           </label>
           <select
-            id="audit-business-type"
+            id={`${idPrefix}-business-type`}
             name="businessType"
             value={form.businessType}
             onChange={update('businessType')}
@@ -235,18 +255,18 @@ export default function AuditForm() {
             ))}
           </select>
           {errors.businessType ? (
-            <p className="cn-field__error" id="audit-businessType-error">
+            <p className="cn-field__error" id={fieldError('businessType')}>
               {errors.businessType}
             </p>
           ) : null}
         </div>
 
         <div className={fieldClass('targetMarket')}>
-          <label htmlFor="audit-target-market">
+          <label htmlFor={`${idPrefix}-target-market`}>
             Target market <span aria-hidden="true">*</span>
           </label>
           <select
-            id="audit-target-market"
+            id={`${idPrefix}-target-market`}
             name="targetMarket"
             value={form.targetMarket}
             onChange={update('targetMarket')}
@@ -262,18 +282,18 @@ export default function AuditForm() {
             ))}
           </select>
           {errors.targetMarket ? (
-            <p className="cn-field__error" id="audit-targetMarket-error">
+            <p className="cn-field__error" id={fieldError('targetMarket')}>
               {errors.targetMarket}
             </p>
           ) : null}
         </div>
 
         <div className={`${fieldClass('growthGoal')} cn-field--full`}>
-          <label htmlFor="audit-growth-goal">
+          <label htmlFor={`${idPrefix}-growth-goal`}>
             Main growth goal <span aria-hidden="true">*</span>
           </label>
           <select
-            id="audit-growth-goal"
+            id={`${idPrefix}-growth-goal`}
             name="growthGoal"
             value={form.growthGoal}
             onChange={update('growthGoal')}
@@ -289,47 +309,28 @@ export default function AuditForm() {
             ))}
           </select>
           {errors.growthGoal ? (
-            <p className="cn-field__error" id="audit-growthGoal-error">
+            <p className="cn-field__error" id={fieldError('growthGoal')}>
               {errors.growthGoal}
             </p>
           ) : null}
         </div>
       </div>
 
-      <label className={`cn-checkbox${errors.consent ? ' has-error' : ''}`} htmlFor="audit-consent">
-        <input
-          id="audit-consent"
-          name="consent"
-          type="checkbox"
-          checked={form.consent}
-          onChange={update('consent')}
-          aria-invalid={Boolean(errors.consent)}
-          aria-describedby={fieldError('consent')}
-        />
-        <span>
-          I agree to be contacted about this request and have read the{' '}
-          <Link to="/privacy-policy">Privacy Policy</Link>. <span aria-hidden="true">*</span>
-        </span>
-      </label>
-      {errors.consent ? (
-        <p className="cn-field__error" id="audit-consent-error">
-          {errors.consent}
-        </p>
-      ) : null}
-
       <button
         className="cn-btn cn-btn--primary cn-btn--block cn-btn--lg"
         type="submit"
         disabled={isSubmitting}
       >
-        {isSubmitting ? 'Submitting your request…' : 'Submit My Audit Request'}
+        {isSubmitting ? 'Claiming your audit slot…' : 'Claim My Free Audit'}
         {!isSubmitting ? <Icon name="arrowRight" size={17} /> : null}
       </button>
 
+      {showNote ? (
       <p className="cn-audit-form__privacy">
-        Your details are submitted to our CRM so the team can respond to your request. We do not
-        sell your information.
+        Free audit · No obligation · Reply within 1 business day. Your details are shared only with
+        our team so we can respond to your request.
       </p>
+      ) : null}
 
       {status === 'error' ? (
         <div

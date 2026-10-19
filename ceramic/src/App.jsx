@@ -7,6 +7,7 @@ import ScrollManager from './components/ScrollManager'
 import SiteHeader from './components/presentation/SiteHeader'
 import SiteFooter from './components/presentation/SiteFooter'
 import BackToTop from './components/presentation/BackToTop'
+import FormPopup from './components/FormPopup'
 import CeramicPresentation from './pages/CeramicPresentation'
 import useAnalytics from './hooks/useAnalytics'
 
@@ -77,6 +78,8 @@ export default function App() {
           <FloatingActions />
         </>
       )}
+
+      <FormPopup />
     </div>
   )
 }

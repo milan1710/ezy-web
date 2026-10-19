@@ -100,6 +100,7 @@ await send('Fetch.enable', {
 })
 await send('Page.addScriptToEvaluateOnNewDocument', {
   source: `
+    window.__EZY_DISABLE_POPUP__ = true;
     window.__fbqEvents = [];
     window.fbq = function () { window.__fbqEvents.push(Array.from(arguments)); };
     window.fbq.queue = [];
@@ -239,7 +240,7 @@ const invalid = await evaluate(`(() => {
   };
 })()`)
 check('audit validation summary', invalid.summary.includes('Please review'), invalid.summary)
-check('audit field errors', invalid.fields === 7, String(invalid.fields))
+check('audit field errors', invalid.fields === 6, String(invalid.fields))
 check('no fake form success', invalid.status === false)
 
 await evaluate(`(() => {
@@ -262,7 +263,6 @@ await evaluate(`(() => {
   setSelect('#audit-business-type', 'Ceramic Tile Manufacturer');
   setSelect('#audit-target-market', 'Domestic — India');
   setSelect('#audit-growth-goal', 'More buyer inquiries');
-  form.querySelector('#audit-consent').click();
 })()`)
 await sleep(300)
 await evaluate("document.querySelector('.cn-audit-form button[type=submit]').click()")

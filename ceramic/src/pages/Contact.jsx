@@ -126,9 +126,16 @@ export default function Contact() {
           <div className="contact-layout">
             <div className="contact-form-card">
               <h2>Request a Free Ceramic Growth Audit</h2>
+              <div className="contact-urgency">
+                <Icon name="clock" size={15} />
+                <span>
+                  <strong>Limited audit slots this week.</strong> Takes under 60 seconds — only 4
+                  fields required.
+                </span>
+              </div>
               <p>
-                Required fields are marked with an asterisk. Your details are submitted to our CRM so
-                the team can review your requirement and contact you.
+                Share a few basics and our team will review your website, catalogue and inquiry
+                path before contacting you.
               </p>
               <InquiryForm key={searchParams.toString()} defaults={defaults} />
             </div>

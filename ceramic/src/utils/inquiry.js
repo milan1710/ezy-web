@@ -31,28 +31,12 @@ export function validateInquiry(form) {
     errors.phone = 'Enter a valid 10-digit Indian mobile number.'
   }
 
+  if (!form.businessType) {
+    errors.businessType = 'Please select your business type.'
+  }
+
   if (!isValidEmail(form.email)) {
     errors.email = 'Enter a valid email address, or leave this field empty.'
-  }
-
-  if (!form.product) {
-    errors.product = 'Please select a product category.'
-  }
-
-  if (!form.goal) {
-    errors.goal = 'Please select your primary business goal.'
-  }
-
-  if (!form.geography) {
-    errors.geography = 'Please select a target geography.'
-  }
-
-  if (!form.description || form.description.trim().length < 10) {
-    errors.description = 'Please describe your requirement in at least 10 characters.'
-  }
-
-  if (!form.consent) {
-    errors.consent = 'Please confirm that Ezy Digital may contact you about this inquiry.'
   }
 
   return errors
@@ -98,6 +82,7 @@ export const emptyInquiry = {
   name: '',
   company: '',
   phone: '',
+  businessType: '',
   email: '',
   website: '',
   product: '',
@@ -105,5 +90,4 @@ export const emptyInquiry = {
   geography: '',
   budget: '',
   description: '',
-  consent: false,
 }
