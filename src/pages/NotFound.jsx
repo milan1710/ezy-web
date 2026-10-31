@@ -9,6 +9,7 @@ export default function NotFound() {
     description:
       'This page could not be found. Return to Ezy Digital for website development, e-commerce and Meta Ads management services.',
     path: '/404',
+    noindex: true,
   })
 
   return (

@@ -1,8 +1,20 @@
+# robots.txt for https://ezydigital.in
+# Marketing site: allow everything that should rank in Google.
+
 User-agent: *
 Allow: /
 
-# Block nothing that matters for a marketing website. Keep it simple and honest.
-Disallow: /npm-install.log
-Disallow: /npm-install.err.log
+# No value in crawling these
+Disallow: /api/
+Disallow: /thank-you
+Disallow: /ceramic/thank-you
+
+# Let Google fully render the site
+User-agent: Googlebot
+Allow: /
+
+# Ad / social crawlers that fetch preview images
+User-agent: facebookexternalhit
+Allow: /
 
 Sitemap: https://ezydigital.in/sitemap.xml

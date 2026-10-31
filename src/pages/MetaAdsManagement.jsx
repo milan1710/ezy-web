@@ -4,6 +4,7 @@ import FinalCTA from '../components/FinalCTA'
 import Icon from '../components/ui/Icon'
 import { metaAdsBudgetDisclaimer } from '../data/pricing'
 import useSeo from '../hooks/useSeo'
+import { serviceSchema } from '../utils/schema'
 
 const included = [
   'One Meta advertising campaign and one ad set configured',
@@ -28,6 +29,13 @@ export default function MetaAdsManagement() {
     description:
       'Meta Ads campaign setup from ₹999, with monthly management plans at ₹2,999, ₹4,999 and ₹7,999. The advertising budget is paid separately to Meta.',
     path: '/meta-ads-management',
+    jsonLd: serviceSchema({
+      name: 'Meta Ads Management',
+      description:
+        'Facebook and Instagram campaign setup from ₹999, with monthly management plans covering audience targeting, creative testing, optimization and reporting. Ad spend is separate.',
+      path: '/meta-ads-management',
+      price: 999,
+    }),
   })
 
   return (

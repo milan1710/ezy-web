@@ -851,3 +851,65 @@
     width: 100%;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Mobile action bar
+   ---------------------------------------------------------------------------
+   On phones the floating circles used to sit on top of the hero / CTA buttons,
+   which looked broken. Below 760px they become a two-button bar fixed to the
+   bottom edge, with a body offset so nothing is ever hidden behind it.
+--------------------------------------------------------------------------- */
+
+.floating-actions__label {
+  display: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+@media (max-width: 760px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .floating-actions {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .floating-actions a {
+    width: 100%;
+    height: 46px;
+    gap: 8px;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  .floating-actions a:hover {
+    transform: none;
+  }
+
+  .floating-actions__label {
+    display: inline;
+  }
+
+  .floating-actions .is-form {
+    justify-content: center;
+  }
+
+  .floating-actions .is-call {
+    justify-content: center;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+

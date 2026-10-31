@@ -18,7 +18,7 @@
 // importable from plain Node (verification scripts).
 const env = import.meta.env ?? {}
 
-const DEFAULT_PIXEL_ID = '2673882233043263'
+const DEFAULT_PIXEL_ID = '1679588473838138'
 
 // Use the verified id when the variable is not defined at all. An explicitly
 // empty value disables the pixel, matching the main website's behaviour.

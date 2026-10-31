@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Button from './ui/Button'
 import LeadFormTrigger from './LeadFormTrigger'
 import { siteConfig } from '../config/siteConfig'
+import { breadcrumbSchema } from '../utils/schema'
 
 const CAPABILITIES = ['Website Development', 'Meta Ads', 'Video Editing']
 
@@ -9,10 +10,21 @@ const CAPABILITIES = ['Website Development', 'Meta Ads', 'Video Editing']
  * Shared page header for every inner page. Keeps the semantic h1, breadcrumb
  * navigation and conversion actions, and adds a decorative capability orbit so
  * every deep page feels part of the same premium system.
+ *
+ * It also emits BreadcrumbList structured data, which Google uses to show the
+ * Home > Section path instead of a bare URL in search results.
  */
 export default function PageHeader({ eyebrow, title, description, breadcrumb = [], quoteService }) {
+  const { pathname } = useLocation()
+
   return (
     <header className="bg-ink-950 relative isolate overflow-hidden pt-28 pb-16 lg:pt-36 lg:pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema(breadcrumb, pathname)),
+        }}
+      />
       <div className="surface-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
       <div
         className="glow-red pointer-events-none absolute -top-40 right-[-10%] h-[38rem] w-[38rem]"

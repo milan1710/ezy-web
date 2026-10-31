@@ -4,6 +4,7 @@ import MetaAdsPricing from '../components/MetaAdsPricing'
 import FinalCTA from '../components/FinalCTA'
 import Icon from '../components/ui/Icon'
 import useSeo from '../hooks/useSeo'
+import { serviceSchema } from '../utils/schema'
 
 const deliverables = [
   'Ongoing Meta Ads campaign management',
@@ -19,6 +20,13 @@ export default function SocialMediaManagement() {
     description:
       'Monthly Meta Ads management from ₹4,999 with audience and creative testing, campaign optimization and performance review. Social media posters are quoted separately.',
     path: '/social-media-management',
+    jsonLd: serviceSchema({
+      name: 'Social Media and Meta Ads Management',
+      description:
+        'Monthly Facebook and Instagram advertising management with audience and creative testing, campaign optimization and performance review. Ad spend is separate.',
+      path: '/social-media-management',
+      price: 4999,
+    }),
   })
 
   return (

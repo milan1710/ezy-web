@@ -342,7 +342,7 @@ export default function Navbar() {
       <div
         id={menuId}
         hidden={!open}
-        className="border-ink-100 max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t bg-white lg:hidden"
+        className="border-ink-100 mobile-sheet overflow-y-auto border-t bg-white lg:hidden"
       >
         <nav aria-label="Mobile navigation" className="container-page py-5">
           <ul className="flex flex-col gap-1">

@@ -3776,3 +3776,68 @@ a.cn-contact__detail:hover {
   }
 }
 
+
+/* ==========================================================================
+   Mobile action bar (presentation pages)
+   --------------------------------------------------------------------------
+   The stacked floating pills sat on top of the hero CTAs on phones, which
+   looked broken. Below 760px they become a two-button bar pinned to the bottom
+   edge; `body` already reserves the matching space in layout.css.
+   ========================================================================== */
+
+.cn-actions__label {
+  display: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  line-height: 1;
+}
+
+@media (max-width: 760px) {
+  .cn-actions {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid rgba(11, 11, 13, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .cn-actions a,
+  .cn-actions button {
+    width: 100% !important;
+    height: 46px;
+    gap: 7px;
+    border-radius: 12px !important;
+    box-shadow: none;
+  }
+
+  .cn-actions a:hover,
+  .cn-actions button:hover {
+    transform: none;
+  }
+
+  .cn-actions__form {
+    padding: 0 12px !important;
+    font-size: 0.66rem;
+  }
+
+  .cn-actions__label {
+    display: inline;
+  }
+
+  /* Back-to-top stays a desktop affordance; the bar only carries the two
+     conversion actions on phones. (Needs the parent class to out-rank the
+     base `.cn-actions button` display rule.) */
+  .cn-actions .cn-actions__top {
+    display: none;
+  }
+}
+

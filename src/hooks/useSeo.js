@@ -33,10 +33,19 @@ function upsertLink(rel, href) {
  * @param {string} [options.path]          Route path used for the canonical URL
  * @param {object} [options.jsonLd]        Optional structured data object for the page
  * @param {boolean} [options.noindex]      Keep a page out of search results
+ * @param {string} [options.image]         Absolute or root-relative social preview image
  */
-export default function useSeo({ title, description, path = '/', jsonLd, noindex = false }) {
+export default function useSeo({
+  title,
+  description,
+  path = '/',
+  jsonLd,
+  noindex = false,
+  image = '/images/og-ezy-digital.png',
+}) {
   useEffect(() => {
     const url = canonicalUrl(path)
+    const imageUrl = image.startsWith('http') ? image : `${siteConfig.domain}${image}`
 
     document.title = title
     upsertMeta('name', 'description', description)
@@ -52,11 +61,22 @@ export default function useSeo({ title, description, path = '/', jsonLd, noindex
     upsertMeta('property', 'og:url', url)
     upsertMeta('property', 'og:type', 'website')
     upsertMeta('property', 'og:site_name', siteConfig.brand.fullName)
-    upsertMeta('property', 'og:image', `${siteConfig.domain}/images/ezy-digital-logo.png`)
+    upsertMeta('property', 'og:locale', 'en_IN')
+    upsertMeta('property', 'og:image', imageUrl)
+    upsertMeta('property', 'og:image:type', 'image/png')
+    upsertMeta('property', 'og:image:width', '1200')
+    upsertMeta('property', 'og:image:height', '630')
+    upsertMeta(
+      'property',
+      'og:image:alt',
+      `${siteConfig.brand.name} - website development, Meta Ads and video editing in Gujarat`,
+    )
 
     upsertMeta('name', 'twitter:card', 'summary_large_image')
     upsertMeta('name', 'twitter:title', title)
     upsertMeta('name', 'twitter:description', description)
+    upsertMeta('name', 'twitter:image', imageUrl)
+    upsertMeta('name', 'twitter:image:alt', `${siteConfig.brand.name} - digital services in Gujarat`)
 
     let script
     if (jsonLd) {
@@ -70,5 +90,5 @@ export default function useSeo({ title, description, path = '/', jsonLd, noindex
     return () => {
       if (script && script.parentNode) script.parentNode.removeChild(script)
     }
-  }, [title, description, path, jsonLd, noindex])
+  }, [title, description, path, jsonLd, noindex, image])
 }

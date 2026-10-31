@@ -43,7 +43,7 @@ export default function App() {
   const isPriceListPage = pathname.replace(/\/+$/, '') === '/service-price'
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="safe-bottom-space flex min-h-screen flex-col">
       <ScrollManager />
       {!isPriceListPage ? <Navbar /> : null}
 

@@ -35,6 +35,7 @@ export default function BackToTop() {
         title={`Call ${ceramicSite.contact.phoneInternational}`}
       >
         <Icon name="phone" size={20} />
+        <span className="cn-actions__label">Call Now</span>
       </a>
       <button
         type="button"

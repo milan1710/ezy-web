@@ -5,6 +5,7 @@ import Process from '../components/Process'
 import FinalCTA from '../components/FinalCTA'
 import Icon from '../components/ui/Icon'
 import useSeo from '../hooks/useSeo'
+import { serviceSchema } from '../utils/schema'
 
 const examples = [
   'Customer portals and self-service accounts',
@@ -21,6 +22,13 @@ export default function CustomWebApplications() {
     description:
       'Custom website and web application development from ₹25,000 with admin panel, database integration, customer management and API integration. Scope confirmed by quotation.',
     path: '/custom-web-applications',
+    jsonLd: serviceSchema({
+      name: 'Custom Website and Web Application Development',
+      description:
+        'Custom web applications with admin panels, database integration, customer management, dashboards and API integrations.',
+      path: '/custom-web-applications',
+      price: 25000,
+    }),
   })
 
   return (

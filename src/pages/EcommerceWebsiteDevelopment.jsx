@@ -4,6 +4,7 @@ import PricingConditions from '../components/PricingConditions'
 import FinalCTA from '../components/FinalCTA'
 import Icon from '../components/ui/Icon'
 import useSeo from '../hooks/useSeo'
+import { serviceSchema } from '../utils/schema'
 
 const capabilities = [
   {
@@ -34,6 +35,13 @@ export default function EcommerceWebsiteDevelopment() {
     description:
       'E-commerce website development from ₹19,999 with product catalogue, cart, checkout, payment gateway and order management. Payment gateway and third-party fees are additional.',
     path: '/ecommerce-website-development',
+    jsonLd: serviceSchema({
+      name: 'E-commerce Website Development',
+      description:
+        'Online store development with product catalogue, cart and checkout, payment gateway integration and order management.',
+      path: '/ecommerce-website-development',
+      price: 19999,
+    }),
   })
 
   return (

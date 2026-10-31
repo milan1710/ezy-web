@@ -1,6 +1,25 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import browserslist from 'browserslist'
+import { browserslistToTargets } from 'lightningcss'
+
+/**
+ * Browsers the production CSS must keep working in.
+ *
+ * Tailwind CSS v4 emits modern CSS by default - `color-mix()`, `oklch()` and
+ * `@property` - which older Android WebView / Chrome (< 111) and Safari
+ * (< 16.4) builds cannot parse. When they fail, every translucent background,
+ * border and tinted text silently disappears and the layout looks broken on a
+ * phone even though the modern desktop rendering is fine.
+ *
+ * Lightning CSS compiles those features down to plain rgb()/rgba() colours for
+ * the targets below, so the same design renders correctly on the older devices
+ * most of our visitors actually use.
+ */
+const cssTargets = browserslistToTargets(
+  browserslist('chrome >= 87, edge >= 88, firefox >= 102, safari >= 14, ios_saf >= 14, samsung >= 14, and_chr >= 87, not dead'),
+)
 
 /**
  * Public Perfex web-to-lead form used by the lead generation form.
@@ -211,5 +230,10 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     chunkSizeWarningLimit: 900,
+    cssMinify: 'lightningcss',
+  },
+  css: {
+    transformer: 'lightningcss',
+    lightningcss: { targets: cssTargets },
   },
 })

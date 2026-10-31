@@ -1,0 +1,31 @@
+{
+  "name": "Ezy Digital — Websites, Meta Ads & Video Editing",
+  "short_name": "Ezy Digital",
+  "description": "Website development, e-commerce stores, custom web applications, Meta Ads management and video editing for businesses in Gujarat, India.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0A0F18",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/images/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

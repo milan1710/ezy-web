@@ -12,6 +12,7 @@ export default function FloatingActions() {
         title="Fill the inquiry form"
       >
         <Icon name="clipboard" size={20} />
+        <span className="floating-actions__label">Fill Form</span>
       </Link>
       <a
         className="is-call"
@@ -20,6 +21,7 @@ export default function FloatingActions() {
         title={`Call ${ceramicSite.contact.phoneInternational}`}
       >
         <Icon name="phone" size={20} />
+        <span className="floating-actions__label">Call Now</span>
       </a>
     </div>
   )
