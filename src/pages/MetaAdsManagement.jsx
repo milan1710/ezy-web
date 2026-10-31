@@ -6,28 +6,27 @@ import { metaAdsBudgetDisclaimer } from '../data/pricing'
 import useSeo from '../hooks/useSeo'
 
 const included = [
-  'Campaign setup in Meta Ads Manager',
+  'One Meta advertising campaign and one ad set configured',
   'Audience and location targeting',
-  'Ad copy preparation',
-  'Static poster creatives within the agreed scope',
-  'Campaign monitoring and basic optimization',
-  'One monthly performance report on the management plan',
+  'Ad copy setup and basic campaign configuration',
+  'Campaign monitoring and optimization on a management plan',
+  'Performance review and reporting according to the agreed scope',
 ]
 
 const notIncluded = [
   'Meta advertising spend',
-  'Video shooting or video editing',
-  'Reel production',
-  'Additional creatives beyond the agreed limit',
+  'Video shooting, video editing or creative production',
+  'Advanced tracking and pixel configuration',
+  'Ongoing management in the one-time setup fee',
+  'Additional campaigns beyond the agreed scope',
   'Website or landing page development',
-  'Paid third-party tools and subscriptions',
 ]
 
 export default function MetaAdsManagement() {
   useSeo({
     title: 'Meta Ads Management in Gujarat | Facebook & Instagram Ads | Ezy Digital',
     description:
-      'Meta Ads setup and management: single campaign ₹1,000, two campaigns ₹1,500, or monthly social media and Meta Ads management ₹5,000. Ad spend is paid separately.',
+      'Meta Ads campaign setup from ₹999, with monthly management plans at ₹2,999, ₹4,999 and ₹7,999. The advertising budget is paid separately to Meta.',
     path: '/meta-ads-management',
   })
 
@@ -36,7 +35,7 @@ export default function MetaAdsManagement() {
       <PageHeader
         eyebrow="Meta Ads management"
         title="Facebook and Instagram advertising with honest, itemised pricing"
-        description="Campaign setup, audience targeting and monthly management through Meta Ads Manager. Advertising budget is always separate and paid by you directly to Meta."
+        description="Campaign setup from ₹999, audience targeting and monthly management through Meta Ads Manager. The advertising budget is always separate and paid by you directly to Meta."
         breadcrumb={[{ label: 'Meta Ads Management' }]}
         quoteService="meta-single-campaign"
       />

@@ -7,7 +7,7 @@ export default function AdditionalDigitalServices() {
   useSeo({
     title: 'Additional Digital Services & Prices | Ezy Digital',
     description:
-      'Social media posters from ₹200, logo design from ₹1,000, video editing from ₹500, Google Business Profile ₹500, SEO from ₹2,000 and website maintenance from ₹1,000 per month.',
+      'Social media posters from ₹200, logo design from ₹1,000, video editing from ₹499, Google Business Profile ₹500, SEO from ₹2,000 and website maintenance from ₹1,000 per month.',
     path: '/additional-digital-services',
   })
 

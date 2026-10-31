@@ -3,7 +3,7 @@ import Icon from './ui/Icon'
 import { whatsappLink } from '../config/siteConfig'
 
 /**
- * Single service card. Also used by the Services section grid.
+ * Single service card, used by the Services grid.
  * `ctaLabel` / `ctaMessage` make the card's action open a package-specific
  * WhatsApp conversation instead of being decorative.
  */
@@ -12,26 +12,32 @@ export default function ServiceCard({ service, ctaLabel = 'Discuss Your Project'
   const isMarketing = service.tier === 'marketing'
   const label = service.ctaLabel ?? ctaLabel
 
+  const linkClasses =
+    'group/link text-ink-950 mt-6 inline-flex items-center gap-2 border-t border-ink-100 pt-5 text-[0.8125rem] font-bold'
+
   return (
     <article
       id={service.id}
-      className="group hover:border-brand-200 flex h-full flex-col rounded-2xl border border-ink-100 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-7"
+      className="group border-ink-100 hover:border-brand-200 relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-38px_rgba(17,17,17,0.45)] sm:p-7"
     >
+      <span
+        className="bg-brand-600 absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+        aria-hidden="true"
+      />
+
       <div className="flex items-start justify-between gap-4">
         <span
           className={[
-            'inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105',
-            isAdvanced
-              ? 'bg-azure-500/12 text-azure-600'
-              : 'bg-brand-50 text-brand-600',
+            'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105',
+            isAdvanced ? 'bg-ink-100 text-ink-800' : 'bg-brand-50 text-brand-600',
           ].join(' ')}
         >
-          <Icon name={service.icon} className="h-6 w-6" />
+          <Icon name={service.icon} className="h-5 w-5" />
         </span>
 
         <span
           className={[
-            'rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-wide uppercase',
+            'rounded-full px-2.5 py-1 text-[0.6rem] font-bold tracking-[0.12em] uppercase',
             isAdvanced ? 'bg-ink-100 text-ink-600' : 'bg-brand-50 text-brand-700',
           ].join(' ')}
         >
@@ -39,23 +45,22 @@ export default function ServiceCard({ service, ctaLabel = 'Discuss Your Project'
         </span>
       </div>
 
-      <h3 className="mt-5 text-lg font-bold text-ink-900">{service.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-ink-500">{service.summary}</p>
+      <h3 className="font-display text-ink-950 mt-5 text-[1.0625rem] leading-snug font-bold">
+        {service.title}
+      </h3>
+      <p className="text-ink-500 mt-2 text-[0.8125rem] leading-relaxed">{service.summary}</p>
 
-      <ul className="mt-5 flex flex-col gap-2.5">
+      <ul className="mt-5 flex flex-1 flex-col gap-2.5">
         {service.features.map((feature) => (
-          <li key={feature} className="flex items-start gap-2.5 text-sm text-ink-600">
-            <Icon name="Check" className="text-brand-600 mt-0.5 h-4 w-4 shrink-0" />
+          <li key={feature} className="text-ink-600 flex items-start gap-2.5 text-[0.8125rem]">
+            <Icon name="Check" className="text-brand-600 mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>{feature}</span>
           </li>
         ))}
       </ul>
 
       {service.to ? (
-        <Link
-          to={service.to}
-          className="group/link text-brand-700 mt-6 inline-flex items-center gap-2 border-t border-ink-100 pt-5 text-sm font-semibold"
-        >
+        <Link to={service.to} className={linkClasses}>
           {label}
           <Icon
             name="ArrowRight"
@@ -69,7 +74,7 @@ export default function ServiceCard({ service, ctaLabel = 'Discuss Your Project'
           )}
           target="_blank"
           rel="noopener noreferrer"
-          className="group/link text-brand-700 mt-6 inline-flex items-center gap-2 border-t border-ink-100 pt-5 text-sm font-semibold"
+          className={linkClasses}
         >
           {label}
           <Icon

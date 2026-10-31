@@ -4,14 +4,14 @@
    ========================================================================== */
 
 .sp-page {
-  --sp-red: #dc1f2c;
-  --sp-red-dark: #b8141f;
-  --sp-red-soft: #fff1f2;
-  --sp-ink: #121b2a;
-  --sp-charcoal: #232f42;
-  --sp-body: #55657f;
-  --sp-muted: #75859e;
-  --sp-line: #e3e8ef;
+  --sp-red: #e53935;
+  --sp-red-dark: #c62828;
+  --sp-red-soft: #fff5f5;
+  --sp-ink: #111111;
+  --sp-charcoal: #1f1f1f;
+  --sp-body: #525252;
+  --sp-muted: #8f8f8f;
+  --sp-line: #e6e6e6;
   --sp-white: #ffffff;
   --sp-radius: 20px;
   --sp-shadow: 0 1px 2px rgb(8 13 22 / 0.04), 0 18px 40px -30px rgb(8 13 22 / 0.28);
@@ -19,9 +19,9 @@
 
   min-height: 100vh;
   background:
-    radial-gradient(circle at 100% 0%, rgb(220 31 44 / 0.07), transparent 28rem),
-    radial-gradient(circle at 0% 42%, rgb(35 47 66 / 0.055), transparent 30rem),
-    #f5f7fa;
+    radial-gradient(circle at 100% 0%, rgb(229 57 53 / 0.07), transparent 28rem),
+    radial-gradient(circle at 0% 42%, rgb(31 31 31 / 0.055), transparent 30rem),
+    #f7f7f7;
   color: var(--sp-charcoal);
   font-family: 'Noto Sans Gujarati', 'Inter', ui-sans-serif, system-ui, sans-serif;
   line-height: 1.7;
@@ -130,7 +130,7 @@
   width: 74px;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--sp-red), rgb(220 31 44 / 0));
+  background: linear-gradient(90deg, var(--sp-red), rgb(229 57 53 / 0));
 }
 
 /* Page body --------------------------------------------------------------- */
@@ -170,7 +170,7 @@
   width: 50px;
   height: 50px;
   flex: 0 0 auto;
-  border: 1px solid rgb(220 31 44 / 0.18);
+  border: 1px solid rgb(229 57 53 / 0.18);
   border-radius: 15px;
   background: linear-gradient(145deg, #fff, var(--sp-red-soft));
   color: var(--sp-red-dark);
@@ -237,7 +237,7 @@
 
 .sp-card:hover {
   transform: translateY(-5px);
-  border-color: rgb(220 31 44 / 0.25);
+  border-color: rgb(229 57 53 / 0.25);
   border-top-color: var(--sp-red-dark);
   box-shadow: var(--sp-shadow-hover);
 }
@@ -257,7 +257,7 @@
   width: 46px;
   height: 46px;
   flex: 0 0 auto;
-  border: 1px solid rgb(220 31 44 / 0.14);
+  border: 1px solid rgb(229 57 53 / 0.14);
   border-radius: 13px;
   background: var(--sp-red-soft);
   color: var(--sp-red-dark);
@@ -280,7 +280,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 24px;
-  border: 1px solid rgb(220 31 44 / 0.13);
+  border: 1px solid rgb(229 57 53 / 0.13);
   border-radius: 999px;
   background: #fff7f7;
   color: var(--sp-red-dark);
@@ -384,7 +384,7 @@
 }
 
 .sp-list__head {
-  background: linear-gradient(110deg, #121b2a, #263247 58%, #121b2a);
+  background: linear-gradient(110deg, #111111, #2b2b2b 58%, #111111);
   color: #cfd9e6;
   padding: 14px 22px;
   font-size: 0.7rem;
@@ -486,7 +486,7 @@
 }
 
 .sp-note p {
-  color: #55657f;
+  color: #525252;
   font-size: 0.84rem;
   line-height: 1.85;
 }

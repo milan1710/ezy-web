@@ -27,16 +27,16 @@ export default function Terms() {
 
       <h2>2. What we provide</h2>
       <p>
-        We design and develop websites and web applications and provide Meta Ads management
-        services. Our published packages are fixed-scope starting points: a Basic Website, a
-        Business Website, a Professional Website, an E-commerce Website, a Custom Website / Web
-        Application, Meta Ads campaign setup and monthly social media management.
+        We design and develop websites and web applications, provide Meta Ads setup and management,
+        and edit promotional videos and Reels. Our published packages are fixed-scope starting
+        points: a Basic Website, a Professional Website, a Business Website, an E-commerce Website, a
+        Custom Website / Web Application, Meta Ads campaign setup and monthly Meta Ads management.
       </p>
       <p>
         We also provide custom development at a quoted price, which may include backend systems,
         databases, authentication, dashboards and third-party integrations. Additional creative
-        services such as poster design, logo design, basic video editing and content writing are
-        available as separately priced services.
+        services such as poster design, logo design, video editing and content writing are available
+        as separately priced services.
       </p>
 
       <h2>3. Quotations and scope</h2>
@@ -69,6 +69,12 @@ export default function Terms() {
         charges cover the work described in the agreed scope only. Monthly management is billed in
         advance and does not include unlimited creative production, video production, extra posters
         or unrelated projects. No fixed number of leads, sales, calls or conversions is guaranteed.
+      </p>
+      <p>
+        <strong>Video editing:</strong> video editing prices are per video or per month as stated in
+        the agreed scope. Footage, brand assets and approvals must be supplied by you. Shooting,
+        voice-over, advanced animation, paid stock footage and revisions beyond the agreed allowance
+        are charged separately. No view count, reach or sales result is guaranteed.
       </p>
 
       <h2>5. Payments</h2>

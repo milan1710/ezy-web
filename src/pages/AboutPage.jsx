@@ -8,9 +8,9 @@ import useSeo from '../hooks/useSeo'
 
 export default function AboutPage() {
   useSeo({
-    title: 'About Ezy Digital | Website Development & Digital Marketing in Gujarat',
+    title: 'About Ezy Digital | Website, Meta Ads & Video Services in Gujarat',
     description:
-      'Ezy Digital builds professional websites, e-commerce stores and custom web applications and manages Facebook and Instagram advertising for businesses across Gujarat.',
+      'Ezy Digital builds professional websites, e-commerce stores and custom web applications, manages Facebook and Instagram advertising, and edits promotional videos for businesses across Gujarat.',
     path: '/about',
   })
 
@@ -18,8 +18,8 @@ export default function AboutPage() {
     <>
       <PageHeader
         eyebrow="About Ezy Digital"
-        title="A focused digital studio you can actually reach"
-        description="Ezy Digital is built around one promise: honest scope, careful development work and a direct line to the person building your website or managing your campaigns."
+        title="Your digital growth partner in Gujarat"
+        description="Ezy Digital provides practical digital solutions for businesses looking to strengthen their online presence through website development, Meta Ads, and creative video content."
         breadcrumb={[{ label: 'About' }]}
       />
       <About />

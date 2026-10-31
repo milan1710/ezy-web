@@ -21,15 +21,15 @@ export default function FAQ() {
           <ul className="flex flex-col gap-3">
             {faqs.map((item, index) => (
               <Reveal key={item.q} delay={Math.min(index * 0.04, 0.24)}>
-                <li className="overflow-hidden rounded-2xl border border-ink-100 bg-white">
+                <li className="border-ink-100 hover:border-brand-200 overflow-hidden rounded-2xl border bg-white transition-colors">
                   <details className="group">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-left sm:p-6">
-                      <h3 className="text-base font-bold text-ink-900">{item.q}</h3>
-                      <span className="bg-ink-50 text-ink-600 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-open:rotate-180">
+                      <h3 className="font-display text-ink-950 text-[0.95rem] font-bold">{item.q}</h3>
+                      <span className="bg-ink-50 text-ink-600 group-open:bg-brand-600 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-open:rotate-180 group-open:text-white">
                         <Icon name="ChevronDown" className="h-4 w-4" />
                       </span>
                     </summary>
-                    <p className="text-ink-500 px-5 pb-5 text-sm leading-relaxed sm:px-6 sm:pb-6">
+                    <p className="text-ink-500 px-5 pb-5 text-[0.8125rem] leading-relaxed sm:px-6 sm:pb-6">
                       {item.a}
                     </p>
                   </details>
@@ -39,16 +39,24 @@ export default function FAQ() {
           </ul>
 
           <Reveal>
-            <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-ink-100 bg-white p-6 text-center sm:p-7">
-              <p className="text-ink-600 text-sm leading-relaxed">
+            <div className="from-ink-950 to-ink-900 relative mt-10 overflow-hidden rounded-3xl bg-gradient-to-br p-7 text-center sm:p-8">
+              <div
+                className="surface-grid pointer-events-none absolute inset-0 opacity-50"
+                aria-hidden="true"
+              />
+              <div
+                className="bg-brand-600/25 pointer-events-none absolute -top-20 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full blur-3xl"
+                aria-hidden="true"
+              />
+              <p className="text-ink-300 relative text-sm leading-relaxed">
                 Still unsure about something? Ask directly - you will get a clear answer, even if the
                 answer is that we are not the right fit.
               </p>
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="relative mt-5 flex flex-wrap justify-center gap-3">
                 <Button href={siteConfig.contact.telHref} size="md" icon="Phone">
                   Call {siteConfig.contact.phoneDisplay}
                 </Button>
-                <Button to="/contact" variant="outline" size="md" iconRight="ArrowRight">
+                <Button to="/contact" variant="outlineLight" size="md" iconRight="ArrowRight">
                   Send an Enquiry
                 </Button>
               </div>

@@ -7,17 +7,17 @@
  */
 
 export const baseOptions = [
-  { id: 'basic-website', label: 'One page / a small website', note: 'Basic website' },
-  { id: 'business-website', label: 'A company or shop website', note: 'Business website' },
-  { id: 'professional-website', label: 'A larger, design-heavy website', note: 'Professional website' },
+  { id: 'basic-website', label: 'A small website / online presence', note: 'Basic website' },
+  { id: 'professional-website', label: 'A growing business website', note: 'Professional website' },
+  { id: 'business-website', label: 'A detailed company website', note: 'Business website' },
   { id: 'ecommerce', label: 'An online store', note: 'E-commerce website' },
   { id: 'custom-website', label: 'A custom web application', note: 'Custom website / web application' },
 ]
 
 export const pageOptions = [
   { id: 'p1', label: 'Just 1 page', pages: 1 },
-  { id: 'p2', label: '2 - 5 pages', pages: 5 },
-  { id: 'p3', label: '6 - 8 pages', pages: 8 },
+  { id: 'p2', label: '3 - 5 pages', pages: 5 },
+  { id: 'p3', label: '5 - 8 pages', pages: 8 },
   { id: 'p4', label: '9 - 15 pages', pages: 15 },
   { id: 'p5', label: 'More than 15 pages', pages: 99 },
 ]
@@ -28,7 +28,7 @@ export const pageOptions = [
  */
 export const featureOptions = [
   { id: 'payments', label: 'Online payments', minPackage: 'ecommerce' },
-  { id: 'dashboard', label: 'Admin dashboard', minPackage: 'ecommerce' },
+  { id: 'dashboard', label: 'Admin dashboard', minPackage: 'business-website' },
   { id: 'cms', label: 'Editable content (CMS)', minPackage: 'professional-website' },
   { id: 'accounts', label: 'User accounts / login', minPackage: 'custom-website' },
   { id: 'integrations', label: 'Third-party or API integrations', minPackage: 'custom-website' },
@@ -37,8 +37,8 @@ export const featureOptions = [
 
 export const PACKAGE_ORDER = [
   'basic-website',
-  'business-website',
   'professional-website',
+  'business-website',
   'ecommerce',
   'custom-website',
 ]
@@ -54,8 +54,8 @@ export function recommendPackage({ base, pages, features }) {
   if (index < 0) index = 0
 
   // Page count can only push the recommendation up, never down.
-  if (pages > 1) index = Math.max(index, PACKAGE_ORDER.indexOf('business-website'))
-  if (pages > 5) index = Math.max(index, PACKAGE_ORDER.indexOf('professional-website'))
+  if (pages > 1) index = Math.max(index, PACKAGE_ORDER.indexOf('professional-website'))
+  if (pages > 5) index = Math.max(index, PACKAGE_ORDER.indexOf('business-website'))
 
   let customScope = false
 

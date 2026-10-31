@@ -1,63 +1,127 @@
 import { Link } from 'react-router-dom'
 import Button from './ui/Button'
+import LeadFormTrigger from './LeadFormTrigger'
 import { siteConfig } from '../config/siteConfig'
 
-/**
- * Shared dark page header for every service page. Keeps a semantic h1,
- * breadcrumb navigation and consistent conversion actions.
- */
-export default function PageHeader({
-  eyebrow,
-  title,
-  description,
-  breadcrumb = [],
-  quoteService,
-}) {
-  const quoteHref = quoteService ? `/contact?service=${quoteService}` : '/contact'
+const CAPABILITIES = ['Website Development', 'Meta Ads', 'Video Editing']
 
+/**
+ * Shared page header for every inner page. Keeps the semantic h1, breadcrumb
+ * navigation and conversion actions, and adds a decorative capability orbit so
+ * every deep page feels part of the same premium system.
+ */
+export default function PageHeader({ eyebrow, title, description, breadcrumb = [], quoteService }) {
   return (
     <header className="bg-ink-950 relative isolate overflow-hidden pt-28 pb-16 lg:pt-36 lg:pb-20">
-      <div className="surface-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
+      <div className="surface-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
       <div
-        className="pointer-events-none absolute -top-32 right-0 h-[26rem] w-[26rem] rounded-full bg-brand-600/20 blur-[130px]"
+        className="glow-red pointer-events-none absolute -top-40 right-[-10%] h-[38rem] w-[38rem]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
         aria-hidden="true"
       />
 
       <div className="container-page relative">
-        <nav aria-label="Breadcrumb" className="text-ink-400 mb-5 text-sm">
-          <Link to="/" className="transition-colors hover:text-white">
-            Home
-          </Link>
-          {breadcrumb.map((item) => (
-            <span key={item.label}>
-              <span className="mx-2">/</span>
-              {item.to ? (
-                <Link to={item.to} className="transition-colors hover:text-white">
-                  {item.label}
-                </Link>
-              ) : (
-                <span className="text-ink-200">{item.label}</span>
-              )}
-            </span>
-          ))}
-        </nav>
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
+          <div>
+            <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-sm">
+              <Link
+                to="/"
+                className="text-ink-300 hover:border-white/30 hover:text-white inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 transition-colors"
+              >
+                Home
+              </Link>
+              {breadcrumb.map((item) => (
+                <span key={item.label} className="text-ink-500 flex items-center gap-2">
+                  <span aria-hidden="true">/</span>
+                  {item.to ? (
+                    <Link
+                      to={item.to}
+                      className="text-ink-300 hover:border-white/30 hover:text-white inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <span className="text-ink-100 inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">
+                      {item.label}
+                    </span>
+                  )}
+                </span>
+              ))}
+            </nav>
 
-        {eyebrow ? (
-          <p className="text-brand-400 text-xs font-semibold tracking-[0.22em] uppercase">{eyebrow}</p>
-        ) : null}
+            {eyebrow ? (
+              <p className="text-brand-400 inline-flex items-center gap-2 text-[0.7rem] font-bold tracking-[0.22em] uppercase">
+                <span className="bg-brand-500 h-1.5 w-1.5 rounded-full" aria-hidden="true" />
+                {eyebrow}
+              </p>
+            ) : null}
 
-        <h1 className="mt-3 max-w-4xl text-3xl leading-tight font-extrabold text-white sm:text-4xl lg:text-[2.85rem]">
-          {title}
-        </h1>
-        <p className="text-ink-300 mt-5 max-w-2xl text-base leading-relaxed">{description}</p>
+            <h1 className="font-display mt-4 max-w-3xl text-[2.1rem] leading-[1.06] font-extrabold tracking-[-0.03em] text-white sm:text-[2.6rem] lg:text-[3.05rem]">
+              {title}
+            </h1>
+            <p className="text-ink-300 mt-5 max-w-2xl text-[0.975rem] leading-relaxed sm:text-lg">
+              {description}
+            </p>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Button to={quoteHref} size="lg" iconRight="ArrowRight">
-            Get a Quote
-          </Button>
-          <Button href={siteConfig.contact.telHref} variant="outlineLight" size="lg" icon="Phone">
-            Call Now
-          </Button>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <LeadFormTrigger
+                size="lg"
+                iconRight="ArrowRight"
+                service={quoteService}
+                source="page_header"
+              >
+                Get a Quote
+              </LeadFormTrigger>
+              <Button
+                href={siteConfig.contact.telHref}
+                variant="outlineLight"
+                size="lg"
+                icon="Phone"
+              >
+                Call Now
+              </Button>
+              <Link
+                to={quoteService ? `/contact?service=${quoteService}` : '/contact'}
+                className="text-ink-400 hover:text-ink-100 inline-flex items-center self-center text-[0.75rem] font-semibold underline decoration-white/25 underline-offset-4 transition-colors"
+              >
+                Or use the full contact page
+              </Link>
+            </div>
+          </div>
+
+          {/* Decorative capability orbit - purely visual */}
+          <div className="relative hidden aspect-square lg:block" aria-hidden="true">
+            <div className="absolute inset-0 rounded-full border border-white/10" />
+            <div className="absolute inset-8 rounded-full border border-white/[0.07]" />
+            <div className="absolute inset-16 rounded-full border border-white/[0.05]" />
+            <div className="bg-brand-600/20 absolute inset-24 rounded-full blur-2xl" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="border-white/10 bg-ink-900/80 flex h-28 w-28 flex-col items-center justify-center rounded-3xl border shadow-2xl backdrop-blur">
+                <span className="font-display text-brand-400 text-3xl font-extrabold">EZ</span>
+                <span className="text-ink-400 mt-1 text-[0.6rem] font-bold tracking-[0.2em] uppercase">
+                  Digital
+                </span>
+              </div>
+            </div>
+            {CAPABILITIES.map((label, index) => {
+              const positions = [
+                'top-2 left-1/2 -translate-x-1/2',
+                'bottom-8 -left-2',
+                'bottom-8 -right-2',
+              ]
+              return (
+                <span
+                  key={label}
+                  className={`border-white/12 bg-ink-900/85 text-ink-100 absolute ${positions[index]} rounded-full border px-3.5 py-2 text-[0.7rem] font-semibold whitespace-nowrap shadow-lg backdrop-blur`}
+                >
+                  {label}
+                </span>
+              )
+            })}
+          </div>
         </div>
       </div>
     </header>

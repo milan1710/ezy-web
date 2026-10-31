@@ -10,7 +10,7 @@ import {
   metaAdsPricingNote,
   metaAdsUnlimitedConditions,
 } from '../data/pricing'
-import { whatsappLink } from '../config/siteConfig'
+import { siteConfig, whatsappLink } from '../config/siteConfig'
 
 function MetaCard({ pkg, index }) {
   return (
@@ -93,6 +93,8 @@ function MetaCard({ pkg, index }) {
             size="lg"
             iconRight="ArrowRight"
             fullWidth
+            data-fb-event="PricingInquiry"
+            data-fb-label={pkg.id}
           >
             {pkg.ctaLabel}
           </Button>
@@ -120,7 +122,7 @@ export default function MetaAdsPricing({ showConditions = true }) {
           eyebrow="Meta Ads pricing"
           titleId="meta-ads-pricing-heading"
           title="Facebook & Instagram advertising with transparent service charges"
-          description="Choose a one-time campaign setup or monthly social media and Meta Ads management. Advertising spend is always paid separately through your own Meta ad account."
+          description="Start with a one-time campaign setup from ₹999, or choose monthly campaign management. Advertising spend is always paid separately through your own Meta ad account."
           level={2}
         />
 
@@ -134,7 +136,7 @@ export default function MetaAdsPricing({ showConditions = true }) {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {metaAdsPackages
             .filter((pkg) => pkg.active)
             .map((pkg, index) => (
@@ -148,7 +150,7 @@ export default function MetaAdsPricing({ showConditions = true }) {
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             <div className="rounded-2xl border border-ink-200 bg-white p-6">
               <h3 className="text-base font-bold text-ink-900">
-                What &ldquo;unlimited campaign setup&rdquo; actually means
+                What a Meta Ads management plan covers
               </h3>
               <ul className="mt-4 flex flex-col gap-2.5">
                 {metaAdsUnlimitedConditions.map((condition) => (
@@ -175,7 +177,7 @@ export default function MetaAdsPricing({ showConditions = true }) {
                 <Button to="/contact?service=meta-single-campaign" size="md" iconRight="ArrowRight">
                   Request a Quote
                 </Button>
-                <Button href={whatsappLink('Hello Ezy Digital, I would like to discuss Meta Ads management for my business.')} external variant="outline" size="md" icon="Sparkles">
+                <Button href={whatsappLink(siteConfig.whatsappMessages.metaAds)} external variant="outline" size="md" icon="Sparkles">
                   WhatsApp Enquiry
                 </Button>
               </div>

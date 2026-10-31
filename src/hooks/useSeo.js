@@ -32,14 +32,20 @@ function upsertLink(rel, href) {
  * @param {string} options.description     Meta description
  * @param {string} [options.path]          Route path used for the canonical URL
  * @param {object} [options.jsonLd]        Optional structured data object for the page
+ * @param {boolean} [options.noindex]      Keep a page out of search results
  */
-export default function useSeo({ title, description, path = '/', jsonLd }) {
+export default function useSeo({ title, description, path = '/', jsonLd, noindex = false }) {
   useEffect(() => {
     const url = canonicalUrl(path)
 
     document.title = title
     upsertMeta('name', 'description', description)
     upsertLink('canonical', url)
+    upsertMeta(
+      'name',
+      'robots',
+      noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large',
+    )
 
     upsertMeta('property', 'og:title', title)
     upsertMeta('property', 'og:description', description)
@@ -64,5 +70,5 @@ export default function useSeo({ title, description, path = '/', jsonLd }) {
     return () => {
       if (script && script.parentNode) script.parentNode.removeChild(script)
     }
-  }, [title, description, path, jsonLd])
+  }, [title, description, path, jsonLd, noindex])
 }

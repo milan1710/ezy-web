@@ -1,14 +1,14 @@
 import PageHeader from '../components/PageHeader'
-import EnquiryForm from '../components/EnquiryForm'
+import LeadForm from '../components/LeadForm'
 import Contact from '../components/Contact'
 import useSeo from '../hooks/useSeo'
 import { siteConfig, whatsappLink } from '../config/siteConfig'
 
 export default function ContactPage() {
   useSeo({
-    title: 'Contact Ezy Digital | Get a Website or Meta Ads Quote',
+    title: 'Contact Ezy Digital | Website, Meta Ads & Video Quotes',
     description:
-      'Contact Ezy Digital for website development, e-commerce, custom web applications and Meta Ads management. Call 9512648085 or send an enquiry on WhatsApp.',
+      'Contact Ezy Digital for website development, e-commerce, Meta Ads and video editing. Call or WhatsApp 9512648085, or send an enquiry through the form.',
     path: '/contact',
   })
 
@@ -23,7 +23,9 @@ export default function ContactPage() {
 
       <section className="bg-ink-50 py-16 lg:py-20">
         <div className="container-page grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <EnquiryForm />
+          <div className="self-start lg:sticky lg:top-24">
+            <LeadForm />
+          </div>
 
           <div className="flex flex-col gap-5">
             <div className="rounded-3xl border border-ink-100 bg-white p-6 sm:p-7">

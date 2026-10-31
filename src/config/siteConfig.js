@@ -16,7 +16,7 @@ export const siteConfig = {
     tagline: 'Grow Your Business Digitally',
     owner: 'Milan Soni',
     shortDescription:
-      'We build professional websites, e-commerce stores and custom web applications, and manage Facebook and Instagram advertising for businesses across Gujarat.',
+      'We build professional websites, e-commerce stores and custom web applications, manage Facebook and Instagram advertising, and edit promotional videos and Reels for businesses across Gujarat.',
   },
 
   contact: {
@@ -45,26 +45,39 @@ export const siteConfig = {
     },
   },
 
+  /**
+   * Lead generation form -> Perfex CRM.
+   *
+   * The browser never posts to the CRM directly: the CRM's web-to-lead endpoint
+   * sends no CORS headers, so a browser could not read the result and would have
+   * to guess whether the lead was stored. `endpoint` is the same-origin proxy
+   * (`public/api/lead.php`) that forwards the lead server-side and returns the
+   * CRM's answer. `thankYouPath` is only reached after that confirmation.
+   */
+  crm: {
+    endpoint: '/api/lead.php',
+  },
+  thankYouPath: '/thank-you/',
+
   /** SEO / canonical configuration. CHANGE THIS to the confirmed live domain. */
   domain: 'https://ezydigital.in',
 
-  /**
-   * The enquiry form does not submit to a server. It composes a WhatsApp
-   * message locally so no lead data is stored by this website.
-   */
-
-  /** Prefilled WhatsApp messages, URL-encoded when used. */
+  /** Prefilled WhatsApp messages used by the content-level WhatsApp links. */
   whatsappMessages: {
     general:
-      'Hello Ezy Digital, I would like to know more about your website development and digital marketing services.',
+      'Hello Ezy Digital, I would like to discuss digital solutions for my business.',
+    website:
+      'Hello Ezy Digital, I am interested in Website Development. Please share the available packages starting at \u20b93,999.',
+    metaAds:
+      'Hello Ezy Digital, I am interested in Meta Ads Campaign Setup starting at \u20b9999. Please share the details.',
+    videoEditing:
+      'Hello Ezy Digital, I am interested in Video Editing starting at \u20b9499 per Reel. Please share the packages.',
     quote:
       'Hello Ezy Digital, I would like a quotation for my website or digital marketing requirement.',
     customQuote:
       'Hello Ezy Digital, my requirements are outside the standard packages. I would like a custom quotation.',
     maintenance:
       'Hello Ezy Digital, I am interested in the Website Maintenance plan for an existing website.',
-    metaAds:
-      'Hello Ezy Digital, I would like to know more about Meta Ads management for my business.',
   },
 }
 

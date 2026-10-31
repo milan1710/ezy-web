@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import {
   Building2,
+  Clapperboard,
   CreditCard,
   FileText,
+  Film,
   Globe,
   Image,
   Info,
@@ -20,6 +22,7 @@ import {
   ShoppingCart,
   Sparkles,
   Target,
+  TrendingUp,
   Video,
   Wrench,
 } from 'lucide-react'
@@ -30,6 +33,8 @@ import {
   metaPriceGroups,
   pricePageNote,
   pricePageTitle,
+  videoMonthlyGroups,
+  videoPriceGroups,
   websitePriceGroups,
 } from '../data/servicePricePage'
 
@@ -43,8 +48,15 @@ const websiteIcons = {
 
 const metaIcons = {
   'meta-single-campaign': Target,
-  'meta-multiple-campaigns': LayoutDashboard,
-  'meta-social-management': Share2,
+  'meta-basic-management': LayoutDashboard,
+  'meta-growth-management': TrendingUp,
+  'meta-professional-management': Megaphone,
+}
+
+const videoIcons = {
+  'basic-reel': Video,
+  'promotional-reel': Clapperboard,
+  'premium-ad-video': Film,
 }
 
 const additionalIcons = {
@@ -185,13 +197,51 @@ export default function ServicePrice() {
             </div>
           </section>
 
+          <section className="sp-section" aria-labelledby="video-pricing-heading">
+            <div className="sp-section__head sp-reveal">
+              <span className="sp-section__icon" aria-hidden="true">
+                <Clapperboard />
+              </span>
+              <div>
+                <span className="sp-section__label">03 · Video</span>
+                <h2 id="video-pricing-heading">વીડિયો એડિટિંગ પેકેજ</h2>
+                <p>પ્રોમોશનલ રીલ અને વિડિયો એડિટિંગ માટેના પેકેજ.</p>
+              </div>
+            </div>
+
+            <div className="sp-grid sp-reveal">
+              {videoPriceGroups.map((item) => (
+                <PriceCard
+                  key={item.id}
+                  item={item}
+                  kind="વીડિયો"
+                  icon={videoIcons[item.id] ?? Video}
+                />
+              ))}
+            </div>
+
+            <ul className="sp-list sp-reveal" aria-label="માસિક રીલ પેકેજ">
+              {videoMonthlyGroups.map((item) => (
+                <li className="sp-list__row" key={item.id}>
+                  <span className="sp-list__service">
+                    <span className="sp-list__icon" aria-hidden="true">
+                      <Video />
+                    </span>
+                    <span className="sp-list__name">{item.name}</span>
+                  </span>
+                  <span className="sp-list__price">{item.price}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <section className="sp-section" aria-labelledby="additional-pricing-heading">
             <div className="sp-section__head sp-reveal">
               <span className="sp-section__icon" aria-hidden="true">
                 <Palette />
               </span>
               <div>
-                <span className="sp-section__label">03 · Additional</span>
+                <span className="sp-section__label">04 · Additional</span>
                 <h2 id="additional-pricing-heading">અન્ય ડિજિટલ સેવાઓ</h2>
                 <p>ડિઝાઇન, કન્ટેન્ટ, SEO અને વેબસાઇટ મેન્ટેનન્સ સેવાઓની કિંમતો.</p>
               </div>

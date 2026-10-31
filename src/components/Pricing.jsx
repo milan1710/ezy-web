@@ -8,7 +8,7 @@ import { formatINR, packageEnquiryMessage, websitePackages } from '../data/prici
 import { whatsappLink } from '../config/siteConfig'
 
 function PricingCard({ pkg, index }) {
-  const featured = pkg.id === 'business-website'
+  const featured = Boolean(pkg.highlight)
 
   return (
     <Reveal delay={(index % 3) * 0.06} className="h-full">
@@ -22,7 +22,7 @@ function PricingCard({ pkg, index }) {
       >
         {featured ? (
           <span className="bg-brand-600 absolute -top-3 left-6 rounded-full px-3 py-1 text-[11px] font-bold tracking-wide text-white uppercase shadow-glow">
-            Recommended for growing businesses
+            {pkg.badge ?? 'Recommended option'}
           </span>
         ) : null}
 
@@ -72,6 +72,8 @@ function PricingCard({ pkg, index }) {
             size="lg"
             iconRight="ArrowRight"
             fullWidth
+            data-fb-event="PricingInquiry"
+            data-fb-label={pkg.id}
           >
             {pkg.ctaLabel}
           </Button>
@@ -103,7 +105,7 @@ export default function Pricing({ withConditions = true }) {
             eyebrow="Website development pricing"
             titleId="pricing-heading"
             title="Professional websites with clear starting prices"
-            description="Five website packages for different stages of business. Every card shows the starting price, who it is for, what is included and what is not included."
+            description="Four published website packages for different business requirements, plus a custom option. Every card shows the starting price, who it is for, what is included and what is not."
             level={2}
           />
 

@@ -9,6 +9,8 @@ import {
   additionalServices,
   formatINR,
   metaAdsPackages,
+  videoMonthlyPackages,
+  videoPackages,
   websitePackages,
 } from './pricing.js'
 
@@ -17,6 +19,8 @@ const byId = (collection, id) => collection.find((item) => item.id === id)
 const sitePrice = (id) => formatINR(byId(websitePackages, id).startingPrice)
 const metaPrice = (id) => formatINR(byId(metaAdsPackages, id).startingPrice)
 const extraPrice = (id) => formatINR(byId(additionalServices, id).startingPrice)
+const videoPrice = (id) => formatINR(byId(videoPackages, id).startingPrice)
+const videoMonthlyPrice = (id) => formatINR(byId(videoMonthlyPackages, id).startingPrice)
 
 export const pricePageTitle = 'સર્વિસ અને પ્રાઇસ લિસ્ટ'
 
@@ -27,48 +31,49 @@ export const websitePriceGroups = [
     name: 'બેઝિક વેબસાઇટ',
     price: `${sitePrice('basic-website')} થી શરૂ`,
     description:
-      'નાના બિઝનેસ, દુકાન અને ફ્રીલાન્સર માટે પ્રોફેશનલ ઓનલાઇન હાજરી.',
+      'નાના બિઝનેસ અને વ્યક્તિગત ઓનલાઇન હાજરી માટે પ્રોફેશનલ વેબસાઇટ.',
     features: [
-      '1–5 પેજ',
-      'મોબાઇલ-ફ્રેન્ડલી ડિઝાઇન',
-      'બિઝનેસની માહિતી',
-      'સર્વિસ વિભાગ',
-      'WhatsApp બટન ઇન્ટિગ્રેશન',
-      'સીધો કૉલ બટન ઇન્ટિગ્રેશન',
-      'કોન્ટેક્ટ ફોર્મ',
-    ],
-  },
-  {
-    id: 'business-website',
-    number: '02',
-    name: 'બિઝનેસ વેબસાઇટ',
-    price: `${sitePrice('business-website')} થી શરૂ`,
-    description:
-      'વધતા બિઝનેસ માટે પ્રીમિયમ ડિઝાઇન અને જરૂરી કોન્ટેક્ટ સુવિધાઓ.',
-    features: [
-      '5–8 પેજ',
-      'પ્રીમિયમ બિઝનેસ ડિઝાઇન',
-      'સર્વિસ અને પ્રોડક્ટ વિભાગ',
-      'WhatsApp ઇન્ટિગ્રેશન',
-      'કોન્ટેક્ટ ફોર્મ',
-      'Google Maps ઇન્ટિગ્રેશન',
-      'બેઝિક On-page SEO',
+      '3–5 પેજ',
+      'મોબાઇલ-રિસ્પોન્સિવ લેઆઉટ',
+      'બિઝનેસની મૂળભૂત માહિતી',
+      'સર્વિસ અથવા પ્રોડક્ટ માહિતી',
+      'WhatsApp કોન્ટેક્ટ બટન',
+      'કોન્ટેક્ટ વિગતો',
+      'બેઝિક On-page SEO સ્ટ્રક્ચર',
     ],
   },
   {
     id: 'professional-website',
-    number: '03',
+    number: '02',
     name: 'પ્રોફેશનલ વેબસાઇટ',
     price: `${sitePrice('professional-website')} થી શરૂ`,
     description:
-      'વિસ્તૃત કન્ટેન્ટ અને લીડ જનરેશન માટે કસ્ટમ ડિઝાઇનવાળી વેબસાઇટ.',
+      'વધતા બિઝનેસ માટે વધુ કસ્ટમાઇઝ્ડ ડિઝાઇન અને એન્ક્વાયરી-કેન્દ્રિત લેઆઉટ.',
     features: [
-      '8–12 પેજ',
-      'કસ્ટમ ડિઝાઇન',
-      'પ્રોડક્ટ અથવા સર્વિસ કેટલોગ',
-      'પૂછપરછ અને લીડ ફોર્મ',
-      'SEO-ફ્રેન્ડલી સ્ટ્રક્ચર',
-      'Google Analytics ઇન્ટિગ્રેશન, જરૂરી સેટઅપને આધીન',
+      '5–8 પેજ',
+      'વધુ કસ્ટમાઇઝ્ડ ડિઝાઇન',
+      'બિઝનેસ અને સર્વિસ વિભાગ',
+      'કોન્ટેક્ટ ફોર્મ',
+      'WhatsApp ઇન્ટિગ્રેશન',
+      'બેઝિક On-page SEO',
+      'સુધારેલ નેવિગેશન અને કન્વર્ઝન લેઆઉટ',
+    ],
+  },
+  {
+    id: 'business-website',
+    number: '03',
+    name: 'બિઝનેસ વેબસાઇટ',
+    price: `${sitePrice('business-website')} થી શરૂ`,
+    description:
+      'વિસ્તૃત કંપની માટે ડિટેલ સર્વિસ સેક્શન અને લીડ જનરેશન ફોર્મવાળી એડવાન્સ વેબસાઇટ.',
+    features: [
+      'એડવાન્સ બિઝનેસ ડિઝાઇન',
+      'ડિટેલ સર્વિસ વિભાગ',
+      'લીડ જનરેશન ફોર્મ',
+      'કસ્ટમ પેજ લેઆઉટ',
+      'WhatsApp ઇન્ટિગ્રેશન',
+      'બેઝિક SEO કન્ફિગરેશન',
+      'વધારાના બિઝનેસ-કેન્દ્રિત વિભાગ',
     ],
   },
   {
@@ -78,13 +83,13 @@ export const websitePriceGroups = [
     price: `${sitePrice('ecommerce')} થી શરૂ`,
     description: 'પ્રોડક્ટ ઓનલાઇન વેચવા માટે પૂર્ણ સ્ટોર સેટઅપ.',
     features: [
-      'ઓનલાઇન પ્રોડક્ટ વેચાણ',
-      'પ્રોડક્ટ લિસ્ટિંગ અને કેટેગરી',
+      'પ્રોડક્ટ કેટલોગ અને કેટેગરી',
+      'પ્રોડક્ટ ડિટેલ પેજ',
       'શોપિંગ કાર્ટ',
       'ચેકઆઉટ',
       'ઓર્ડર મેનેજમેન્ટ',
-      'પેમેન્ટ ગેટવે ઇન્ટિગ્રેશન',
-      'મોબાઇલ-ફ્રેન્ડલી ડિઝાઇન',
+      'પેમેન્ટ ગેટવે ઇન્ટિગ્રેશન, મંજૂર સ્કોપ મુજબ',
+      'મોબાઇલ-રિસ્પોન્સિવ શોપિંગ અનુભવ',
     ],
   },
   {
@@ -108,49 +113,119 @@ export const metaPriceGroups = [
   {
     id: 'meta-single-campaign',
     number: '01',
-    name: 'એક કેમ્પેઇન સેટઅપ',
+    name: 'કેમ્પેઇન સેટઅપ',
     price: metaPrice('meta-single-campaign'),
     priceSuffix: 'એક વખતનો ચાર્જ',
-    description: 'પહેલી Meta Ads કેમ્પેઇન શરૂ કરવા માટે બેઝિક સેટઅપ.',
+    description: 'એક Meta Ads કેમ્પેઇન અને એક એડ સેટનું બેઝિક સેટઅપ.',
     features: [
       'એક Meta Ads કેમ્પેઇન સેટઅપ',
+      'એક એડ સેટ',
       'ઓડિયન્સ અને લોકેશન ટાર્ગેટિંગ',
       'Ad Copy સેટઅપ',
-      'એક સ્ટેટિક પોસ્ટર',
       'બેઝિક કેમ્પેઇન સેટિંગ્સ',
+      'બેઝિક ઓપ્ટિમાઇઝેશન સેટિંગ્સ',
     ],
   },
   {
-    id: 'meta-multiple-campaigns',
+    id: 'meta-basic-management',
     number: '02',
-    name: 'બે કેમ્પેઇન સેટઅપ',
-    price: metaPrice('meta-multiple-campaigns'),
-    priceSuffix: 'એક વખતનો ચાર્જ',
-    description: 'બે કેમ્પેઇન સાથે સેટઅપ — માત્ર એક વખતનો ચાર્જ.',
+    name: 'બેઝિક એડ્સ મેનેજમેન્ટ',
+    price: metaPrice('meta-basic-management'),
+    priceSuffix: 'પ્રતિ મહિનો',
+    description: 'નાના કેમ્પેઇન માટે નિયમિત મોનિટરિંગ અને બેઝિક મેનેજમેન્ટ.',
     features: [
-      'બે Meta Ads કેમ્પેઇન સેટઅપ',
-      'ઓડિયન્સ અને લોકેશન ટાર્ગેટિંગ',
-      'Ad Copy',
-      'મંજૂર સ્કોપ મુજબ 2–3 બેઝિક પોસ્ટર ક્રિએટિવ્સ',
+      'બેઝિક કેમ્પેઇન મેનેજમેન્ટ',
+      'કેમ્પેઇન મોનિટરિંગ',
+      'બેઝિક ઓપ્ટિમાઇઝેશન',
+      'મંજૂર સ્કોપ મુજબ રિપોર્ટિંગ',
     ],
   },
   {
-    id: 'meta-social-management',
+    id: 'meta-growth-management',
     number: '03',
-    name: 'સંપૂર્ણ સોશિયલ મીડિયા + Meta Ads મેનેજમેન્ટ',
-    price: metaPrice('meta-social-management'),
+    name: 'ગ્રોથ એડ્સ મેનેજમેન્ટ',
+    price: metaPrice('meta-growth-management'),
     priceSuffix: 'પ્રતિ મહિનો',
-    description: 'Facebook અને Instagram પેજ તથા Meta Adsનું માસિક મેનેજમેન્ટ.',
+    description: 'ઓડિયન્સ અને ક્રિએટિવ ટેસ્ટિંગ સાથે વધુ સ્ટ્રક્ચર્ડ મેનેજમેન્ટ.',
     features: [
-      'Facebook પેજ મેનેજમેન્ટ',
-      'Instagram પેજ મેનેજમેન્ટ',
-      'દર મહિને 12 સુધી સ્ટેટિક પોસ્ટર',
-      'નક્કી કરેલા સર્વિસ સ્કોપમાં જરૂર મુજબ કેમ્પેઇન સેટઅપ',
-      'Ad Copy',
-      'ઓડિયન્સ અને લોકેશન ટાર્ગેટિંગ',
-      'કેમ્પેઇન મોનિટરિંગ અને ઑપ્ટિમાઇઝેશન',
-      'એક માસિક પરફોર્મન્સ રિપોર્ટ',
+      'કેમ્પેઇન મેનેજમેન્ટ',
+      'ઓડિયન્સ અને ક્રિએટિવ ટેસ્ટિંગ, જ્યાં લાગુ પડે',
+      'કેમ્પેઇન ઓપ્ટિમાઇઝેશન',
+      'પરફોર્મન્સ રિવ્યુ',
     ],
+  },
+  {
+    id: 'meta-professional-management',
+    number: '04',
+    name: 'પ્રોફેશનલ એડ્સ મેનેજમેન્ટ',
+    price: metaPrice('meta-professional-management'),
+    priceSuffix: 'પ્રતિ મહિનો',
+    description: 'ઘણા કેમ્પેઇન માટે સ્ટ્રક્ચર્ડ ટેસ્ટિંગ, એનાલિસિસ અને રિપોર્ટિંગ.',
+    features: [
+      'વ્યાપક કેમ્પેઇન મેનેજમેન્ટ',
+      'સ્ટ્રક્ચર્ડ ટેસ્ટિંગ અને ઓપ્ટિમાઇઝેશન',
+      'પરફોર્મન્સ એનાલિસિસ',
+      'મંજૂર સ્કોપ મુજબ રિપોર્ટિંગ',
+    ],
+  },
+]
+
+export const videoPriceGroups = [
+  {
+    id: 'basic-reel',
+    number: '01',
+    name: 'બેઝિક રીલ',
+    price: `${extraPrice('video-reel-editing')} થી શરૂ`,
+    priceSuffix: 'પ્રતિ રીલ',
+    description: 'તમારા આપેલા ફૂટેજમાંથી સાદી, સુઘડ રીલ એડિટ.',
+    features: [
+      'વર્ટિકલ રીલ એડિટ',
+      'બેઝિક કટ અને સિક્વન્સ',
+      'બેઝિક ટેક્સ્ટ / કેપ્શન',
+      'સોશિયલ મીડિયા માટે એક્સપોર્ટ',
+    ],
+  },
+  {
+    id: 'promotional-reel',
+    number: '02',
+    name: 'પ્રોમોશનલ રીલ',
+    price: `${videoPrice('promotional-reel')} થી શરૂ`,
+    priceSuffix: 'પ્રતિ રીલ',
+    description: 'પ્રોડક્ટ, સર્વિસ કે ઓફર માટે બ્રાન્ડેડ પ્રોમોશનલ રીલ.',
+    features: [
+      'પ્રોમોશનલ રીલ સ્ટ્રક્ચર',
+      'બ્રાન્ડેડ ટાઇટલ અને ટેક્સ્ટ',
+      'ટ્રાન્ઝિશન અને બેઝિક મોશન',
+      'મંજૂર સ્કોપ મુજબ સંગીત',
+      'સોશિયલ મીડિયા માટે એક્સપોર્ટ',
+    ],
+  },
+  {
+    id: 'premium-ad-video',
+    number: '03',
+    name: 'પ્રીમિયમ એડ વિડિયો',
+    price: `${videoPrice('premium-ad-video')} થી શરૂ`,
+    priceSuffix: 'પ્રતિ વિડિયો',
+    description: 'જાહેરાત કે વેબસાઇટ માટે વધુ વિગતવાર એડિટ કરેલો વિડિયો.',
+    features: [
+      'લાંબો પ્રોમોશનલ / એડ વિડિયો',
+      'બ્રાન્ડેડ ગ્રાફિક્સ',
+      'અલગ-અલગ આઉટપુટ ફોર્મેટ',
+      'જાહેરાત માટે તૈયાર આસ્પેક્ટ રેશિયો',
+    ],
+  },
+]
+
+export const videoMonthlyGroups = [
+  {
+    id: 'video-monthly-8',
+    name: '8 રીલ્સ',
+    price: `${videoMonthlyPrice('video-monthly-8')} પ્રતિ મહિનો`,
+  },
+  {
+    id: 'video-monthly-12',
+    name: '12 રીલ્સ',
+    price: `${videoMonthlyPrice('video-monthly-12')} પ્રતિ મહિનો`,
   },
 ]
 

@@ -10,7 +10,7 @@ export default function WebsiteDevelopment() {
   useSeo({
     title: 'Website Development Services in Gujarat | Ezy Digital',
     description:
-      'Professional website development from ₹2,999: business websites, e-commerce stores and custom web applications. Transparent starting prices and a written scope before work begins.',
+      'Professional website development from ₹3,999: business websites, e-commerce stores and custom web applications. Transparent starting prices and a written scope before work begins.',
     path: '/website-development',
   })
 
@@ -21,7 +21,7 @@ export default function WebsiteDevelopment() {
         title="Website development services for growing businesses"
         description="Business websites, professional websites, online stores and custom web applications - designed for real customers and built to work properly on mobile."
         breadcrumb={[{ label: 'Website Development' }]}
-        quoteService="business-website"
+        quoteService="professional-website"
       />
       <Services />
       <Pricing />

@@ -41,6 +41,11 @@ const reasons = [
     text: 'Meta Ads management includes campaign monitoring, basic optimization and a monthly performance report within the agreed scope.',
   },
   {
+    icon: 'Clapperboard',
+    title: 'Video and Reel editing',
+    text: 'Promotional videos and Reels edited from your footage, with the edit level, duration and revision allowance agreed up front.',
+  },
+  {
     icon: 'ShieldCheck',
     title: 'Support after launch',
     text: 'Optional maintenance covers routine fixes, updates, backups and security checks within a clearly limited monthly allowance.',
@@ -54,25 +59,40 @@ export default function About() {
         <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
             <SectionHeading
-              eyebrow="Why choose Ezy Digital"
+              eyebrow="About Ezy Digital"
               titleId="about-heading"
               align="left"
               className="mx-0"
-              title="Why choose Ezy Digital?"
-              description="Ezy Digital is built around one promise: honest scope, careful development work and a direct line to the person building your website."
+              title="Your digital growth partner"
+              description="Ezy Digital provides practical digital solutions for businesses looking to strengthen their online presence through website development, Meta Ads, and creative video content."
               level={2}
             />
 
-            <ul className="mt-10 grid gap-5 sm:grid-cols-2">
+            <p className="text-ink-600 mt-6 text-sm leading-relaxed">
+              We work with small businesses, local shops, service providers and growing companies
+              across Upleta, Rajkot district and Gujarat. A website, an advertising campaign and
+              video content work best together: the website gives customers somewhere to land, Meta
+              Ads bring relevant visitors, and short video content gives them a reason to stop and
+              look. You can start with one service and add the others when it makes sense for your
+              business.
+            </p>
+            <p className="text-ink-500 mt-3 text-sm leading-relaxed">
+              Requirements are discussed directly, the scope is written down before work starts, and
+              the final quotation reflects what you actually need rather than a fixed template.
+            </p>
+
+            <ul className="mt-10 grid gap-4 sm:grid-cols-2">
               {reasons.map((reason, index) => (
                 <Reveal key={reason.title} delay={(index % 2) * 0.07}>
-                  <li className="flex h-full gap-4 rounded-2xl border border-ink-100 bg-white p-5">
-                    <span className="bg-brand-50 text-brand-600 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
-                      <Icon name={reason.icon} className="h-5 w-5" />
+                  <li className="group border-ink-100 hover:border-brand-200 flex h-full gap-4 rounded-2xl border bg-white p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-38px_rgba(17,17,17,0.5)]">
+                    <span className="bg-ink-950 group-hover:bg-brand-600 text-white inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors">
+                      <Icon name={reason.icon} className="h-4.5 w-4.5" />
                     </span>
                     <div>
-                      <h3 className="text-sm font-bold text-ink-900">{reason.title}</h3>
-                      <p className="text-ink-500 mt-1.5 text-sm leading-relaxed">{reason.text}</p>
+                      <h3 className="font-display text-ink-950 text-[0.9rem] leading-snug font-bold">
+                        {reason.title}
+                      </h3>
+                      <p className="text-ink-500 mt-1.5 text-[0.8125rem] leading-relaxed">{reason.text}</p>
                     </div>
                   </li>
                 </Reveal>
@@ -82,7 +102,15 @@ export default function About() {
 
           {/* Owner card */}
           <Reveal delay={0.12}>
-            <aside className="from-ink-950 to-ink-900 rounded-3xl bg-gradient-to-br p-7 sm:p-8">
+            <aside className="from-ink-950 via-ink-900 to-ink-800 relative overflow-hidden rounded-3xl bg-gradient-to-br p-7 sm:p-8">
+              <div
+                className="surface-grid pointer-events-none absolute inset-0 opacity-50"
+                aria-hidden="true"
+              />
+              <div
+                className="bg-brand-600/25 pointer-events-none absolute -top-16 -right-14 h-44 w-44 rounded-full blur-3xl"
+                aria-hidden="true"
+              />
               <div className="flex items-center gap-4">
                 <span className="border-brand-500/30 bg-brand-600/15 text-brand-300 inline-flex h-16 w-16 items-center justify-center rounded-2xl border text-xl font-extrabold">
                   MS

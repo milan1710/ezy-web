@@ -2,33 +2,24 @@ import { Phone } from 'lucide-react'
 import { siteConfig } from '../config/siteConfig'
 
 /**
- * MANDATORY fixed direct-call button.
+ * Fixed "Call Now" button (secondary action under the Fill Form button).
  *
- * Always visible on every page and every screen size, anchored bottom-right.
- * Uses the exact business number and a `tel:` link so supported devices open
- * the phone dialer (mobile) or the default calling app (desktop).
+ * Always visible on desktop; on mobile the same action lives in the fixed bottom
+ * bar rendered by `FloatingActions`. Uses the exact business number and a `tel:`
+ * link so supported devices open the dialer. Clicks are counted as a Meta `Lead`
+ * with `lead_source: call_click` by `hooks/useAnalytics.js`.
  */
 export default function FloatingCallButton() {
   return (
     <a
       href={siteConfig.contact.telHref}
-      aria-label="Call Milan Soni"
-      title="Call Milan Soni"
-      className="group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400 relative inline-flex items-center"
+      aria-label={`Call Now ${siteConfig.contact.phoneInternational}`}
+      title={`Call Now ${siteConfig.contact.phoneInternational}`}
+      className="group focus-visible:outline-brand-400 relative inline-flex items-center"
     >
-      {/* Pulse ring */}
-      <span
-        aria-hidden="true"
-        className="bg-brand-600/60 animate-pulse-ring absolute inset-0 rounded-full"
-      />
-
-      <span className="bg-brand-600 shadow-glow ring-brand-500/40 relative inline-flex h-14 w-14 items-center justify-center rounded-full text-white ring-1 transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
-        <Phone className="h-6 w-6" aria-hidden="true" />
-
-        {/* Desktop hover label */}
-        <span className="bg-ink-950 pointer-events-none absolute right-full mr-3 hidden translate-x-2 rounded-lg px-3 py-2 text-sm font-semibold whitespace-nowrap text-white opacity-0 shadow-lg transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 lg:block">
-          Call Milan Soni
-        </span>
+      <span className="bg-ink-950 ring-white/10 hover:bg-ink-800 relative inline-flex items-center gap-2 rounded-full px-5 py-3.5 text-white ring-1 transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
+        <Phone className="h-4 w-4" aria-hidden="true" />
+        <span className="text-sm font-bold tracking-wide">Call Now</span>
       </span>
     </a>
   )

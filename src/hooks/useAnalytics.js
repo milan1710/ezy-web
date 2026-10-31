@@ -1,24 +1,30 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import {
-  describeLink,
   initPixel,
+  isCallLink,
   isPixelEnabled,
-  trackLead,
+  trackCallLead,
+  trackCustomEvent,
   trackPageView,
 } from '../utils/analytics'
 
 /**
  * Wires up Meta Pixel tracking for the whole site:
  *
- * 1. Initialises the pixel and sends the first PageView.
+ * 1. Initialises the single pixel and sends the first PageView.
  * 2. Sends a PageView on every in-app route change (this is a single page app,
  *    so a route change does not reload the page and would otherwise go unseen).
- * 3. Uses ONE delegated click listener to fire a `Lead` event whenever a visitor
- *    clicks a phone, WhatsApp or email link. Because it is delegated at the
- *    document level, every current and future CTA is covered automatically -
- *    the floating call/WhatsApp buttons, the header phone icon, hero buttons,
- *    pricing and package-finder CTAs and the footer links alike.
+ * 3. Uses ONE delegated click listener to fire a `Lead` event (with
+ *    `lead_source: call_click`) whenever a visitor clicks a `tel:` link. Because
+ *    it is delegated at the document level, every current and future Call Now
+ *    button is covered - the floating button, the header, the hero, the pricing
+ *    sections, the footer and the Thank You page alike.
+ * 4. Still forwards the `data-fb-event` custom events used by the pricing and
+ *    service CTAs. Those are not Lead events.
+ *
+ * The Lead event for the form is fired by the form itself, only after the CRM
+ * confirms the submission (see `components/LeadForm.jsx`).
  *
  * Everything no-ops safely when VITE_FB_PIXEL_ID is not set.
  */
@@ -48,10 +54,19 @@ export default function useAnalytics() {
       const anchor = target instanceof Element ? target.closest('a[href]') : null
       if (!anchor) return
 
-      const info = describeLink(anchor.getAttribute('href'))
-      if (!info) return
+      const customEvent = anchor.dataset.fbEvent
+      if (customEvent) {
+        trackCustomEvent(customEvent, {
+          content_name: anchor.dataset.fbLabel || customEvent,
+        })
+      }
 
-      trackLead(info.source)
+      const href = anchor.getAttribute('href')
+      if (!isCallLink(href)) return
+
+      // Fire-and-forget: the dialer must open immediately, the event must not
+      // block navigation. Duplicate clicks are handled inside trackCallLead().
+      trackCallLead(href)
     }
 
     // Capture phase so the event is counted even if a handler stops propagation.

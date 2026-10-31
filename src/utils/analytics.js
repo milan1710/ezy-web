@@ -1,20 +1,23 @@
 /**
- * Meta (Facebook) Pixel integration.
+ * Meta (Facebook) Pixel integration - one pixel, one instance.
  *
- * The pixel ID lives in the environment (`VITE_FB_PIXEL_ID`) so it can be
- * changed without touching any code - see `.env` and `.env.example`.
+ * The pixel id lives in the environment (`VITE_FB_PIXEL_ID`, see `.env`), so a
+ * new pixel can be installed by changing one value and rebuilding. There is no
+ * second pixel snippet anywhere in the project: `initPixel()` is guarded, so the
+ * base code and `fbq('init', ...)` can only ever run once per page load.
  *
- * What is tracked on this website:
- *   PageView - once when the site loads, and again on every in-app route change
- *   Lead     - when a visitor clicks a phone (`tel:`), WhatsApp (`wa.me`) or
- *              email (`mailto:`) link, i.e. when they actually try to get in touch
+ * Tracked events (all belong to the single pixel):
+ *   PageView - on first load and on every in-app route change
+ *   Lead     - (a) a confirmed lead-form submission  -> lead_source: website_form
+ *              (b) a click on a Call Now `tel:` link -> lead_source: call_click
  *
- * Nothing else is sent. In particular, no name, phone number, email address or
- * project description ever reaches Meta, because this website has no form.
+ * No name, phone number, city or any other form value is sent to Meta. The pixel
+ * only receives the page path, the selected service name (for the form event)
+ * and the lead source, which keeps ad reporting useful without sending personal
+ * data to a third party.
  *
- * The pixel is a public identifier (it appears in the page source anyway); the
- * environment variable exists for easy switching between pixel IDs, not to keep
- * it secret. If the variable is empty the pixel is disabled entirely.
+ * Google Analytics is a completely separate tag loaded from `index.html`; this
+ * module never touches `gtag`.
  */
 
 // `import.meta.env` only exists under Vite, so fall back to an empty object to
@@ -28,36 +31,36 @@ export const FB_EVENTS = {
   lead: 'Lead',
 }
 
-/** Friendly names so Meta's events manager shows useful breakdowns. */
-const LEAD_SOURCES = {
-  call: { content_name: 'Phone call button', content_category: 'Call' },
-  whatsapp: { content_name: 'WhatsApp button', content_category: 'WhatsApp' },
-  email: { content_name: 'Email link', content_category: 'Email' },
+/** Values sent as `lead_source` so form leads and call leads stay separable. */
+export const LEAD_SOURCES = {
+  form: 'website_form',
+  call: 'call_click',
 }
 
-/** True when a pixel ID has been configured. */
+/** A click on one of these links starts a phone call. */
+const CALL_LINK_PREFIX = 'tel:'
+
+/** Window used to swallow a duplicate click on the same call link. */
+export const CALL_DEDUPE_WINDOW_MS = 1000
+
+let initialised = false
+let lastCallEvent = { href: '', at: 0 }
+
+/** True when a pixel id has been configured. */
 export function isPixelEnabled() {
   return FB_PIXEL_ID.length > 0
 }
 
 /**
- * Classifies a link so the caller knows whether clicking it is a lead.
- * Pure function - no browser APIs - so it can be unit checked.
+ * Classifies an href. Only `tel:` links are call leads - normal links, email
+ * links and WhatsApp links are not counted as calls.
  *
- * @param {string} href
- * @returns {{ event: string, source: string } | null}
+ * @param {string | null | undefined} href
+ * @returns {boolean}
  */
-export function describeLink(href) {
-  if (!href || typeof href !== 'string') return null
-
-  const value = href.trim().toLowerCase()
-  const lead = (source) => ({ event: FB_EVENTS.lead, source })
-
-  if (value.startsWith('tel:')) return lead('call')
-  if (value.includes('wa.me/') || value.includes('api.whatsapp.com')) return lead('whatsapp')
-  if (value.startsWith('mailto:')) return lead('email')
-
-  return null
+export function isCallLink(href) {
+  if (typeof href !== 'string') return false
+  return href.trim().toLowerCase().startsWith(CALL_LINK_PREFIX)
 }
 
 /** Loads Meta's fbevents.js and creates a queueing `fbq` stub if needed. */
@@ -86,11 +89,9 @@ function ensureFbq() {
   return true
 }
 
-let initialised = false
-
 /**
  * Initialises the pixel once and sends the first PageView.
- * Safe to call on every render: it only does work the first time.
+ * Safe to call on every render: all work happens exactly once.
  *
  * @returns {boolean} whether the pixel is active
  */
@@ -98,16 +99,21 @@ export function initPixel() {
   if (!isPixelEnabled()) {
     if (env.DEV) {
       console.info(
-        '[analytics] Facebook Pixel is disabled because VITE_FB_PIXEL_ID is not set.',
+        '[analytics] Meta Pixel is disabled because VITE_FB_PIXEL_ID is not set.',
       )
     }
     return false
   }
 
   if (initialised) return true
-  if (!ensureFbq()) return false
 
+  // Set the flag before touching fbq so a re-entrant call cannot double init.
   initialised = true
+  if (!ensureFbq()) {
+    initialised = false
+    return false
+  }
+
   window.fbq('init', FB_PIXEL_ID)
   window.fbq('track', FB_EVENTS.pageView)
   return true
@@ -118,6 +124,9 @@ export function track(event, params) {
   if (!isPixelEnabled() || typeof window === 'undefined') return false
   if (typeof window.fbq !== 'function') return false
 
+  // fbevents.js delivers events with `navigator.sendBeacon` where available, so
+  // an event fired just before a navigation (e.g. a call click) still leaves the
+  // page with the browser.
   window.fbq('track', event, params)
   return true
 }
@@ -128,16 +137,60 @@ export function trackPageView(pathname) {
   return track(FB_EVENTS.pageView, params)
 }
 
+/** Custom (non-lead) events, e.g. `ServiceCTAClick` / `PricingInquiry`. */
+export function trackCustomEvent(name, params) {
+  if (!name) return false
+  return track(name, params)
+}
+
 /**
- * Lead event for a visitor who is trying to contact the business.
+ * Standard Meta `Lead` event with a distinguishing `lead_source`.
  *
- * @param {'call' | 'whatsapp' | 'email' | string} source
+ * @param {string} source `website_form` or `call_click`
+ * @param {Record<string, unknown>} [params]
  */
-export function trackLead(source = 'unknown') {
-  const meta = LEAD_SOURCES[source] ?? {
-    content_name: `Lead - ${source}`,
-    content_category: 'Other',
+export function trackLead(source, params = {}) {
+  return track(FB_EVENTS.lead, { ...params, lead_source: source })
+}
+
+/**
+ * Lead event for a lead-form submission. Must only be called after the CRM has
+ * confirmed the lead - never on validation errors or on failure.
+ *
+ * @param {string} [serviceLabel] service chosen by the visitor (for reporting)
+ */
+export function trackFormLead(serviceLabel = '') {
+  const label = String(serviceLabel).trim()
+  return trackLead(LEAD_SOURCES.form, {
+    content_name: label ? `Lead form - ${label}` : 'Lead form',
+    content_category: 'Form',
+  })
+}
+
+/**
+ * Lead event for a Call Now click. A click only proves that the visitor started
+ * a call action - it does not prove that the call connected.
+ *
+ * @param {string} [href] the clicked `tel:` link
+ * @returns {boolean} whether an event was actually sent
+ */
+export function trackCallLead(href = '') {
+  const now = Date.now()
+
+  // Swallow an accidental double click on the same link in quick succession so a
+  // single call attempt can never produce two Lead events.
+  if (
+    lastCallEvent.href === href &&
+    now - lastCallEvent.at < CALL_DEDUPE_WINDOW_MS
+  ) {
+    return false
   }
 
-  return track(FB_EVENTS.lead, { ...meta, source })
+  lastCallEvent = { href, at: now }
+
+  return trackLead(LEAD_SOURCES.call, {
+    content_name: 'Call Now button',
+    content_category: 'Call',
+  })
 }
+

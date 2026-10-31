@@ -9,7 +9,7 @@ export default function WebsiteDevelopmentPricing() {
   useSeo({
     title: 'Website Development Pricing in India | Ezy Digital',
     description:
-      'Compare Ezy Digital website packages: Basic ₹2,999, Business ₹5,999, Professional ₹9,999, E-commerce ₹14,999 and Custom Web Application ₹25,000. Starting prices with clear conditions.',
+      'Compare Ezy Digital website packages: Basic ₹3,999, Professional ₹7,999, Business ₹14,999, E-commerce ₹19,999 and Custom Web Application ₹25,000. Starting prices with clear conditions.',
     path: '/website-development/pricing',
   })
 
@@ -23,7 +23,7 @@ export default function WebsiteDevelopmentPricing() {
           { label: 'Website Development', to: '/website-development' },
           { label: 'Pricing' },
         ]}
-        quoteService="business-website"
+        quoteService="professional-website"
       />
       <Pricing withConditions />
       <PackageMatrix />

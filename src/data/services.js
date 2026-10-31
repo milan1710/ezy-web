@@ -192,6 +192,23 @@ export const services = [
     to: '/social-media-management',
   },
   {
+    id: 'video-editing',
+    tier: 'marketing',
+    icon: 'Clapperboard',
+    title: 'Promotional Video & Reel Editing',
+    summary:
+      'Engaging short-form video for businesses that want to present products and services through Reels and promotional videos.',
+    features: [
+      'Promotional Reels',
+      'Business marketing videos',
+      'Product videos',
+      'Social media video editing',
+      'Editing based on package and supplied footage',
+    ],
+    ctaLabel: 'View Video Editing Packages',
+    to: '/video-editing',
+  },
+  {
     id: 'creative-services',
     tier: 'marketing',
     icon: 'Palette',

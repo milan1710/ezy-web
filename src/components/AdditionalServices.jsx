@@ -117,7 +117,7 @@ export default function AdditionalServices({ showHeading = true }) {
     <section
       id="additional-services"
       aria-labelledby="additional-services-heading"
-      className="bg-white py-20 lg:py-28"
+      className="bg-ink-50 py-20 lg:py-28"
     >
       <div className="container-page">
         {showHeading ? (

@@ -27,7 +27,7 @@ const chipOff = 'border-ink-200 bg-white text-ink-700 hover:border-brand-300 hov
  * and sends the structured requirement straight to WhatsApp.
  */
 export default function PackageFinder() {
-  const [base, setBase] = useState('business-website')
+  const [base, setBase] = useState('professional-website')
   const [pageId, setPageId] = useState('p2')
   const [features, setFeatures] = useState([])
 

@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
   useSeo({
     title: 'Privacy Policy | Ezy Digital',
     description:
-      'How Ezy Digital handles information you share by phone, WhatsApp, email or the enquiry form, what the Meta Pixel measures on this website, and how to request deletion.',
+      'How Ezy Digital handles the details you submit through the lead form, what the Meta Pixel and Google Analytics measure on this website, and how to request deletion.',
     path: '/privacy-policy',
   })
 
@@ -25,13 +25,17 @@ export default function PrivacyPolicy() {
       </p>
 
       <h2>2. What information we collect</h2>
-      <p>
-        This website does not have a server-side form handler. The contact-page enquiry form runs
-        entirely in your browser: it validates the details you enter and prepares a WhatsApp
-        message, but it does not send or store those details on this website. We only hold
-        information that you choose to give us directly:
-      </p>
+      <p>We collect only what you choose to give us:</p>
       <ul>
+        <li>
+          <strong>Lead form details</strong> - the full name, mobile number, city and service you
+          select in the lead form on this website. Submitting the form sends these details to our
+          customer relationship management (CRM) system at{' '}
+          <a href="https://crm.ezydigital.in/" target="_blank" rel="noopener noreferrer">
+            crm.ezydigital.in
+          </a>{' '}
+          so our team can call you back about the enquiry.
+        </li>
         <li>
           <strong>Contact details you share</strong> - if you call, message us on WhatsApp or email
           us, we receive the number or address you contact us from, and whatever you tell us about
@@ -49,22 +53,21 @@ export default function PrivacyPolicy() {
       </p>
 
       <h2>3. How we receive your enquiry</h2>
-      <p>
-        You contact us yourself, using the enquiry form or one of the direct options on this
-        website. No data reaches us until you take one of these actions:
-      </p>
+      <p>You start every enquiry yourself, using one of these options:</p>
       <ul>
         <li>
-          <strong>Enquiry form</strong> - the form checks the fields you entered and opens WhatsApp
-          with a prefilled message. The details are not submitted to this website and nothing is
-          transmitted until you press send inside WhatsApp.
+          <strong>Lead form</strong> - the form checks your name, mobile number, city and selected
+          service in your browser, then sends them over an encrypted connection to a handler on this
+          website. That handler forwards the details to our Perfex CRM and reports back whether the
+          CRM accepted the lead. You only see the confirmation page when the CRM confirmed the
+          submission. The details are stored as a lead in our CRM.
         </li>
         <li>
-          <strong>Call</strong> - the call button opens your phone&apos;s dialer with our number. The
-          call is handled by your telephone service provider.
+          <strong>Call</strong> - the Call Now buttons open your phone&apos;s dialer with our
+          number. The call is handled by your telephone service provider.
         </li>
         <li>
-          <strong>WhatsApp</strong> - the WhatsApp buttons open a chat with us with a prefilled
+          <strong>WhatsApp</strong> - the WhatsApp links open a chat with us with a prefilled
           message that you can edit or delete before sending. Nothing is transmitted until you press
           send, and the conversation is then subject to WhatsApp&apos;s own privacy terms.
         </li>
@@ -74,8 +77,7 @@ export default function PrivacyPolicy() {
         </li>
       </ul>
       <p>
-        Your enquiry therefore exists only in your own phone, email account or WhatsApp account and
-        in ours - we do not copy it into a database or mailing list.
+        We do not add you to a mailing list, and we do not send unsolicited promotional messages.
       </p>
 
       <h2>4. Why we use your information</h2>
@@ -92,48 +94,63 @@ export default function PrivacyPolicy() {
 
       <h2>5. How long we keep it</h2>
       <p>
-        Enquiry details are kept only as long as needed to respond and, if a project goes ahead, for
-        the duration of the working relationship plus any period required for accounting or tax
-        purposes. If an enquiry does not lead to a project, we will delete it on request.
+        Lead records are kept in our CRM only as long as needed to respond and, if a project goes
+        ahead, for the duration of the working relationship plus any period required for accounting or
+        tax purposes. If an enquiry does not lead to a project, we will delete it on request.
       </p>
 
       <h2>6. Cookies, measurement and advertising</h2>
       <p>
-        This website uses the <strong>Meta (Facebook) Pixel</strong> to measure how many people visit
-        the site and how many of them try to get in touch. It is the only tracking script on this
-        website.
+        This website uses two independent measurement tools: the{' '}
+        <strong>Meta (Facebook) Pixel</strong> and <strong>Google Analytics 4</strong> (Google tag
+        <code> G-NLVGK5BQ3D</code>).
       </p>
-      <p>When you use the site, the pixel may:</p>
+      <p>The Meta Pixel records:</p>
       <ul>
+        <li>a <strong>PageView</strong> when the site loads and when you move between pages;</li>
         <li>
-          set cookies in your browser (including the <strong>_fbp</strong> cookie) and read that
-          cookie on later visits;
+          a <strong>Lead</strong> when the lead form has been successfully submitted and confirmed by
+          our CRM (recorded with the source value <code>website_form</code>, plus the service you
+          selected);
         </li>
         <li>
-          send Meta Platforms information such as the page you viewed, the fact that you clicked a
-          call or WhatsApp button, your IP address, and standard browser and device details.
+          a <strong>Lead</strong> when you click a Call Now button (recorded with the source value
+          <code>call_click</code>). This only records that the call action was started - it does not
+          confirm that the call connected.
+        </li>
+      </ul>
+      <p>When you use the site, these tools may:</p>
+      <ul>
+        <li>
+          set cookies in your browser (including the Meta <strong>_fbp</strong> cookie and Google
+          Analytics cookies such as <strong>_ga</strong>) and read them on later visits;
+        </li>
+        <li>
+          send the page you viewed, the lead source described above, your approximate location derived
+          from your IP address, and standard browser and device details to Meta Platforms and to
+          Google.
         </li>
       </ul>
       <p>
         We use this only to understand which pages lead to enquiries and to measure the performance of
-        any Facebook or Instagram advertising we may run. It is not used to build a profile of you for
-        any other purpose.
+        any Facebook, Instagram or Google advertising we may run. It is not used to build a profile of
+        you for any other purpose.
       </p>
       <p>
-        <strong>What is never sent to Meta:</strong> your name, phone number, email address, or
-        anything you enter in the enquiry form. The form prepares a WhatsApp message locally and
-        this website does not pass those details to the Meta Pixel.
+        <strong>What is never sent to Meta or Google:</strong> your name, mobile number, city, or the
+        service you select. The form sends those details only to our own lead handler and our CRM -
+        never to an advertising platform. No conversion API or hashed customer list is used.
       </p>
       <p>You can limit or avoid this measurement by:</p>
       <ul>
         <li>changing your cookies and tracking settings in your browser;</li>
         <li>
-          adjusting your advertising preferences in your Meta / Facebook account, or browsing while
-          logged out of Meta;
+          adjusting your advertising preferences in your Meta / Facebook or Google account, or
+          browsing while logged out;
         </li>
         <li>
           using a browser or extension that blocks third-party scripts (the website will still work
-          normally).
+          normally, and the lead form will still submit).
         </li>
       </ul>
       <p>
@@ -144,17 +161,26 @@ export default function PrivacyPolicy() {
 
       <h2>7. Third-party services</h2>
       <p>
-        Some parts of this website link to third-party services. Once you leave this website, the
-        privacy policy of that service applies:
+        Some parts of this website use or link to third-party services. Where a service processes the
+        data described above, its own privacy policy also applies:
       </p>
       <ul>
         <li>
-          <strong>Meta Platforms (Facebook Pixel)</strong> - measures page visits and clicks on our
-          call, WhatsApp and email links, as described in section 6.
+          <strong>Meta Platforms (Facebook Pixel)</strong> - measures page visits, confirmed form
+          leads and Call Now clicks, as described in section 6.
         </li>
         <li>
-          <strong>WhatsApp</strong> (Meta Platforms) - used for prefilled enquiry messages and the
-          floating chat button.
+          <strong>Google Analytics 4</strong> - measures page visits and general traffic statistics,
+          as described in section 6.
+        </li>
+        <li>
+          <strong>Perfex CRM</strong> - stores the lead (name, mobile number, city and selected
+          service) submitted through the lead form so our team can follow up.
+        </li>
+        <li>
+          <strong>WhatsApp</strong> (Meta Platforms) - used for the WhatsApp links on this website.
+          The static floating WhatsApp button has been removed; any WhatsApp link opens a chat only
+          when you choose to click it.
         </li>
         <li>
           <strong>Google Fonts</strong> - used to load the Inter typeface. Google may log the request

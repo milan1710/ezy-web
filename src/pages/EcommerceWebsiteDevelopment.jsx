@@ -32,7 +32,7 @@ export default function EcommerceWebsiteDevelopment() {
   useSeo({
     title: 'E-commerce Website Development in Gujarat | Ezy Digital',
     description:
-      'E-commerce website development from ₹14,999 with product catalogue, cart, checkout, payment gateway and order management. Payment gateway and third-party fees are additional.',
+      'E-commerce website development from ₹19,999 with product catalogue, cart, checkout, payment gateway and order management. Payment gateway and third-party fees are additional.',
     path: '/ecommerce-website-development',
   })
 
@@ -41,7 +41,7 @@ export default function EcommerceWebsiteDevelopment() {
       <PageHeader
         eyebrow="E-commerce website development"
         title="Sell your products online with a store built for mobile shoppers"
-        description="A product catalogue, cart, checkout and order management in one focused online store. Starting at ₹14,999, with the final scope agreed in writing."
+        description="A product catalogue, cart, checkout and order management in one focused online store. Starting at ₹19,999, with the final scope agreed in writing."
         breadcrumb={[
           { label: 'Website Development', to: '/website-development' },
           { label: 'E-commerce' },

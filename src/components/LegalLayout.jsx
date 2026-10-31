@@ -10,26 +10,33 @@ export default function LegalLayout({ title, lead, updated, children }) {
   return (
     <>
       <header className="bg-ink-950 relative isolate overflow-hidden pt-28 pb-14 lg:pt-36 lg:pb-16">
-        <div className="surface-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
+        <div className="surface-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
         <div
-          className="pointer-events-none absolute -top-32 right-0 h-[24rem] w-[24rem] rounded-full bg-brand-600/20 blur-[120px]"
+          className="glow-red pointer-events-none absolute -top-32 right-[-10%] h-[30rem] w-[30rem]"
           aria-hidden="true"
         />
         <div className="container-page relative">
-          <nav aria-label="Breadcrumb" className="text-ink-400 mb-5 text-sm">
-            <Link to="/" className="transition-colors hover:text-white">
+          <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-sm">
+            <Link
+              to="/"
+              className="text-ink-300 hover:border-white/30 hover:text-white inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 transition-colors"
+            >
               Home
             </Link>
-            <span className="mx-2">/</span>
-            <span className="text-ink-200">{title}</span>
+            <span className="text-ink-500" aria-hidden="true">
+              /
+            </span>
+            <span className="text-ink-100 inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">
+              {title}
+            </span>
           </nav>
 
-          <h1 className="max-w-3xl text-3xl leading-tight font-extrabold text-white sm:text-4xl lg:text-[2.75rem]">
+          <h1 className="font-display max-w-3xl text-[2.1rem] leading-[1.08] font-extrabold tracking-[-0.03em] text-white sm:text-[2.6rem] lg:text-[2.95rem]">
             {title}
           </h1>
-          <p className="text-ink-300 mt-5 max-w-2xl text-base leading-relaxed">{lead}</p>
+          <p className="text-ink-300 mt-5 max-w-2xl text-[0.975rem] leading-relaxed">{lead}</p>
           {updated ? (
-            <p className="text-ink-400 mt-6 text-xs font-semibold tracking-[0.18em] uppercase">
+            <p className="text-ink-500 mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[0.65rem] font-bold tracking-[0.16em] uppercase">
               Last updated: {updated}
             </p>
           ) : null}
@@ -40,8 +47,8 @@ export default function LegalLayout({ title, lead, updated, children }) {
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_20rem]">
           <div className="legal-prose max-w-3xl">{children}</div>
 
-          <aside className="h-max rounded-2xl border border-ink-100 bg-ink-50 p-6 lg:sticky lg:top-28">
-            <h2 className="text-base font-bold text-ink-900">Questions about this page?</h2>
+          <aside className="border-ink-100 bg-ink-50 h-max rounded-2xl border p-6 lg:sticky lg:top-28">
+            <h2 className="font-display text-ink-950 text-base font-bold">Questions about this page?</h2>
             <p className="text-ink-500 mt-2 text-sm leading-relaxed">
               Contact {siteConfig.brand.owner} at {siteConfig.brand.fullName} directly.
             </p>
