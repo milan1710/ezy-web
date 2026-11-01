@@ -6,9 +6,11 @@
  * build-time configuration.
  *
  * Tracked events:
- *   PageView - once on first load and on every in-app route change
- *   Lead     - when a visitor clicks any phone (`tel:`) link
- *   Lead     - once on the thank-you page after a successful form submission
+ *   PageView  - once on first load and on every in-app route change
+ *   Lead      - once on the thank-you page after a successful form submission
+ *   CallClick - when a visitor clicks any phone (`tel:`) link. This is a custom
+ *               event and NOT a `Lead`, so call clicks never inflate the Lead
+ *               count reported by Meta.
  *
  * No name, phone number, email address or form description is ever sent to
  * Meta. Only the event and generic button/page labels are sent.
@@ -30,11 +32,11 @@ export const FB_PIXEL_ID =
 export const FB_EVENTS = {
   pageView: 'PageView',
   lead: 'Lead',
+  callClick: 'CallClick',
 }
 
 /** Friendly labels so Meta Events Manager shows useful breakdowns. */
 const LEAD_SOURCES = {
-  call: { content_name: 'Phone call button', content_category: 'Call' },
   form: { content_name: 'Ceramic growth form', content_category: 'Form' },
 }
 
@@ -113,13 +115,27 @@ export function trackPageView(pathname) {
 /**
  * Lead event for a visitor who is trying to contact the business.
  *
- * @param {'call' | 'form' | string} source
+ * @param {'form' | string} source
  */
-export function trackLead(source = 'unknown') {
+export function trackLead(source = 'form') {
   const meta = LEAD_SOURCES[source] ?? {
     content_name: `Lead - ${source}`,
     content_category: 'Other',
   }
 
   return track(FB_EVENTS.lead, { ...meta, source })
+}
+
+/**
+ * Custom `CallClick` event for a phone (`tel:`) link click.
+ *
+ * Deliberately NOT a `Lead` event: clicking a Call Now button only proves that
+ * the dialer was opened, so counting it as a lead inflates the Lead numbers in
+ * Meta Ads Manager. Only the thank-you page fires the form `Lead`.
+ */
+export function trackCallClick() {
+  return track(FB_EVENTS.callClick, {
+    content_name: 'Phone call button',
+    content_category: 'Call',
+  })
 }

@@ -6,8 +6,8 @@ import { siteConfig } from '../config/siteConfig'
  *
  * Always visible on desktop; on mobile the same action lives in the fixed bottom
  * bar rendered by `FloatingActions`. Uses the exact business number and a `tel:`
- * link so supported devices open the dialer. Clicks are counted as a Meta `Lead`
- * with `lead_source: call_click` by `hooks/useAnalytics.js`.
+ * link so supported devices open the dialer. Clicks are sent as a custom
+ * `CallClick` event (never a `Lead`) by `hooks/useAnalytics.js`.
  */
 export default function FloatingCallButton() {
   return (

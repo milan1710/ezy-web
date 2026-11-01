@@ -14,8 +14,9 @@ const formButtonBase =
  *   Meta traffic - the form is always one tap away.
  * - Desktop: the same two actions stacked bottom-right, form first.
  *
- * Call links are counted as a Meta `Lead` by the delegated listener in
- * `hooks/useAnalytics.js`; the form Lead fires only after the CRM confirms.
+ * Call links send a custom `CallClick` event (never a `Lead`) through the
+ * delegated listener in `hooks/useAnalytics.js`; the only `Lead` on this site is
+ * the form's, and it fires only after the CRM confirms.
  */
 export default function FloatingActions() {
   return (

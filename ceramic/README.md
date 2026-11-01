@@ -88,8 +88,8 @@ the public form key is enough.
 
 The floating WhatsApp button has been replaced by two fixed buttons: **Fill
 Form** (scrolls to the audit form, or opens `/contact` on legacy routes) and
-**Call** (`tel:+919512648085`). All phone-link clicks are counted as Meta
-`Lead` events.
+**Call** (`tel:+919512648085`). All phone-link clicks send a custom `CallClick`
+event - never a `Lead`.
 
 ## Meta Pixel
 
@@ -97,7 +97,8 @@ Form** (scrolls to the audit form, or opens `/contact` on legacy routes) and
 `VITE_FB_PIXEL_ID` if needed) and tracks:
 
 - `PageView` on first load and every in-app route change.
-- `Lead` when any `tel:` link is clicked.
+- `CallClick` (custom event, not `Lead`) when any `tel:` link is clicked, so call
+  clicks never inflate the Lead count in Meta Ads Manager.
 - `Lead` once on the thank-you page after a successful form submission. A
   per-submission id in `sessionStorage` prevents double counting on refresh or
   React StrictMode remounts. Direct visits to `/thank-you` do not count.

@@ -7,9 +7,13 @@
  * base code and `fbq('init', ...)` can only ever run once per page load.
  *
  * Tracked events (all belong to the single pixel):
- *   PageView - on first load and on every in-app route change
- *   Lead     - (a) a confirmed lead-form submission  -> lead_source: website_form
- *              (b) a click on a Call Now `tel:` link -> lead_source: call_click
+ *   PageView  - on first load and on every in-app route change
+ *   Lead      - ONLY for a lead-form submission confirmed by the CRM
+ *               -> lead_source: website_form
+ *   CallClick - a click on a Call Now `tel:` link. This is deliberately a
+ *               custom event and NOT `Lead`: opening the dialer does not prove
+ *               that a lead was created, so call clicks must never inflate the
+ *               Lead count reported by Meta.
  *
  * No name, phone number, city or any other form value is sent to Meta. The pixel
  * only receives the page path, the selected service name (for the form event)
@@ -29,12 +33,12 @@ export const FB_PIXEL_ID = String(env.VITE_FB_PIXEL_ID ?? '').trim()
 export const FB_EVENTS = {
   pageView: 'PageView',
   lead: 'Lead',
+  callClick: 'CallClick',
 }
 
-/** Values sent as `lead_source` so form leads and call leads stay separable. */
+/** `lead_source` values. Only a confirmed form submission is a Lead. */
 export const LEAD_SOURCES = {
   form: 'website_form',
-  call: 'call_click',
 }
 
 /** A click on one of these links starts a phone call. */
@@ -146,7 +150,7 @@ export function trackCustomEvent(name, params) {
 /**
  * Standard Meta `Lead` event with a distinguishing `lead_source`.
  *
- * @param {string} source `website_form` or `call_click`
+ * @param {string} source `website_form`
  * @param {Record<string, unknown>} [params]
  */
 export function trackLead(source, params = {}) {
@@ -168,17 +172,21 @@ export function trackFormLead(serviceLabel = '') {
 }
 
 /**
- * Lead event for a Call Now click. A click only proves that the visitor started
- * a call action - it does not prove that the call connected.
+ * Custom `CallClick` event for a Call Now click.
+ *
+ * This is intentionally NOT a `Lead` event: a click only proves that the dialer
+ * was opened, so counting it as a lead inflates the Lead numbers in Meta Ads
+ * Manager and in the events behind any Lead-optimised campaign. Only a lead form
+ * that the CRM confirmed produces a `Lead` (see `trackFormLead()`).
  *
  * @param {string} [href] the clicked `tel:` link
  * @returns {boolean} whether an event was actually sent
  */
-export function trackCallLead(href = '') {
+export function trackCallClick(href = '') {
   const now = Date.now()
 
   // Swallow an accidental double click on the same link in quick succession so a
-  // single call attempt can never produce two Lead events.
+  // single call attempt can never produce two events.
   if (
     lastCallEvent.href === href &&
     now - lastCallEvent.at < CALL_DEDUPE_WINDOW_MS
@@ -188,7 +196,7 @@ export function trackCallLead(href = '') {
 
   lastCallEvent = { href, at: now }
 
-  return trackLead(LEAD_SOURCES.call, {
+  return track(FB_EVENTS.callClick, {
     content_name: 'Call Now button',
     content_category: 'Call',
   })

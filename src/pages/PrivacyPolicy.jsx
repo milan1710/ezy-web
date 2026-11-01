@@ -114,9 +114,9 @@ export default function PrivacyPolicy() {
           selected);
         </li>
         <li>
-          a <strong>Lead</strong> when you click a Call Now button (recorded with the source value
-          <code>call_click</code>). This only records that the call action was started - it does not
-          confirm that the call connected.
+          a <strong>CallClick</strong> custom event when you click a Call Now button. This is not a{' '}
+          <strong>Lead</strong> event: it only records that the call action was started, not that a
+          call connected or that an enquiry was created.
         </li>
       </ul>
       <p>When you use the site, these tools may:</p>

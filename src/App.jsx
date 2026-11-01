@@ -36,7 +36,8 @@ function PageFallback() {
 }
 
 export default function App() {
-  // Meta Pixel: PageView on load and on route change, Lead on call/WhatsApp/email clicks.
+  // Meta Pixel: PageView on load and on route change, `Lead` only for a confirmed
+  // form submission, custom `CallClick` for Call Now (`tel:`) clicks.
   useAnalytics()
 
   const { pathname } = useLocation()

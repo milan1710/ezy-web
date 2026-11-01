@@ -400,7 +400,11 @@ check(
 check('PageView event name', FB_EVENTS.pageView === 'PageView', FB_EVENTS.pageView)
 check('Lead event name', FB_EVENTS.lead === 'Lead', FB_EVENTS.lead)
 check('form leads use the website_form source', LEAD_SOURCES.form === 'website_form')
-check('call leads use the call_click source', LEAD_SOURCES.call === 'call_click')
+check(
+  'call clicks are a custom event, not a Lead',
+  FB_EVENTS.callClick === 'CallClick' && LEAD_SOURCES.call === undefined,
+  String(FB_EVENTS.callClick),
+)
 check('duplicate call clicks are deduped', CALL_DEDUPE_WINDOW_MS >= 500)
 
 check('tel: links are call links', isCallLink(siteConfig.contact.telHref) === true)
@@ -443,17 +447,22 @@ check(
     .length === 1,
 )
 check('pixel init is guarded against double initialisation', /if \(initialised\) return true/.test(analyticsSource))
-check('call clicks send a distinct lead_source', /LEAD_SOURCES\.call/.test(analyticsSource))
+check(
+  'call clicks never fire a Lead event',
+  !/LEAD_SOURCES\.call/.test(analyticsSource) &&
+    !/trackLead\([^)]*call/i.test(analyticsSource) &&
+    /track\(FB_EVENTS\.callClick/.test(analyticsSource),
+)
 check('form leads send a distinct lead_source', /LEAD_SOURCES\.form/.test(analyticsSource))
-check('only tel: links are counted as call leads', /CALL_LINK_PREFIX = 'tel:'/.test(analyticsSource))
+check('only tel: links are counted as call clicks', /CALL_LINK_PREFIX = 'tel:'/.test(analyticsSource))
 
 // The hook must actually wire the behaviours together.
 const analyticsHook = readFileSync(new URL('../src/hooks/useAnalytics.js', import.meta.url), 'utf8')
 check('analytics hook initialises the pixel', /initPixel\(\)/.test(analyticsHook))
 check('analytics hook tracks route-change page views', /trackPageView\(/.test(analyticsHook))
 check(
-  'analytics hook turns call clicks into Lead events',
-  /isCallLink\(/.test(analyticsHook) && /trackCallLead\(/.test(analyticsHook),
+  'analytics hook turns call clicks into CallClick events, not Leads',
+  /isCallLink\(/.test(analyticsHook) && /trackCallClick\(/.test(analyticsHook),
 )
 check(
   'analytics hook listens for clicks at document level',

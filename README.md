@@ -174,22 +174,24 @@ safely.
 | --- | --- | --- |
 | Page visit / in-app route change | `PageView` | page path |
 | Lead form submitted **and confirmed by the CRM** | `Lead` | `lead_source: 'website_form'`, `content_name: 'Lead form - <service>'`, `content_category: 'Form'` |
-| Click on any Call Now (`tel:`) link | `Lead` | `lead_source: 'call_click'`, `content_name: 'Call Now button'`, `content_category: 'Call'` |
+| Click on any Call Now (`tel:`) link | `CallClick` (custom, **not** `Lead`) | `content_name: 'Call Now button'`, `content_category: 'Call'` |
 
 The pricing/service CTAs still send the existing custom events (`PricingInquiry`,
 `ServiceCTAClick`) - those are not Lead events.
 
-A Call Now click only proves that the call action was started. It cannot prove the call connected.
+A Call Now click only proves that the call action was started. It cannot prove the call connected,
+so it is reported as a custom `CallClick` event and **never** as a `Lead`. The Lead count in Meta
+Ads Manager therefore contains form submissions only.
 
 ### How it is implemented
 
 - `src/utils/analytics.js` - the single pixel loader (`ensureFbq` + one guarded `fbq('init')`),
   `track()`, `trackPageView()`, `trackCustomEvent()`, `trackLead()`, `trackFormLead()`,
-  `trackCallLead()` and the pure `isCallLink()` classifier. Duplicate call clicks on the same link
+  `trackCallClick()` and the pure `isCallLink()` classifier. Duplicate call clicks on the same link
   inside `CALL_DEDUPE_WINDOW_MS` are swallowed.
 - `src/hooks/useAnalytics.js` - initialises the pixel, sends route-change PageViews, and installs
   **one delegated click/aux-click listener** on the document, so every current and future Call Now
-  button is counted. `tel:` links are handled with capture phase and never blocked.
+  button fires `CallClick`. `tel:` links are handled with capture phase and never blocked.
 - `src/components/LeadForm.jsx` - fires `trackFormLead()` only after the proxy returned
   `success: true` (i.e. the CRM confirmed the lead), then redirects to `/thank-you/`.
 - `src/pages/ThankYou.jsx` - sends no `Lead` event at all, so opening the URL directly is never

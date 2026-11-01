@@ -1,18 +1,19 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import { initPixel, isPixelEnabled, trackLead, trackPageView } from '../utils/analytics'
+import { initPixel, isPixelEnabled, trackCallClick, trackPageView } from '../utils/analytics'
 
 /**
  * Wires up Meta Pixel tracking for the ceramic site:
  *
  * 1. Initialises the pixel and sends the first PageView.
  * 2. Sends a PageView on every in-app route change.
- * 3. Fires a Lead when a visitor clicks any phone (`tel:`) link. This covers
- *    the floating call button, header/footer phone links and every "call"
- *    fallback inside the forms.
+ * 3. Fires a custom `CallClick` event when a visitor clicks any phone (`tel:`)
+ *    link. This covers the floating call button, header/footer phone links and
+ *    every "call" fallback inside the forms. It is NOT a `Lead`, so a call click
+ *    can never inflate the Lead count in Meta Ads reporting.
  *
- * Form submissions are counted separately on the thank-you page, so they are
- * never double-counted here.
+ * Form submissions are counted separately on the thank-you page (the only
+ * `Lead` event), so they are never double-counted here.
  */
 export default function useAnalytics() {
   const location = useLocation()
@@ -41,7 +42,7 @@ export default function useAnalytics() {
       if (!anchor) return
 
       const href = (anchor.getAttribute('href') || '').trim().toLowerCase()
-      if (href.startsWith('tel:')) trackLead('call')
+      if (href.startsWith('tel:')) trackCallClick()
     }
 
     // Capture phase so the event is counted even if a handler stops propagation.
