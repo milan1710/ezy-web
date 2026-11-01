@@ -25,6 +25,7 @@ const pending = new Map()
 const consoleErrors = []
 const pageExceptions = []
 let capturedFormPost = ''
+let crmShouldFail = false
 ws.addEventListener('message', async (event) => {
   const message = JSON.parse(event.data)
   if (message.id && pending.has(message.id)) {
@@ -37,6 +38,14 @@ ws.addEventListener('message', async (event) => {
   if (message.method === 'Fetch.requestPaused') {
     // Intercept the CRM request so the smoke test never creates a real lead.
     capturedFormPost = message.params.request.postData || ''
+    if (crmShouldFail) {
+      // Simulates a rejected submission (network / API failure).
+      await send('Fetch.failRequest', {
+        requestId: message.params.requestId,
+        errorReason: 'Failed',
+      })
+      return
+    }
     await send('Fetch.fulfillRequest', {
       requestId: message.params.requestId,
       responseCode: 200,
@@ -86,12 +95,24 @@ async function navigate(path) {
   await sleep(400)
 }
 
+async function waitForPage() {
+  for (let i = 0; i < 50; i += 1) {
+    await sleep(100)
+    const ready = await evaluate("document.readyState === 'complete' && !!document.querySelector('h1')")
+    if (ready) break
+  }
+  await sleep(500)
+}
+
 const results = []
 const failures = []
 function check(name, ok, detail = '') {
   results.push({ name, ok, detail })
   if (!ok) failures.push(`${name}${detail ? ` — ${detail}` : ''}`)
 }
+
+const EXPECTED_PRICES = ['₹30,000', '₹75,000', '₹1,50,000', '₹2,25,000', '₹3,00,000']
+const OLD_PRICES = ['₹1,00,000', '₹2,50,000', '₹5,00,000', '₹7,50,000', '₹10,00,000']
 
 await send('Page.enable')
 await send('Runtime.enable')
@@ -137,10 +158,38 @@ check('homepage title', home.title === 'Ceramic Digital Marketing & Website Solu
 check('single h1', home.h1 === 'Digital Growth Solutions for Ceramic Businesses', home.h1)
 check('five packages', home.packages === 5, String(home.packages))
 check(
-  'approved prices',
-  JSON.stringify(home.prices) ===
-    JSON.stringify(['₹1,00,000', '₹2,50,000', '₹5,00,000', '₹7,50,000', '₹10,00,000']),
+  'approved service charges',
+  JSON.stringify(home.prices) === JSON.stringify(EXPECTED_PRICES),
   home.prices.join(', '),
+)
+const pageText = await evaluate('document.body.innerText')
+check(
+  'old package prices removed',
+  OLD_PRICES.every((price) => !pageText.includes(price)),
+  OLD_PRICES.filter((price) => pageText.includes(price)).join(', '),
+)
+check(
+  'five service charge cards',
+  (pageText.match(/advertising budget/gi) || []).length >= 5,
+  String((pageText.match(/advertising budget/gi) || []).length),
+)
+
+// Meta Pixel: exactly one init with the verified id and one PageView on load.
+const pixel = await evaluate(`({
+  init: window.__fbqEvents.filter((event) => event[0] === 'init'),
+  pageViews: window.__fbqEvents.filter((event) => event[1] === 'PageView').length,
+  registry: window.__EZY_CERAMIC_PIXELS__ || [],
+})`)
+check(
+  'pixel 1679588473838138 initialised once',
+  pixel.init.length === 1 && pixel.init[0][1] === '1679588473838138',
+  JSON.stringify(pixel.init),
+)
+check('page load fires one PageView', pixel.pageViews === 1, String(pixel.pageViews))
+check(
+  'pixel registry has a single id',
+  JSON.stringify(pixel.registry) === JSON.stringify(['1679588473838138']),
+  JSON.stringify(pixel.registry),
 )
 check('eight services', home.services === 8, String(home.services))
 check('six industries', home.industries === 6, String(home.industries))
@@ -187,8 +236,13 @@ for (const pkg of packages) {
     `WhatsApp message ${pkg.name}`,
     pkg.host === 'wa.me' &&
       pkg.number === '919512648085' &&
-      pkg.text.includes(pkg.name) &&
-      pkg.text.includes(pkg.price),
+      pkg.text.includes('Ceramic Industry Marketing Package') &&
+      pkg.text.includes(`Package: ${pkg.name}`) &&
+      pkg.text.includes(pkg.price) &&
+      pkg.text.includes('Monthly Service Charge') &&
+      pkg.text.includes('Advertising budget is separate') &&
+      pkg.text.includes('GST is extra') &&
+      !OLD_PRICES.some((price) => pkg.text.includes(price)),
     pkg.text,
   )
 }
@@ -242,8 +296,12 @@ const invalid = await evaluate(`(() => {
 check('audit validation summary', invalid.summary.includes('Please review'), invalid.summary)
 check('audit field errors', invalid.fields === 6, String(invalid.fields))
 check('no fake form success', invalid.status === false)
+check(
+  'validation errors fire no Lead',
+  (await evaluate("window.__fbqEvents.filter((event) => event[1] === 'Lead').length")) === 0,
+)
 
-await evaluate(`(() => {
+const FILL_AUDIT_FORM = `(() => {
   const form = document.querySelector('.cn-audit-form');
   const setInput = (selector, value) => {
     const el = form.querySelector(selector);
@@ -263,7 +321,8 @@ await evaluate(`(() => {
   setSelect('#audit-business-type', 'Ceramic Tile Manufacturer');
   setSelect('#audit-target-market', 'Domestic — India');
   setSelect('#audit-growth-goal', 'More buyer inquiries');
-})()`)
+})()`
+await evaluate(FILL_AUDIT_FORM)
 await sleep(300)
 await evaluate("document.querySelector('.cn-audit-form button[type=submit]').click()")
 await sleep(1200)
@@ -271,16 +330,60 @@ const valid = await evaluate(`(() => ({
   path: window.location.pathname,
   heading: document.querySelector('.thankyou__card h1')?.textContent || '',
   leads: window.__fbqEvents.filter((e) => e[1] === 'Lead'),
+  pageViews: window.__fbqEvents.filter((e) => e[1] === 'PageView').length,
 }))()`)
 check('audit form redirects to thank-you', valid.path.endsWith('/thank-you'), valid.path)
 check('thank-you page renders', valid.heading.includes('Thank you'), valid.heading.slice(0, 80))
-check('thank-you fires form Lead', valid.leads.some((e) => e[2]?.source === 'form'))
+check('thank-you fires exactly one Lead', valid.leads.length === 1, String(valid.leads.length))
+check(
+  'Lead is tagged as the ceramic audit form',
+  valid.leads[0]?.[2]?.source === 'audit' &&
+    String(valid.leads[0]?.[2]?.content_name || '').startsWith('Ceramic'),
+  JSON.stringify(valid.leads[0]?.[2] || {}),
+)
 
 const leadPayload = new URLSearchParams(capturedFormPost)
 check('CRM form key sent', leadPayload.get('key') === '95115b27a7b5f5e2f295973f75aa376f')
 check('CRM name and company mapped', leadPayload.get('name') === 'Test User' && leadPayload.get('company') === 'Test Ceramics')
 check('CRM phone mapped', leadPayload.get('phonenumber') === '+919876543210')
 check('CRM description gets extra fields', (leadPayload.get('description') || '').includes('More buyer inquiries'))
+
+// Refreshing the thank-you page must not fire another Lead.
+await send('Page.reload', { ignoreCache: true })
+await waitForPage()
+const afterReload = await evaluate(`({
+  path: window.location.pathname,
+  leads: window.__fbqEvents.filter((event) => event[1] === 'Lead').length,
+  pageViews: window.__fbqEvents.filter((event) => event[1] === 'PageView').length,
+})`)
+check('refresh thank-you fires no Lead', afterReload.leads === 0, String(afterReload.leads))
+check('refresh still counts a PageView', afterReload.pageViews === 1, String(afterReload.pageViews))
+
+// A direct visit to the thank-you URL must not count as a Lead either.
+await navigate('/thank-you')
+const directVisit = await evaluate(`({
+  leads: window.__fbqEvents.filter((event) => event[1] === 'Lead').length,
+  pageViews: window.__fbqEvents.filter((event) => event[1] === 'PageView').length,
+})`)
+check('direct thank-you visit fires no Lead', directVisit.leads === 0, String(directVisit.leads))
+check('direct thank-you visit still fires PageView', directVisit.pageViews === 1, String(directVisit.pageViews))
+
+// A rejected CRM request must show the error state and fire no Lead.
+crmShouldFail = true
+await navigate('/')
+await evaluate(FILL_AUDIT_FORM)
+await sleep(300)
+await evaluate("document.querySelector('.cn-audit-form button[type=submit]').click()")
+await sleep(1200)
+const failedSubmission = await evaluate(`({
+  path: window.location.pathname,
+  errorShown: Boolean(document.querySelector('.cn-form-status--error')),
+  leads: window.__fbqEvents.filter((event) => event[1] === 'Lead').length,
+})`)
+check('failed submission stays on the form', !failedSubmission.path.endsWith('/thank-you'), failedSubmission.path)
+check('failed submission shows the error state', failedSubmission.errorShown === true)
+check('failed submission fires no Lead', failedSubmission.leads === 0, String(failedSubmission.leads))
+crmShouldFail = false
 
 // Reduced-motion content fallback.
 await send('Emulation.setEmulatedMedia', {

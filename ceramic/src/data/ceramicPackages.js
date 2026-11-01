@@ -1,21 +1,20 @@
 /**
- * Ceramic growth packages — the single source of truth for every price and
- * inquiry estimate shown on the ceramic presentation.
+ * Ceramic growth packages — the single source of truth for every monthly
+ * service charge shown on the ceramic presentation and sent to WhatsApp.
  *
- * All prices are monthly. GST is charged extra. Inquiry ranges are planning
- * estimates, not guaranteed results.
+ * All service charges are monthly. GST is charged extra wherever applicable.
+ * Advertising budget is separate from the monthly service charge. No specific
+ * number of inquiries, leads or sales is guaranteed.
  */
 
 export const ceramicPackages = [
   {
     id: 'ceramic-starter',
     number: '01',
-    name: 'Ceramic Starter',
-    price: '₹1,00,000',
-    priceValue: 100000,
+    name: 'Starter',
+    price: '₹30,000',
+    priceValue: 30000,
     priceSuffix: '/ month',
-    inquiries: '200–500',
-    inquiriesSuffix: '/ month',
     positioning:
       'Ideal for ceramic businesses beginning a structured digital growth programme.',
     deliverables: [
@@ -30,14 +29,12 @@ export const ceramicPackages = [
     recommended: false,
   },
   {
-    id: 'market-expansion',
+    id: 'ceramic-growth',
     number: '02',
-    name: 'Market Expansion',
-    price: '₹2,50,000',
-    priceValue: 250000,
+    name: 'Growth',
+    price: '₹75,000',
+    priceValue: 75000,
     priceSuffix: '/ month',
-    inquiries: '500–1,250',
-    inquiriesSuffix: '/ month',
     positioning:
       'Ideal for businesses seeking broader reach and market expansion.',
     deliverables: [
@@ -53,14 +50,12 @@ export const ceramicPackages = [
     recommended: true,
   },
   {
-    id: 'ceramic-growth-pro',
+    id: 'ceramic-advanced',
     number: '03',
-    name: 'Ceramic Growth Pro',
-    price: '₹5,00,000',
-    priceValue: 500000,
+    name: 'Advanced',
+    price: '₹1,50,000',
+    priceValue: 150000,
     priceSuffix: '/ month',
-    inquiries: '1,000–2,500',
-    inquiriesSuffix: '/ month',
     positioning:
       'For businesses seeking stronger digital visibility and a broader growth programme.',
     deliverables: [
@@ -76,14 +71,12 @@ export const ceramicPackages = [
     recommended: false,
   },
   {
-    id: 'ceramic-export-growth',
+    id: 'ceramic-premium',
     number: '04',
-    name: 'Ceramic Export Growth',
-    price: '₹7,50,000',
-    priceValue: 750000,
+    name: 'Premium',
+    price: '₹2,25,000',
+    priceValue: 225000,
     priceSuffix: '/ month',
-    inquiries: '1,500–3,750',
-    inquiriesSuffix: '/ month',
     positioning:
       'For ceramic businesses focused on international buyer discovery and export markets.',
     deliverables: [
@@ -99,14 +92,12 @@ export const ceramicPackages = [
     recommended: false,
   },
   {
-    id: 'ceramic-market-leadership',
+    id: 'ceramic-enterprise',
     number: '05',
-    name: 'Ceramic Market Leadership',
-    price: '₹10,00,000',
-    priceValue: 1000000,
+    name: 'Enterprise',
+    price: '₹3,00,000',
+    priceValue: 300000,
     priceSuffix: '/ month',
-    inquiries: '2,000–5,000',
-    inquiriesSuffix: '/ month',
     positioning:
       'For established businesses seeking a comprehensive domestic, dealer and export programme.',
     deliverables: [
@@ -123,15 +114,32 @@ export const ceramicPackages = [
   },
 ]
 
-export const packageInquiryNote =
-  'Inquiry figures are planning estimates, not guaranteed results. Actual performance depends on targeting, competition, market conditions, campaign execution, landing-page conversion and lead qualification.'
+export const packageResultsNote =
+  'No specific number of inquiries, leads or sales is guaranteed. Results depend on targeting, competition, market conditions, campaign execution, landing-page conversion and lead qualification.'
 
 export const packageCommercialNote =
-  'GST extra. Third-party expenses and additional production or travel requirements must be agreed upon separately where applicable.'
+  'GST extra wherever applicable. Advertising budget is separate from the monthly service charge and is paid directly to the advertising platform. Third-party expenses and additional production or travel requirements must be agreed separately where applicable.'
 
-/** Prefilled WhatsApp copy for a selected package. */
+/**
+ * Prefilled WhatsApp copy for a selected package.
+ *
+ * Always includes the selected package name and its updated monthly service
+ * charge. Advertising budget and GST are called out separately, and no result
+ * is promised.
+ */
 export function buildPackageMessage(pkg) {
-  return `Hello Ezy Digital, I am interested in the ${pkg.name} package at ${pkg.price} ${pkg.priceSuffix.replace('/', 'per')}. Please share the complete scope and next steps.`
+  return [
+    'Hello Ezy Digital,',
+    '',
+    'I am interested in your Ceramic Industry Marketing Package.',
+    '',
+    `Package: ${pkg.name}`,
+    `Monthly Service Charge: ${pkg.price} ${pkg.priceSuffix.replace('/', 'per').trim()}`,
+    '',
+    'Advertising budget is separate from the service charge. GST is extra.',
+    '',
+    'Please share the complete details.',
+  ].join('\n')
 }
 
 export default ceramicPackages

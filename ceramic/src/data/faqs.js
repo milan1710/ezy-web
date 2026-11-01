@@ -24,7 +24,7 @@ export const homeFaqs = [
   {
     question: 'How much does a ceramic growth package cost?',
     answer:
-      'The approved ceramic growth packages start at ₹1,00,000 per month. All package prices are monthly charges and GST is extra. Deliverables and reporting frequency are confirmed in writing before work begins, and inquiry figures are planning estimates rather than guaranteed results.',
+      'The approved ceramic growth packages start at ₹30,000 per month. All package service charges are monthly and GST is extra wherever applicable. Advertising budget is separate from the service charge. Deliverables and reporting frequency are confirmed in writing before work begins. No specific number of inquiries, leads or sales is guaranteed.',
   },
   {
     question: 'Is advertising spend included?',

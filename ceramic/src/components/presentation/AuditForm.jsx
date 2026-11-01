@@ -84,7 +84,10 @@ export default function AuditForm({
       await submitLeadToCrm(buildLeadPayload(form, buildAuditDescription(form)))
       onSuccess?.()
       const submissionId = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-      navigate('/thank-you', { replace: true, state: { submitted: true, submissionId } })
+      navigate('/thank-you', {
+        replace: true,
+        state: { submitted: true, submissionId, form: 'ceramic-audit' },
+      })
     } catch {
       setStatus('error')
       window.requestAnimationFrame(() => statusRef.current?.focus())

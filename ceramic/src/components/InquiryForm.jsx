@@ -48,7 +48,10 @@ export default function InquiryForm({ defaults = {} }) {
     try {
       await submitLeadToCrm(buildLeadPayload(form, buildInquiryDescription(form)))
       const submissionId = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-      navigate('/thank-you', { replace: true, state: { submitted: true, submissionId } })
+      navigate('/thank-you', {
+        replace: true,
+        state: { submitted: true, submissionId, form: 'ceramic-inquiry' },
+      })
     } catch {
       setStatus('error')
       window.requestAnimationFrame(() => statusRef.current?.focus())

@@ -13,9 +13,9 @@ export const websitePackages = ceramicPackages.map((pkg) => ({
   priceLabel: pkg.price,
   priceSuffix: pkg.priceSuffix,
   tagline: pkg.positioning,
-  bestFor: `Estimated inquiries: ${pkg.inquiries} ${pkg.inquiriesSuffix}. Planning estimate only.`,
+  bestFor: 'Monthly service charge. Advertising budget is separate.',
   features: pkg.deliverables,
-  note: 'Monthly package. GST extra. Inquiry figures are estimates, not guaranteed results.',
+  note: 'Monthly service charge. GST extra. Advertising budget is separate.',
   featured: pkg.recommended,
 }))
 
@@ -63,9 +63,9 @@ export const marketingServices = [
 ]
 
 export const pricingNotes = [
-  'All Ceramic Growth Package prices are monthly charges. GST will be charged extra.',
-  'Inquiry figures are planning estimates, not guaranteed results.',
-  'Advertising-platform charges and campaign expenditure must be handled according to the written commercial agreement.',
+  'All Ceramic Growth Package service charges are monthly. GST is extra wherever applicable.',
+  'Advertising budget is separate from the monthly service charge and is paid directly to the advertising platform.',
+  'No specific number of inquiries, leads or sales is guaranteed.',
   'Third-party expenses and additional production or travel requirements must be agreed separately where applicable.',
   'Deliverables and reporting frequency are confirmed in writing before work begins.',
 ]

@@ -30,7 +30,7 @@ export default function Home() {
   useSeo({
     title: 'Ezy Digital | Ceramic Business Growth Solutions',
     description:
-      'Ezy Digital helps ceramic manufacturers reach potential buyers, develop dealer and distributor inquiries, improve export visibility and manage business inquiries. Ceramic growth packages start at ₹1,00,000 per month plus GST.',
+      'Ezy Digital helps ceramic manufacturers reach potential buyers, develop dealer and distributor inquiries, improve export visibility and manage business inquiries. Ceramic growth packages start at ₹30,000 per month plus GST, with advertising budget separate.',
     path: '/',
     jsonLd: {
       '@context': 'https://schema.org',
@@ -356,6 +356,7 @@ export default function Home() {
             </a>
             <p className="small" style={{ marginTop: 14, color: 'rgba(255,255,255,0.42)' }}>
               Ceramic growth packages start at {websitePackages[0].priceLabel} per month. GST extra.
+              Advertising budget is separate.
             </p>
           </div>
         </div>

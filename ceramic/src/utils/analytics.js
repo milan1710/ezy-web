@@ -1,9 +1,12 @@
 /**
  * Meta (Facebook) Pixel integration for the ceramic micro-site.
  *
- * The pixel id can be overridden with `VITE_FB_PIXEL_ID`, but the verified
- * ceramic-site id is used by default so tracking keeps working without any
- * build-time configuration.
+ * Exactly ONE pixel is used on the ceramic site: `1679588473838138`. The id can
+ * be overridden with `VITE_FB_PIXEL_ID`, but the verified ceramic-site id is
+ * used by default so tracking keeps working without build-time configuration.
+ * Duplicate initialisation is blocked both in module scope and with a global
+ * flag, so the same pixel can never be loaded twice (HMR, StrictMode or a
+ * second bundle).
  *
  * Tracked events:
  *   PageView  - once on first load and on every in-app route change
@@ -22,6 +25,10 @@ const env = import.meta.env ?? {}
 
 const DEFAULT_PIXEL_ID = '1679588473838138'
 
+// Global registry of pixel ids already initialised on this page. It survives
+// duplicate module evaluation so `fbq('init', ...)` is never sent twice.
+const PIXEL_REGISTRY_KEY = '__EZY_CERAMIC_PIXELS__'
+
 // Use the verified id when the variable is not defined at all. An explicitly
 // empty value disables the pixel, matching the main website's behaviour.
 export const FB_PIXEL_ID =
@@ -37,7 +44,9 @@ export const FB_EVENTS = {
 
 /** Friendly labels so Meta Events Manager shows useful breakdowns. */
 const LEAD_SOURCES = {
-  form: { content_name: 'Ceramic growth form', content_category: 'Form' },
+  form: { content_name: 'Ceramic growth form', content_category: 'Ceramic inquiry' },
+  audit: { content_name: 'Ceramic growth audit form', content_category: 'Ceramic inquiry' },
+  inquiry: { content_name: 'Ceramic inquiry form', content_category: 'Ceramic inquiry' },
 }
 
 /** True when a pixel ID is configured. */
@@ -73,6 +82,20 @@ function ensureFbq() {
 
 let initialised = false
 
+/** True when this exact pixel id was already initialised on the page. */
+function isRegisteredOnPage() {
+  if (typeof window === 'undefined') return false
+  const ids = window[PIXEL_REGISTRY_KEY]
+  return Array.isArray(ids) && ids.includes(FB_PIXEL_ID)
+}
+
+function registerOnPage() {
+  if (typeof window === 'undefined') return
+  const ids = Array.isArray(window[PIXEL_REGISTRY_KEY]) ? window[PIXEL_REGISTRY_KEY] : []
+  if (!ids.includes(FB_PIXEL_ID)) ids.push(FB_PIXEL_ID)
+  window[PIXEL_REGISTRY_KEY] = ids
+}
+
 /**
  * Initialises the pixel once and sends the first PageView.
  * Safe to call on every render: it only does work the first time.
@@ -85,10 +108,14 @@ export function initPixel() {
     return false
   }
 
-  if (initialised) return true
+  if (initialised || isRegisteredOnPage()) {
+    initialised = true
+    return true
+  }
   if (!ensureFbq()) return false
 
   initialised = true
+  registerOnPage()
   window.fbq('init', FB_PIXEL_ID)
   window.fbq('track', FB_EVENTS.pageView)
   return true
@@ -113,14 +140,18 @@ export function trackPageView(pathname) {
 }
 
 /**
- * Lead event for a visitor who is trying to contact the business.
+ * Lead event for a visitor who submitted a ceramic form successfully.
  *
- * @param {'form' | string} source
+ * Only the ceramic thank-you page calls this, and only for the
+ * `ceramic-audit` / `ceramic-inquiry` form ids, so unrelated forms can never
+ * be counted as ceramic Leads.
+ *
+ * @param {'form' | 'audit' | 'inquiry' | string} source
  */
 export function trackLead(source = 'form') {
   const meta = LEAD_SOURCES[source] ?? {
-    content_name: `Lead - ${source}`,
-    content_category: 'Other',
+    content_name: `Ceramic lead - ${source}`,
+    content_category: 'Ceramic inquiry',
   }
 
   return track(FB_EVENTS.lead, { ...meta, source })

@@ -2,7 +2,7 @@ import {
   buildPackageMessage,
   ceramicPackages,
   packageCommercialNote,
-  packageInquiryNote,
+  packageResultsNote,
 } from '../../data/ceramicPackages'
 import { whatsappLink } from '../../config/ceramicSite'
 import Icon from '../ui/Icon'
@@ -34,13 +34,13 @@ export default function Packages() {
               </p>
               <div className="cn-packages__chips">
                 <span>
-                  <Icon name="users" size={14} /> More inquiries
+                  <Icon name="users" size={14} /> Buyer discovery
                 </span>
                 <span>
-                  <Icon name="handshake" size={14} /> More dealers
+                  <Icon name="handshake" size={14} /> Dealer outreach
                 </span>
                 <span>
-                  <Icon name="globe" size={14} /> More markets
+                  <Icon name="globe" size={14} /> Market expansion
                 </span>
               </div>
             </div>
@@ -75,10 +75,10 @@ export default function Packages() {
               </div>
 
               <div className="cn-package__estimate">
-                <span>Estimated inquiries</span>
+                <span>Advertising budget</span>
                 <strong>
-                  {pkg.inquiries}
-                  <small>{pkg.inquiriesSuffix}</small>
+                  Separate
+                  <small>from service charge</small>
                 </strong>
               </div>
 
@@ -108,7 +108,7 @@ export default function Packages() {
         <div className="cn-packages__notes">
           <Reveal className="cn-packages__note">
             <Icon name="info" size={17} />
-            <p>{packageInquiryNote}</p>
+            <p>{packageResultsNote}</p>
           </Reveal>
           <Reveal className="cn-packages__note" delay={80}>
             <Icon name="file" size={17} />

@@ -42,20 +42,22 @@ The presentation at `/ceramic/` contains all sections on one page with smooth sc
 
 Navigation is sticky, keyboard accessible and updates the active section while scrolling.
 
-## Package pricing
+## Package service charges
 
-`src/data/ceramicPackages.js` is the only source of truth for ceramic package prices,
-inquiry estimates, deliverables and WhatsApp messages:
+`src/data/ceramicPackages.js` is the only source of truth for ceramic package
+service charges, deliverables and WhatsApp messages:
 
-- Ceramic Starter — ₹1,00,000 / month — 200–500 estimated inquiries
-- Market Expansion — ₹2,50,000 / month — 500–1,250 estimated inquiries
-- Ceramic Growth Pro — ₹5,00,000 / month — 1,000–2,500 estimated inquiries
-- Ceramic Export Growth — ₹7,50,000 / month — 1,500–3,750 estimated inquiries
-- Ceramic Market Leadership — ₹10,00,000 / month — 2,000–5,000 estimated inquiries
+- Starter — ₹30,000 / month
+- Growth — ₹75,000 / month
+- Advanced — ₹1,50,000 / month
+- Premium — ₹2,25,000 / month
+- Enterprise — ₹3,00,000 / month
 
-All prices are monthly and GST is extra. Inquiry figures are planning estimates, not
-guaranteed results. Package CTAs build a URL-encoded WhatsApp message for the selected
-package.
+All service charges are monthly. Advertising budget is separate from the service
+charge and is paid directly to the advertising platform. GST is extra wherever
+applicable. No specific number of inquiries, leads or sales is guaranteed. Package
+CTAs build a URL-encoded WhatsApp message containing the selected package name and
+its updated monthly service charge.
 
 ## Forms, CRM and lead counting
 
@@ -93,15 +95,21 @@ event - never a `Lead`.
 
 ## Meta Pixel
 
-`src/utils/analytics.js` loads pixel `2673882233043263` (override with
-`VITE_FB_PIXEL_ID` if needed) and tracks:
+`src/utils/analytics.js` loads only the ceramic pixel `1679588473838138` (override
+with `VITE_FB_PIXEL_ID` if needed) and tracks:
 
 - `PageView` on first load and every in-app route change.
 - `CallClick` (custom event, not `Lead`) when any `tel:` link is clicked, so call
   clicks never inflate the Lead count in Meta Ads Manager.
-- `Lead` once on the thank-you page after a successful form submission. A
-  per-submission id in `sessionStorage` prevents double counting on refresh or
-  React StrictMode remounts. Direct visits to `/thank-you` do not count.
+- `Lead` once on the thank-you page after a successful ceramic form submission.
+  Only the `ceramic-audit` and `ceramic-inquiry` form ids can fire it, a
+  per-submission `sessionStorage` key blocks duplicate Leads, and the submission
+  flag is removed from history after firing so refreshing `/thank-you` cannot
+  replay the event. Direct visits to `/thank-you` never count.
+
+A global pixel registry (`window.__EZY_CERAMIC_PIXELS__`) guarantees that
+`fbq('init', ...)` runs only once per page load, even if the module is evaluated
+twice or the app is remounted under React StrictMode.
 
 No personal form data is sent to Meta; only the event name and generic button /
 page labels.
@@ -140,8 +148,12 @@ use the legacy header/footer. They are not part of the single-page presentation:
 - No horizontal overflow at 360, 390, 430, 768, 1024, 1366 or 1440 px.
 - All 36 in-page links resolve to existing section IDs.
 - Mobile menu opens, locks body scroll, closes on selection and scrolls to the section.
-- All five package WhatsApp messages include the correct package name and price.
+- All five package WhatsApp messages include the selected package name and its
+  updated monthly service charge, plus the separate advertising budget and GST note.
 - Audit form validation, CRM payload mapping, thank-you redirect and reduced-motion fallback verified.
+- Pixel `1679588473838138` initialised exactly once; `PageView` on load and `Lead`
+  exactly once after a successful submission, with no Lead on validation errors,
+  direct thank-you visits or thank-you refreshes.
 
 To re-run the browser smoke test, start the preview and a debugging browser, then run
 `node scripts/cdp-check.mjs`:

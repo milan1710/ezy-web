@@ -1,12 +1,22 @@
 import { useEffect, useRef } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useSeo from '../hooks/useSeo'
 import Icon from '../components/ui/Icon'
 import { ceramicSite } from '../config/ceramicSite'
 import { trackLead } from '../utils/analytics'
 
+/**
+ * Form ids that are allowed to produce a ceramic `Lead`.
+ * The thank-you page is shared, so anything else is ignored.
+ */
+const CERAMIC_FORM_SOURCES = {
+  'ceramic-audit': 'audit',
+  'ceramic-inquiry': 'inquiry',
+}
+
 export default function ThankYou() {
   const location = useLocation()
+  const navigate = useNavigate()
   const tracked = useRef(false)
 
   useSeo({
@@ -19,8 +29,15 @@ export default function ThankYou() {
 
   /**
    * The Lead event is fired only when the visitor arrives here after a
-   * successful form submission, never on a direct visit or a page refresh.
-   * The submission id keeps React StrictMode and refreshes from double-counting.
+   * successful ceramic form submission, never on a direct visit, a refresh or
+   * a failed submission.
+   *
+   * Three guards keep the count at exactly one per submission:
+   *   1. `tracked` ref   - blocks React StrictMode double effect runs.
+   *   2. sessionStorage  - blocks a refresh / back-forward cache restore.
+   *   3. history reset   - the `submitted` flag is removed from history after
+   *                        the event, so a refresh cannot replay it even when
+   *                        storage is unavailable (private mode).
    */
   useEffect(() => {
     if (tracked.current) return
@@ -28,18 +45,27 @@ export default function ThankYou() {
     const state = location.state
     if (!state?.submitted) return
 
+    const source = CERAMIC_FORM_SOURCES[state.form]
+    if (!source) return
+
     tracked.current = true
 
-    const storageKey = `ceramic-lead-${state.submissionId || 'form'}`
+    const storageKey = `ceramic-lead-${state.form}-${state.submissionId || 'form'}`
+    let alreadyTracked = false
     try {
-      if (window.sessionStorage.getItem(storageKey)) return
-      window.sessionStorage.setItem(storageKey, '1')
+      alreadyTracked = window.sessionStorage.getItem(storageKey) === '1'
+      if (!alreadyTracked) window.sessionStorage.setItem(storageKey, '1')
     } catch {
-      // Storage can be unavailable in private mode; still count the lead.
+      // Storage can be unavailable in private mode; the history reset below is
+      // the fallback guard against a duplicate Lead.
     }
 
-    trackLead('form')
-  }, [location.state])
+    if (!alreadyTracked) trackLead(source)
+
+    // Drop the submission flag so refreshing the thank-you page does not fire
+    // a second Lead.
+    navigate('/thank-you', { replace: true, state: null })
+  }, [location.state, navigate])
 
   return (
     <section className="section thankyou">

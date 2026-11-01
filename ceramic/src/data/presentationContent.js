@@ -364,17 +364,17 @@ export const terms = [
   {
     icon: 'clipboard',
     title: 'Pricing',
-    text: 'All package prices are monthly charges. GST will be charged extra.',
+    text: 'All package service charges are monthly. GST is extra wherever applicable. Advertising budget is separate from the service charge.',
   },
   {
     icon: 'megaphone',
     title: 'Advertising',
-    text: 'Advertising-platform charges and campaign expenditure must be handled according to the written commercial agreement. Clearly disclose what is included in the selected package before the customer signs.',
+    text: 'Advertising-platform charges and campaign expenditure are separate from the monthly service charge and must be handled according to the written commercial agreement. Clearly disclose what is included in the selected package before the customer signs.',
   },
   {
     icon: 'chart',
-    title: 'Inquiry estimates',
-    text: 'Inquiry figures are estimates based on planning assumptions and may vary according to market conditions, targeting, competition, offer, landing-page experience and lead qualification.',
+    title: 'Results',
+    text: 'No specific number of inquiries, leads or sales is guaranteed. Outcomes depend on market conditions, targeting, competition, offer, landing-page experience, budget and lead qualification.',
   },
   {
     icon: 'camera',

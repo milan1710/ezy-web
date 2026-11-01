@@ -18,7 +18,7 @@ export default function Pricing() {
   useSeo({
     title: 'Ceramic Growth Packages | Ezy Digital',
     description:
-      'Ceramic growth packages with websites, social creatives, product videos, Meta and Google Ads, inquiry campaigns and reporting. Monthly packages from ₹1,00,000 plus GST.',
+      'Ceramic growth packages with websites, social creatives, product videos, Meta and Google Ads, inquiry campaigns and reporting. Monthly service charges from ₹30,000 plus GST. Advertising budget is separate.',
     path: '/pricing',
     image: `${import.meta.env.BASE_URL}images/slab-factory.jpg`,
     jsonLd: {
@@ -32,7 +32,7 @@ export default function Pricing() {
           name: pkg.name,
           price: String(pkg.price),
           priceCurrency: 'INR',
-          description: `${pkg.tagline} Monthly package; GST extra. Inquiry figures are estimates, not guarantees.`,
+          description: `${pkg.tagline} Monthly service charge; advertising budget and GST extra.`,
         })),
       ],
     },
@@ -47,8 +47,8 @@ export default function Pricing() {
         image={ceramicImages.slabFactory.src}
         imageAlt={ceramicImages.slabFactory.alt}
         breadcrumbs={[{ label: 'Packages' }]}
-        meta={['Monthly packages', 'GST extra', 'Inquiry estimates, not guarantees']}
-        stamp="Packages from ₹1,00,000 per month."
+        meta={['Monthly service charges', 'Advertising budget separate', 'GST extra']}
+        stamp="Packages from ₹30,000 per month."
         actions={
           <>
             <Link className="btn" to="/contact">
@@ -76,9 +76,10 @@ export default function Pricing() {
           <div className="notice mt-24">
             <Icon name="info" size={16} />
             <p>
-              All package prices are monthly charges. GST will be charged extra. Third-party
-              expenses and additional production or travel requirements must be agreed separately
-              where applicable.
+              All package service charges are monthly. GST is extra wherever applicable. Advertising
+              budget is separate from the service charge and is paid directly to the advertising
+              platform. Third-party expenses and additional production or travel requirements must be
+              agreed separately where applicable.
             </p>
           </div>
         </div>
